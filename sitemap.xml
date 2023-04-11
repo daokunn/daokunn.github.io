@@ -565,14 +565,14 @@
   </url>
   
   <url>
-    <loc>https://daokun.eu.org/tags/%E7%88%AC%E8%99%AB/</loc>
+    <loc>https://daokun.eu.org/tags/%E5%B7%A5%E5%85%B7%E6%95%99%E7%A8%8B/</loc>
     <lastmod>2023-04-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://daokun.eu.org/tags/%E5%B7%A5%E5%85%B7%E6%95%99%E7%A8%8B/</loc>
+    <loc>https://daokun.eu.org/tags/%E7%88%AC%E8%99%AB/</loc>
     <lastmod>2023-04-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -784,14 +784,14 @@
   </url>
   
   <url>
-    <loc>https://daokun.eu.org/categories/Python/%E8%93%9D%E6%A1%A5%E6%9D%AF/</loc>
+    <loc>https://daokun.eu.org/categories/C/</loc>
     <lastmod>2023-04-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://daokun.eu.org/categories/C/</loc>
+    <loc>https://daokun.eu.org/categories/Python/%E8%93%9D%E6%A1%A5%E6%9D%AF/</loc>
     <lastmod>2023-04-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
