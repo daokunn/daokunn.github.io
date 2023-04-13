@@ -551,14 +551,14 @@
 
   
   <url>
-    <loc>https://daokun.eu.org/tags/Linux/</loc>
+    <loc>https://daokun.eu.org/tags/Python/</loc>
     <lastmod>2023-04-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://daokun.eu.org/tags/Python/</loc>
+    <loc>https://daokun.eu.org/tags/Linux/</loc>
     <lastmod>2023-04-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -600,14 +600,14 @@
   </url>
   
   <url>
-    <loc>https://daokun.eu.org/tags/SQL/</loc>
+    <loc>https://daokun.eu.org/tags/Shell/</loc>
     <lastmod>2023-04-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://daokun.eu.org/tags/Shell/</loc>
+    <loc>https://daokun.eu.org/tags/SQL/</loc>
     <lastmod>2023-04-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -665,14 +665,14 @@
 
   
   <url>
-    <loc>https://daokun.eu.org/categories/Linux/</loc>
+    <loc>https://daokun.eu.org/categories/Python%E7%88%AC%E8%99%AB/</loc>
     <lastmod>2023-04-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://daokun.eu.org/categories/Python%E7%88%AC%E8%99%AB/</loc>
+    <loc>https://daokun.eu.org/categories/Linux/</loc>
     <lastmod>2023-04-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
