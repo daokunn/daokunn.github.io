@@ -593,13 +593,6 @@
   </url>
   
   <url>
-    <loc>https://daokun.eu.org/tags/Shell/</loc>
-    <lastmod>2023-04-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://daokun.eu.org/tags/Sqlite3/</loc>
     <lastmod>2023-04-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -608,6 +601,13 @@
   
   <url>
     <loc>https://daokun.eu.org/tags/SQL/</loc>
+    <lastmod>2023-04-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://daokun.eu.org/tags/Shell/</loc>
     <lastmod>2023-04-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -721,13 +721,6 @@
   </url>
   
   <url>
-    <loc>https://daokun.eu.org/categories/Shell/</loc>
-    <lastmod>2023-04-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://daokun.eu.org/categories/Sqlite3/</loc>
     <lastmod>2023-04-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -742,7 +735,14 @@
   </url>
   
   <url>
-    <loc>https://daokun.eu.org/categories/Shell/Linux/</loc>
+    <loc>https://daokun.eu.org/categories/Shell/</loc>
+    <lastmod>2023-04-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://daokun.eu.org/categories/%E7%88%AC%E8%99%AB/</loc>
     <lastmod>2023-04-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -756,7 +756,7 @@
   </url>
   
   <url>
-    <loc>https://daokun.eu.org/categories/%E7%88%AC%E8%99%AB/</loc>
+    <loc>https://daokun.eu.org/categories/Shell/Linux/</loc>
     <lastmod>2023-04-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -784,14 +784,14 @@
   </url>
   
   <url>
-    <loc>https://daokun.eu.org/categories/Python/%E8%93%9D%E6%A1%A5%E6%9D%AF/</loc>
+    <loc>https://daokun.eu.org/categories/C/</loc>
     <lastmod>2023-04-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://daokun.eu.org/categories/C/</loc>
+    <loc>https://daokun.eu.org/categories/Python/%E8%93%9D%E6%A1%A5%E6%9D%AF/</loc>
     <lastmod>2023-04-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
