@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://daokun.eu.org/2022/07/07/%E4%BD%A0%E7%9C%9F%E7%9A%84%E7%86%9F%E7%BB%83%E6%8E%8C%E6%8F%A1vim%E7%BC%96%E8%BE%91%E5%99%A8%E5%90%97%EF%BC%9F/</loc>
+    <lastmod>2023-05-05</lastmod>
+  </url>
+  <url>
     <loc>https://daokun.eu.org/2023/04/10/SQL%E8%AF%AD%E8%A8%80-MySQL-Oracle-SQL-Server-PostgreSQL/</loc>
     <lastmod>2023-04-26</lastmod>
   </url>
@@ -187,10 +191,6 @@
   <url>
     <loc>https://daokun.eu.org/2022/07/10/GCC-GDB-makefile%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/</loc>
     <lastmod>2022-07-10</lastmod>
-  </url>
-  <url>
-    <loc>https://daokun.eu.org/2022/07/07/%E4%BD%A0%E7%9C%9F%E7%9A%84%E7%86%9F%E7%BB%83%E6%8E%8C%E6%8F%A1vim%E7%BC%96%E8%BE%91%E5%99%A8%E5%90%97%EF%BC%9F/</loc>
-    <lastmod>2022-07-07</lastmod>
   </url>
   <url>
     <loc>https://daokun.eu.org/2022/06/28/Typora-picGo%E5%9B%BE%E5%BA%8A-github%E8%AE%BE%E7%BD%AE/</loc>
