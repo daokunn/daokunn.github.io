@@ -574,14 +574,14 @@
   </url>
   
   <url>
-    <loc>https://daokun.eu.org/tags/%E7%88%AC%E8%99%AB/</loc>
+    <loc>https://daokun.eu.org/tags/%E5%B7%A5%E5%85%B7%E6%95%99%E7%A8%8B/</loc>
     <lastmod>2023-05-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://daokun.eu.org/tags/%E5%B7%A5%E5%85%B7%E6%95%99%E7%A8%8B/</loc>
+    <loc>https://daokun.eu.org/tags/%E7%88%AC%E8%99%AB/</loc>
     <lastmod>2023-05-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -637,14 +637,14 @@
   </url>
   
   <url>
-    <loc>https://daokun.eu.org/tags/%E8%93%9D%E6%A1%A5%E6%9D%AF/</loc>
+    <loc>https://daokun.eu.org/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
     <lastmod>2023-05-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://daokun.eu.org/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
+    <loc>https://daokun.eu.org/tags/%E8%93%9D%E6%A1%A5%E6%9D%AF/</loc>
     <lastmod>2023-05-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -688,13 +688,6 @@
   </url>
   
   <url>
-    <loc>https://daokun.eu.org/categories/%E5%B7%A5%E5%85%B7%E7%B1%BB/</loc>
-    <lastmod>2023-05-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://daokun.eu.org/categories/Linux/</loc>
     <lastmod>2023-05-05</lastmod>
     <changefreq>weekly</changefreq>
@@ -703,6 +696,13 @@
   
   <url>
     <loc>https://daokun.eu.org/categories/%E5%B7%A5%E5%85%B7%E6%95%99%E7%A8%8B/</loc>
+    <lastmod>2023-05-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://daokun.eu.org/categories/%E5%B7%A5%E5%85%B7%E7%B1%BB/</loc>
     <lastmod>2023-05-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
