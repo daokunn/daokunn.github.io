@@ -542,14 +542,14 @@
 
   
   <url>
-    <loc>http://daokunn.fun/tags/Python/</loc>
+    <loc>http://daokunn.fun/tags/Linux/</loc>
     <lastmod>2023-06-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://daokunn.fun/tags/Linux/</loc>
+    <loc>http://daokunn.fun/tags/Python/</loc>
     <lastmod>2023-06-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -598,14 +598,14 @@
   </url>
   
   <url>
-    <loc>http://daokunn.fun/tags/Shell/</loc>
+    <loc>http://daokunn.fun/tags/SQL/</loc>
     <lastmod>2023-06-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://daokunn.fun/tags/SQL/</loc>
+    <loc>http://daokunn.fun/tags/Shell/</loc>
     <lastmod>2023-06-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -663,14 +663,14 @@
 
   
   <url>
-    <loc>http://daokunn.fun/categories/Python%E7%88%AC%E8%99%AB/</loc>
+    <loc>http://daokunn.fun/categories/Linux/</loc>
     <lastmod>2023-06-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://daokunn.fun/categories/Linux/</loc>
+    <loc>http://daokunn.fun/categories/Python%E7%88%AC%E8%99%AB/</loc>
     <lastmod>2023-06-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -726,13 +726,6 @@
   </url>
   
   <url>
-    <loc>http://daokunn.fun/categories/Shell/</loc>
-    <lastmod>2023-06-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://daokunn.fun/categories/Python/CSV/</loc>
     <lastmod>2023-06-03</lastmod>
     <changefreq>weekly</changefreq>
@@ -740,7 +733,7 @@
   </url>
   
   <url>
-    <loc>http://daokunn.fun/categories/Shell/Linux/</loc>
+    <loc>http://daokunn.fun/categories/Shell/</loc>
     <lastmod>2023-06-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -748,6 +741,13 @@
   
   <url>
     <loc>http://daokunn.fun/categories/%E7%88%AC%E8%99%AB/</loc>
+    <lastmod>2023-06-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://daokunn.fun/categories/Shell/Linux/</loc>
     <lastmod>2023-06-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -782,14 +782,14 @@
   </url>
   
   <url>
-    <loc>http://daokunn.fun/categories/C/</loc>
+    <loc>http://daokunn.fun/categories/Python/%E8%93%9D%E6%A1%A5%E6%9D%AF/</loc>
     <lastmod>2023-06-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://daokunn.fun/categories/Python/%E8%93%9D%E6%A1%A5%E6%9D%AF/</loc>
+    <loc>http://daokunn.fun/categories/C/</loc>
     <lastmod>2023-06-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
