@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>Vercel免费容器一键部署Hexo轻量级的博客</title>
+      <link href="/2023/06/09/Vercel%E5%85%8D%E8%B4%B9%E5%AE%B9%E5%99%A8%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2Hexo%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%9A%84%E5%8D%9A%E5%AE%A2/"/>
+      <url>/2023/06/09/Vercel%E5%85%8D%E8%B4%B9%E5%AE%B9%E5%99%A8%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2Hexo%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%9A%84%E5%8D%9A%E5%AE%A2/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\css\APlayer.min.css"><script src="\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\js\Meting.min.js"></script><h3 id="账号准备"><a href="#账号准备" class="headerlink" title="账号准备"></a>账号准备</h3><p><strong>请注册好：</strong><a href="https://github.com/">Github 账号 </a></p><p>再前往<a href="https://vercel.com/">Vercel 网站 </a><strong>使用Github账号</strong>注册一个账号。这样注册好以后 Vercel里面就可以看到你 Github 里面的项目了。</p><p><img src="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230609151542780.png" alt="image-20230609151542780"></p><p><img src="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230609151839099.png" alt="image-20230609151839099"></p><h3 id="创建-Hexo-项目"><a href="#创建-Hexo-项目" class="headerlink" title="创建 Hexo 项目"></a>创建 Hexo 项目</h3><p>创建 Hexo 项目直达链接：</p><p><a href="https://vercel.com/new/clone?repository-url=https://github.com/EvanNotFound/vercel-hexo-template/tree/main&template=hexo"> Deploy</a></p><p>这时候就到了创建 Hexo 项目的页面了。</p><p>左边的 <code>Git Scope</code> 是你的 Github 账号，右边 <code>REPOSITORY NAME</code> 是你账号下 Hexo 博客仓库的名字，你的博客源文件就存放在这里，名称可以<strong>自选</strong></p><p>项目可见性就保持 <code>Private</code>，这样别人就看不到你 Hexo 仓库的各种机密信息了，有效保持版权和隐私</p><p>最简单的方式：直接点击【**<a href="https://vercel.com/new/clone?repository-url=https://github.com/EvanNotFound/vercel-hexo-template/tree/main&template=hexo">一键部署Hexo</a>**】</p><p>最后成功以后，会给你一个二级域名，这个二级域名是属于你的，不会回收，建议可以调试的时候临时使用。</p><p>部署完成后，它就和你刚刚所填写的仓库绑定了，一旦你的仓库有什么变化，它就会自动同步部署，全过程大概 5 分钟可以完成部署。</p><p>你现在可以点击那个二级域名，就可以看到你的 Hexo 博客了。</p><p>我的是<a href="https://daokunn-github-io.vercel.app/">https://daokunn-github-io.vercel.app/</a></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>STM32智能小车课程设计</title>
       <link href="/2023/06/04/STM32%E6%99%BA%E8%83%BD%E5%B0%8F%E8%BD%A6%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/"/>
       <url>/2023/06/04/STM32%E6%99%BA%E8%83%BD%E5%B0%8F%E8%BD%A6%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/</url>
