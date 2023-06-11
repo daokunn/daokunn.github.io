@@ -9,8 +9,8 @@
 
 
     <url>
-        <loc>http://daokunn.fun/2023/05/10/Python%E8%B0%83%E7%94%A8you-get/</loc>
-        <lastmod>2023-06-10T11:05:56.466Z</lastmod>
+        <loc>http://daokunn.fun/2023/05/11/%E6%97%A0%E6%8F%92%E4%BB%B6%E4%B8%8B%E8%BD%BDcsdn%E7%9A%84%E6%96%87%E7%AB%A0%E5%B9%B6%E8%BD%AC%E6%88%90pdf/</loc>
+        <lastmod>2023-06-11T09:29:42.525Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -18,7 +18,15 @@
 
     <url>
         <loc>http://daokunn.fun/2023/06/09/%E5%85%8D%E8%B4%B9%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84ChatGpt%E7%BD%91%E7%AB%99-Chatbot-UI-%E7%BB%93%E5%90%88Vercel%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2/</loc>
-        <lastmod>2023-06-09T12:31:12.149Z</lastmod>
+        <lastmod>2023-06-10T16:15:35.210Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://daokunn.fun/2023/05/10/Python%E8%B0%83%E7%94%A8you-get/</loc>
+        <lastmod>2023-06-10T11:05:56.466Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

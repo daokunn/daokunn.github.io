@@ -3,6 +3,13 @@
 
 
     <url>
+        <loc>http://daokunn.fun/tags/Vercel/</loc>
+        <lastmod>2023-06-10T16:15:35.210Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://daokunn.fun/tags/you-get/</loc>
         <lastmod>2023-06-10T11:05:56.466Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -12,13 +19,6 @@
     <url>
         <loc>http://daokunn.fun/tags/Python/</loc>
         <lastmod>2023-06-10T11:05:56.466Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://daokunn.fun/tags/Vercel/</loc>
-        <lastmod>2023-06-09T12:31:12.149Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
