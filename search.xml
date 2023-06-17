@@ -4,6 +4,56 @@
   
     
     <entry>
+      <title>使用云监控和弹性伸缩实现弹性架构设计</title>
+      <link href="/2023/06/18/%E4%BD%BF%E7%94%A8%E4%BA%91%E7%9B%91%E6%8E%A7%E5%92%8C%E5%BC%B9%E6%80%A7%E4%BC%B8%E7%BC%A9%E5%AE%9E%E7%8E%B0%E5%BC%B9%E6%80%A7%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/"/>
+      <url>/2023/06/18/%E4%BD%BF%E7%94%A8%E4%BA%91%E7%9B%91%E6%8E%A7%E5%92%8C%E5%BC%B9%E6%80%A7%E4%BC%B8%E7%BC%A9%E5%AE%9E%E7%8E%B0%E5%BC%B9%E6%80%A7%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\css\APlayer.min.css"><script src="\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\js\Meting.min.js"></script><h2 id="实验概述"><a href="#实验概述" class="headerlink" title="实验概述"></a>实验概述</h2><p>需要创建2台部署了云监控插件的ECS实例。</p><ol><li><p>配置负载均衡实例的监听配置，创建ECS实例的自定义镜像。</p></li><li><p>在创建弹性伸缩服务，配置报警任务，将已创建的ECS实例加入伸缩组和负载均衡实例后端。最后，增加ECS的CPU使用率达到100%，通过弹性伸缩服务，自动新建ECS实例并添加到负载均衡实例后端。</p></li></ol><p><img src="https://edu.aliyun.com/lab/files/courses/intro/f5b61d01652e41a1a23e406f9eea4c14/images/course-f5b61d01652e41a1a23e406f9eea4c14-intro-image-1471571422748-vt3u8A" alt="示意图"></p><h2 id="实验目标"><a href="#实验目标" class="headerlink" title="实验目标"></a>实验目标</h2><p>完成此实验后，可以掌握的能力有：</p><ol><li><p>创建弹性伸缩组；</p></li><li><p>创建报警任务；在CPU达到指定范围时，自动弹出ECS实例；</p></li><li><p>弹性伸缩服务与负载均衡服务和云监控的结合应用。</p></li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> Linux </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 云监控 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>负载均衡使用初体验</title>
+      <link href="/2023/06/17/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/"/>
+      <url>/2023/06/17/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\css\APlayer.min.css"><script src="\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\js\Meting.min.js"></script><h1 id="实验概述"><a href="#实验概述" class="headerlink" title="实验概述"></a>实验概述</h1><p>  拥有大量用户的企业，经常会面临如下的难题：在高并发的情况下，经常会导致服务器响应速度慢，严重的情况会直接导致服务器停止服务。此时，会导致企业的业务中断，影响客户的正常访问。</p><p>  本实验通过使用阿里云负载均衡SLB以及对负载均衡SLB后端服务器ECS的权重进行修改，可以快速解决上述的问题。</p><p><img src="https://edu.aliyun.com/lab/files/courses/intro/11bc5c2e31a3429082a2b012fe08034d/images/course-11bc5c2e31a3429082a2b012fe08034d-intro-image-1501646995770-ezxsMY"></p><h1 id="实验目标"><a href="#实验目标" class="headerlink" title="实验目标"></a>实验目标</h1><p>  完成此实验后，可以掌握的能力有：</p><ol><li><p>配置负载均衡SLB的监听规则，并将ECS实例部署到SLB后端；</p></li><li><p>通过设置负载均衡SLB后端服务器ECS的权重值，分配用户访问后端ECS实例的比例。</p></li></ol><h1 id="阿里云负载均衡"><a href="#阿里云负载均衡" class="headerlink" title="阿里云负载均衡"></a>阿里云负载均衡</h1><h4 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h4><p>负载均衡服务主要有三个核心概念：</p><p><strong>负载均衡实例</strong> （Server Load Balancer instances）</p><p>一个负载均衡实例是一个运行的负载均衡服务，用来接收流量并将其分配给后端服务器。要使用负载均衡服务，您必须创建一个负载均衡实例，并至少添加一个监听和两台ECS实例。</p><p><strong>监听</strong> （Listeners）</p><p>监听用来检查客户端请求并将请求转发给后端服务器。监听也会对后端服务器进行健康检查。</p><p><strong>后端服务器</strong>（Backend Servers）</p><p>一组接收前端请求的ECS实例。您可以单独添加ECS实例到服务器池，也可以通过虚拟服务器组或主备服务器组来批量添加和管理。</p><p><img src="https://edu.aliyun.com/lab/files/courses/11bc5c2e31a3429082a2b012fe08034d/sections/8c47d7f310214b3184714b66c75b88d2/content/images/course-11bc5c2e31a3429082a2b012fe08034d-section-8c47d7f310214b3184714b66c75b88d2-content-image-1482739463577-BaRBx3"></p><p>特点:</p><p>1）负载均衡服务通过设置虚拟服务地址（IP），将位于同一地域（Region）的多台云服务器（Elastic Compute Service，简称ECS）资源虚拟成一个高性能、高可用的应用服务池；根据应用指定的方式，将来自客户端的网络请求分发到云服务器池中。</p><p>2）负载均衡服务会检查云服务器池中ECS的健康状态，自动隔离异常状态的ECS，从而解决了单台ECS的<strong>单点问题</strong>，同时提高了应用的整体服务能力。在标准的负载均衡功能之外，负载均衡服务还具备<strong>TCP与HTTP抗DDoS攻击的特性</strong>，增强了应用服务器的防护能力。</p><p>3）负载均衡服务是ECS面向多机方案的一个配套服务，需要同ECS结合使用</p><h3 id="阿里云负载均衡基础架构"><a href="#阿里云负载均衡基础架构" class="headerlink" title="阿里云负载均衡基础架构"></a>阿里云负载均衡基础架构</h3><p>负载均衡采用集群部署，可实现会话同步，以消除服务器单点故障，提升冗余，保证服务的稳定性。</p><p>阿里云当前提供四层（TCP协议和UDP协议）和七层（HTTP和HTTPS协议）的负载均衡服务。</p><ul><li>四层采用开源软件LVS（Linux Virtual Server）+ keepalived的方式实现负载均衡，并根据云计算需求对其进行了个性化定制。</li><li>七层采用Tengine实现负载均衡。Tengine是由淘宝网发起的Web服务器项目，它在Nginx的基础上，针对有大访问量的网站需求，添加了很多高级功能和特性</li></ul><p><img src="https://edu.aliyun.com/lab/files/courses/11bc5c2e31a3429082a2b012fe08034d/sections/8c47d7f310214b3184714b66c75b88d2/content/images/course-11bc5c2e31a3429082a2b012fe08034d-section-8c47d7f310214b3184714b66c75b88d2-content-image-1541389955758-2RtYaM"></p><p>如下图所示，各个地域的四层负载均衡实际上是由<strong>多台LVS机器部署成一个LVS集群</strong>来运行的。采用集群部署模式极大地保证了异常情况下负载均衡服务的可用性、稳定性与可扩展性。</p><p><img src="https://edu.aliyun.com/lab/files/courses/11bc5c2e31a3429082a2b012fe08034d/sections/8c47d7f310214b3184714b66c75b88d2/content/images/course-11bc5c2e31a3429082a2b012fe08034d-section-8c47d7f310214b3184714b66c75b88d2-content-image-1541390115823-zXMyaq"></p><p>LVS集群内的每台LVS都会进行会话，通过组播报文同步到该集群内的其它LVS机器上，从而实现LVS集群内各台机器间的会话同步。如下图所示，当客户端向服务端传输三个数据包后，在LVS1上建立的会话A开始同步到其它LVS机器上。图中实线表示现有的连接，图中虚线表示当LVS1出现故障或进行维护时，这部分流量会走到一台可以正常运行的机器LVS2上。因而负载均衡集群支持<strong>热升级</strong>，并且在机器故障和集群维护时最大程度对用户透明，不影响用户业务。</p><h1 id="实验步奏"><a href="#实验步奏" class="headerlink" title="实验步奏"></a>实验步奏</h1><h2 id="访问两台服务器"><a href="#访问两台服务器" class="headerlink" title="访问两台服务器"></a>访问两台服务器</h2><p><img src="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230617112423356.png" alt="image-20230617112423356"></p><p><img src="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230617112435617.png" alt="image-20230617112435617"></p><h2 id="进入负载均衡界面"><a href="#进入负载均衡界面" class="headerlink" title="进入负载均衡界面"></a>进入负载均衡界面</h2><p><img src="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230617113400713.png" alt="image-20230617113400713"></p><p>配置监听规则的<strong>基本信息</strong></p><ol><li>在弹出的页面中，选择负载均衡协议为<strong>HTTP</strong>，<strong>监听端口</strong>为 <strong>80</strong>；然后点击<strong>高级配置</strong>右侧的<strong>修改</strong>按钮：</li></ol><p><img src="https://edu.aliyun.com/lab/files/courses/11bc5c2e31a3429082a2b012fe08034d/sections/16cb4667b34a44b79846106d231a75f5/content/images/course-11bc5c2e31a3429082a2b012fe08034d-section-16cb4667b34a44b79846106d231a75f5-content-image-1640683224137-1jr4Xw"></p><ol start="2"><li>在展开的<strong>高级配置</strong>中，查看到默认<strong>会话保持</strong>的状态为<strong>关闭</strong>。不做任何修改，直接点击<strong>下一步；</strong></li></ol><p><img src="https://edu.aliyun.com/lab/files/courses/11bc5c2e31a3429082a2b012fe08034d/sections/16cb4667b34a44b79846106d231a75f5/content/images/course-11bc5c2e31a3429082a2b012fe08034d-section-16cb4667b34a44b79846106d231a75f5-content-image-1640683245756-UeojUO"></p><ol start="3"><li>选择<strong>默认服务器</strong>下方的<strong>继续添加</strong>，将两台已创建的ECS实例添加到SLB后端。</li></ol><p><img src="https://edu.aliyun.com/lab/files/courses/11bc5c2e31a3429082a2b012fe08034d/sections/16cb4667b34a44b79846106d231a75f5/content/images/course-11bc5c2e31a3429082a2b012fe08034d-section-16cb4667b34a44b79846106d231a75f5-content-image-1585034113289-nKBF4q"></p><ol start="4"><li>在弹出的页面中勾选两台已创建的ECS实例，并点击<strong>下一步</strong>；</li></ol><p><img src="https://edu.aliyun.com/lab/files/courses/11bc5c2e31a3429082a2b012fe08034d/sections/16cb4667b34a44b79846106d231a75f5/content/images/course-11bc5c2e31a3429082a2b012fe08034d-section-16cb4667b34a44b79846106d231a75f5-content-image-1585034179806-kxeSd9"></p><ol start="5"><li>在弹出的页面点击<strong>添加</strong>；</li></ol><p><img src="https://edu.aliyun.com/lab/files/courses/11bc5c2e31a3429082a2b012fe08034d/sections/16cb4667b34a44b79846106d231a75f5/content/images/course-11bc5c2e31a3429082a2b012fe08034d-section-16cb4667b34a44b79846106d231a75f5-content-image-1585034229137-XGOhp5"></p><ol start="6"><li>选择已添加的ECS实例的端口为 <strong>80</strong>，并点击<strong>下一步</strong>：</li></ol><p><img src="https://edu.aliyun.com/lab/files/courses/11bc5c2e31a3429082a2b012fe08034d/sections/16cb4667b34a44b79846106d231a75f5/content/images/course-11bc5c2e31a3429082a2b012fe08034d-section-16cb4667b34a44b79846106d231a75f5-content-image-1585034414783-3vO2Bi"></p><ol start="7"><li><p>在<strong>健康检查</strong> 配置中，不做任何修改，保持健康检查<strong>开启状态</strong>，点击<strong>下一步</strong>。</p></li><li><p>提交。</p></li></ol><h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><ul><li><strong>验证负载均衡的工作原理；</strong></li><li><strong>验证通过配置不同后端服务器权重，将用户的请求按比例分发到不同后端服务器；</strong></li><li><strong>验证在一台后端服务器开启会话请求时，请求在会话开启的时间内只会分发到这一台服务器</strong></li></ul><p>本文是实验记录，源地址:<a href="https://edu.aliyun.com/lab/courses/11bc5c2e31a3429082a2b012fe08034d/detail?purchaseRecordId=da64b402991240baa6ff1897e66b4a07">负载均衡使用初体验</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Linux </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 负载均衡 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Docker学习记录</title>
       <link href="/2023/06/16/Docker%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/"/>
       <url>/2023/06/16/Docker%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
