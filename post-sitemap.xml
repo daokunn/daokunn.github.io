@@ -9,6 +9,22 @@
 
 
     <url>
+        <loc>http://daokunn.fun/2023/06/17/Linux%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C-%E7%A3%81%E7%9B%98%E6%93%8D%E4%BD%9C/</loc>
+        <lastmod>2023-06-18T07:50:01.107Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://daokunn.fun/2023/06/17/k8s%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</loc>
+        <lastmod>2023-06-17T07:43:23.133Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://daokunn.fun/2023/06/17/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%AE%9E%E7%8E%B0https%E4%B8%8Ehttp%E7%9A%84%E6%B7%B7%E5%90%88%E8%AE%BF%E9%97%AE/</loc>
         <lastmod>2023-06-17T06:38:35.389Z</lastmod>
         <changefreq>weekly</changefreq>

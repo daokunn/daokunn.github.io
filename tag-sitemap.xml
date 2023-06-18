@@ -3,6 +3,20 @@
 
 
     <url>
+        <loc>http://daokunn.fun/tags/linux/</loc>
+        <lastmod>2023-06-18T07:50:01.107Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://daokunn.fun/tags/k8s/</loc>
+        <lastmod>2023-06-17T07:43:23.133Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://daokunn.fun/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/</loc>
         <lastmod>2023-06-17T06:38:35.389Z</lastmod>
         <changefreq>weekly</changefreq>
