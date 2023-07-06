@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://daokunn.fun/2023/07/06/%E5%9F%BA%E4%BA%8ECentos7-9%E7%9A%84%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD/</loc>
+    <lastmod>2023-07-06</lastmod>
+  </url>
+  <url>
     <loc>http://daokunn.fun/2023/07/05/kvm%E7%9A%84%E5%AE%89%E8%A3%85/</loc>
     <lastmod>2023-07-05</lastmod>
   </url>
@@ -135,10 +139,6 @@
   <url>
     <loc>http://daokunn.fun/2023/01/03/Pandas%E7%9A%84%E4%BD%BF%E7%94%A8/</loc>
     <lastmod>2023-01-07</lastmod>
-  </url>
-  <url>
-    <loc>http://daokunn.fun/2023/01/04/%E5%9F%BA%E4%BA%8ECentos7%E6%90%AD%E5%BB%BAWordPress%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</loc>
-    <lastmod>2023-01-04</lastmod>
   </url>
   <url>
     <loc>http://daokunn.fun/2023/01/02/Python%E8%AF%BB%E5%86%99CSV%E6%96%87%E4%BB%B6/</loc>
