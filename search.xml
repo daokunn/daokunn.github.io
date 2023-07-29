@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>超大流量网站的负载均衡</title>
+      <link href="/2023/07/29/%E8%B6%85%E5%A4%A7%E6%B5%81%E9%87%8F%E7%BD%91%E7%AB%99%E7%9A%84%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/"/>
+      <url>/2023/07/29/%E8%B6%85%E5%A4%A7%E6%B5%81%E9%87%8F%E7%BD%91%E7%AB%99%E7%9A%84%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\css\APlayer.min.css"><script src="\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\js\Meting.min.js"></script><h1 id="负载均衡介绍"><a href="#负载均衡介绍" class="headerlink" title="负载均衡介绍"></a>负载均衡介绍</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><ol><li>网络数据访问流量迅速增长</li><li>需要提高不间断24小时服务</li><li>服务器的处理器和内存访问速度的增长远低于网络带宽和应用服务的增长</li><li>传统的单机模式——单点故障</li></ol><h2 id="负载均衡的模式"><a href="#负载均衡的模式" class="headerlink" title="负载均衡的模式"></a>负载均衡的模式</h2><p>分为<strong>垂直扩展</strong>和<strong>水平扩展</strong></p><p><strong>垂直扩展</strong>：表现在技术上。就是把这个任务更加专业的去完成，比如数据库的负载均衡，可以使用读写分离技术，使用数据库缓存，多用这些专业技术去完成我们的目的。</p><p><strong>水平扩展</strong>：表现在业务上，业务拆分。通俗的说就是多叫人去做。比如一个电商网站，用户模块放在一个服务器，订单模块放在一个服务器等等。</p><p><img src="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230729195300716.png" alt="image-20230729195300716"></p><h2 id="负载均衡的工作原理"><a href="#负载均衡的工作原理" class="headerlink" title="负载均衡的工作原理"></a>负载均衡的工作原理</h2><p><img src="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230729195702391.png" alt="image-20230729195702391"></p><h1 id="云负载均衡介绍和使用场景"><a href="#云负载均衡介绍和使用场景" class="headerlink" title="云负载均衡介绍和使用场景"></a>云负载均衡介绍和使用场景</h1><p>SLB是阿里云负载均衡产品的统称，是阿里云提供全托管式在线负载均衡服务。</p><p>使用场景主要分为：</p><ul><li>基于4层（TCP&#x2F;UDP）的<strong>传统负载均衡CLB</strong></li><li>基于7层（HTTP&#x2F;HTTPS）的<strong>应用型负载均衡ALB</strong></li></ul><p><img src="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230729200248612.png" alt="image-20230729200248612"></p><p><img src="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230729200405250.png" alt="image-20230729200405250"></p><h2 id="CLB"><a href="#CLB" class="headerlink" title="CLB"></a>CLB</h2><p><img src="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230729200453855.png" alt="image-20230729200453855"></p><h2 id="ALB"><a href="#ALB" class="headerlink" title="ALB"></a>ALB</h2><p><img src="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230729200658153.png" alt="image-20230729200658153"></p><h2 id="CLB和ALB对比"><a href="#CLB和ALB对比" class="headerlink" title="CLB和ALB对比"></a>CLB和ALB对比</h2><p><img src="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230729200841525.png" alt="image-20230729200841525"></p><h2 id="云负载均衡和传统负载均衡对比"><a href="#云负载均衡和传统负载均衡对比" class="headerlink" title="云负载均衡和传统负载均衡对比"></a>云负载均衡和传统负载均衡对比</h2><p><img src="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230729201002628.png" alt="image-20230729201002628"></p><h1 id="云负载均衡的功能"><a href="#云负载均衡的功能" class="headerlink" title="云负载均衡的功能"></a>云负载均衡的功能</h1><p>下面主要是以CLB作为介绍</p><p>CLB的基本功能：</p><ul><li>支持公网或私网类型的负载均衡服务</li><li><strong>流量分发</strong>：当前提供4层（tcp&#x2F;udp）和7层(http&#x2F;https)的负载均衡服务</li><li><strong>流量调度</strong>：支持加权轮询（WRR），加权最小连接数（WLC）转发方式</li><li><strong>会话保持</strong>：在Session的生命周期内，可以将同一个客户端请求转发到同一后端的ECS上</li><li>健康检查：可以对后端ECS监控检查，自动屏蔽异常状态的ECS，恢复后接触屏蔽。</li></ul><p><img src="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230729201652511.png" alt="image-20230729201652511"></p><p><img src="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230729201710183.png" alt="image-20230729201710183"></p><h1 id="云负载均衡的高可用"><a href="#云负载均衡的高可用" class="headerlink" title="云负载均衡的高可用"></a>云负载均衡的高可用</h1><p><img src="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230729201941329.png" alt="image-20230729201941329"></p><p><img src="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230729202224583.png" alt="image-20230729202224583"></p><h1 id="为网站创建和配置负载均衡"><a href="#为网站创建和配置负载均衡" class="headerlink" title="为网站创建和配置负载均衡"></a>为网站创建和配置负载均衡</h1><p><img src="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230729202310139.png" alt="image-20230729202310139"></p><p><img src="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230729202356980.png" alt="image-20230729202356980"></p><p><img src="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230729202809447.png" alt="image-20230729202809447"></p><p><img src="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230729202753583.png" alt="image-20230729202753583"></p><p><img src="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230729202830556.png" alt="image-20230729202830556"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 负载均衡 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 负载均衡 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>对象存储管理与安全</title>
       <link href="/2023/07/28/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E4%B8%8E%E5%AE%89%E5%85%A8/"/>
       <url>/2023/07/28/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E4%B8%8E%E5%AE%89%E5%85%A8/</url>
