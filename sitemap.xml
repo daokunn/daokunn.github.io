@@ -936,14 +936,14 @@
   </url>
   
   <url>
-    <loc>https://daokun.eu.org/tags/MongoDB/</loc>
+    <loc>https://daokun.eu.org/tags/MySQL/</loc>
     <lastmod>2024-05-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://daokun.eu.org/tags/MySQL/</loc>
+    <loc>https://daokun.eu.org/tags/MongoDB/</loc>
     <lastmod>2024-05-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -999,14 +999,14 @@
   </url>
   
   <url>
-    <loc>https://daokun.eu.org/tags/K8s/</loc>
+    <loc>https://daokun.eu.org/tags/kvm/</loc>
     <lastmod>2024-05-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://daokun.eu.org/tags/kvm/</loc>
+    <loc>https://daokun.eu.org/tags/K8s/</loc>
     <lastmod>2024-05-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
