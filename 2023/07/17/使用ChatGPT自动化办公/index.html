@@ -1,0 +1,271 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>使用ChatGPT自动化办公 | 道坤</title><meta name="author" content="阿福"><meta name="copyright" content="阿福"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="本文章主要内容是:ChatGPT编写VBA程序格式转换问题(批量转换.xls–&gt;xlsx .csv–&gt;xlsx .doc–&gt;.docx .ppt–&gt;.pptx ppt–&gt;pdf) 准备ChatGPT–镜像或者new-bing Office 2019（或者其他版本，不要太老） ChatGPT编写VBA程序先在设置中把开发工具全选   然后在开发者工具  第一个代码 12">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用ChatGPT自动化办公">
+<meta property="og:url" content="https://daokun.eu.org/2023/07/17/%E4%BD%BF%E7%94%A8ChatGPT%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8A%9E%E5%85%AC/index.html">
+<meta property="og:site_name" content="道坤">
+<meta property="og:description" content="本文章主要内容是:ChatGPT编写VBA程序格式转换问题(批量转换.xls–&gt;xlsx .csv–&gt;xlsx .doc–&gt;.docx .ppt–&gt;.pptx ppt–&gt;pdf) 准备ChatGPT–镜像或者new-bing Office 2019（或者其他版本，不要太老） ChatGPT编写VBA程序先在设置中把开发工具全选   然后在开发者工具  第一个代码 12">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://daokun.eu.org/img/default_top_img.jpg">
+<meta property="article:published_time" content="2023-07-17T13:29:02.000Z">
+<meta property="article:modified_time" content="2023-07-17T15:12:41.107Z">
+<meta property="article:author" content="阿福">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://daokun.eu.org/img/default_top_img.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://daokun.eu.org/2023/07/17/%E4%BD%BF%E7%94%A8ChatGPT%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8A%9E%E5%85%AC/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="baidu-site-verification" content="code-mCgJ2GybwQ"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bfd0e8d34358f7b5477c5fccfd340d45";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '使用ChatGPT自动化办公',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-07-17 23:12:41'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/loading.gif" data-original="/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">83</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E5%88%86%E7%B1%BB/"><i class="fa-fw fa fa-archive"></i><span> 工具教程</span></a></li><li><a class="site-page child" href="/%E6%A0%87%E7%AD%BE/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E7%9B%B8%E5%86%8C/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/%E9%9F%B3%E4%B9%90/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/%E5%BD%B1%E8%A7%86/"><i class="fa-fw fas fa-video"></i><span> 影视</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/%E7%95%99%E8%A8%80%E6%9D%BF/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link"><i class="fa-fw fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/%E5%85%B3%E4%BA%8E%E7%AC%94%E8%80%85/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/default_top_img.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">道坤</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E5%88%86%E7%B1%BB/"><i class="fa-fw fa fa-archive"></i><span> 工具教程</span></a></li><li><a class="site-page child" href="/%E6%A0%87%E7%AD%BE/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E7%9B%B8%E5%86%8C/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/%E9%9F%B3%E4%B9%90/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/%E5%BD%B1%E8%A7%86/"><i class="fa-fw fas fa-video"></i><span> 影视</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/%E7%95%99%E8%A8%80%E6%9D%BF/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link"><i class="fa-fw fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/%E5%85%B3%E4%BA%8E%E7%AC%94%E8%80%85/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">使用ChatGPT自动化办公</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-07-17T13:29:02.000Z" title="发表于 2023-07-17 21:29:02">2023-07-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-07-17T15:12:41.107Z" title="更新于 2023-07-17 23:12:41">2023-07-17</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="使用ChatGPT自动化办公"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>本文章主要内容是:<br>ChatGPT编写VBA程序<br>格式转换问题(批量转换.xls–&gt;xlsx .csv–&gt;xlsx .doc–&gt;.docx .ppt–&gt;.pptx ppt–&gt;pdf)</p>
+<h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><p><a target="_blank" rel="noopener" href="https://ai.minihuo.com/">ChatGPT–镜像</a>或者new-bing</p>
+<p>Office 2019（或者其他版本，不要太老）</p>
+<h1 id="ChatGPT编写VBA程序"><a href="#ChatGPT编写VBA程序" class="headerlink" title="ChatGPT编写VBA程序"></a>ChatGPT编写VBA程序</h1><p>先在设置中把开发工具全选</p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230717214210155.png" alt="image-20230717214210155"></p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230717214611831.png" alt="image-20230717214611831"></p>
+<p>然后在开发者工具</p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230717214210155.png"></p>
+<p>第一个代码</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Sub</span> SayHello()</span><br><span class="line">    MsgBox <span class="string">&quot;你好！&quot;</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230717214711301.png" alt="image-20230717214711301"></p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230717214728629.png" alt="image-20230717214728629"></p>
+<h1 id="格式转换"><a href="#格式转换" class="headerlink" title="格式转换"></a>格式转换</h1><h2 id="批量-xls–-gt-xlsx"><a href="#批量-xls–-gt-xlsx" class="headerlink" title="批量.xls–&gt;.xlsx"></a>批量.xls–&gt;.xlsx</h2><p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230717215358946.png" alt="image-20230717215358946"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">Sub ConvertXLS2XLSX()</span><br><span class="line">    Dim strPath As String, strFile As String</span><br><span class="line">    Dim wb As Workbook</span><br><span class="line">    </span><br><span class="line">    &#x27;选择文件夹路径</span><br><span class="line">    With Application.FileDialog(msoFileDialogFolderPicker)</span><br><span class="line">        .Title = &quot;选择文件夹&quot;</span><br><span class="line">        .Show</span><br><span class="line">        </span><br><span class="line">        If .SelectedItems.Count &gt; 0 Then</span><br><span class="line">            strPath = .SelectedItems(1) &amp; &quot;\&quot;</span><br><span class="line">        Else</span><br><span class="line">            MsgBox &quot;未选择文件夹！&quot;, vbExclamation</span><br><span class="line">            Exit Sub</span><br><span class="line">        End If</span><br><span class="line">    End With</span><br><span class="line">    </span><br><span class="line">    &#x27;处理文件夹中的xls文件</span><br><span class="line">    strFile = Dir(strPath &amp; &quot;*.xls&quot;)</span><br><span class="line">    Do While strFile &lt;&gt; &quot;&quot;</span><br><span class="line">        Set wb = Workbooks.Open(strPath &amp; strFile)</span><br><span class="line">        wb.SaveAs Replace(wb.FullName, &quot;.xls&quot;, &quot;.xlsx&quot;), FileFormat:=xlOpenXMLWorkbook</span><br><span class="line">        wb.Close SaveChanges:=False</span><br><span class="line">        </span><br><span class="line">        strFile = Dir</span><br><span class="line">    Loop</span><br><span class="line">    </span><br><span class="line">    MsgBox &quot;转换完成！&quot;, vbInformation</span><br><span class="line">End Sub</span><br></pre></td></tr></table></figure>
+
+<p>上述代码会弹出一个对话框用于选择包含要转换的xls文件的文件夹。然后，它会遍历文件夹中的每个xls文件，并将其另存为xlsx格式文件。转换完成后，会有一个消息框提示转换完成。请注意，这段代码只能处理一个文件夹中的xls文件，不会递归子文件夹。</p>
+<h2 id="批量-CSV-gt-xlsx"><a href="#批量-CSV-gt-xlsx" class="headerlink" title="批量.CSV-&gt;.xlsx"></a>批量.CSV-&gt;.xlsx</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">Sub ConvertCSV2XLSX()</span><br><span class="line">    Dim strPath As String, strFile As String</span><br><span class="line">    Dim wb As Workbook</span><br><span class="line">    </span><br><span class="line">    &#x27;选择文件夹路径</span><br><span class="line">    With Application.FileDialog(msoFileDialogFolderPicker)</span><br><span class="line">        .Title = &quot;选择文件夹&quot;</span><br><span class="line">        .Show</span><br><span class="line">        </span><br><span class="line">        If .SelectedItems.Count &gt; 0 Then</span><br><span class="line">            strPath = .SelectedItems(1) &amp; &quot;\&quot;</span><br><span class="line">        Else</span><br><span class="line">            MsgBox &quot;未选择文件夹！&quot;, vbExclamation</span><br><span class="line">            Exit Sub</span><br><span class="line">        End If</span><br><span class="line">    End With</span><br><span class="line">    </span><br><span class="line">    &#x27;处理文件夹中的csv文件</span><br><span class="line">    strFile = Dir(strPath &amp; &quot;*.csv&quot;)</span><br><span class="line">    Do While strFile &lt;&gt; &quot;&quot;</span><br><span class="line">        Set wb = Workbooks.Open(strPath &amp; strFile, Local:=True)</span><br><span class="line">        wb.SaveAs Replace(wb.FullName, &quot;.csv&quot;, &quot;.xlsx&quot;), FileFormat:=xlOpenXMLWorkbook</span><br><span class="line">        wb.Close SaveChanges:=False</span><br><span class="line">        </span><br><span class="line">        strFile = Dir</span><br><span class="line">    Loop</span><br><span class="line">    </span><br><span class="line">    MsgBox &quot;转换完成！&quot;, vbInformation</span><br><span class="line">End Sub</span><br></pre></td></tr></table></figure>
+
+<p>上述代码会弹出一个对话框用于选择包含要转换的csv文件的文件夹。然后，它会遍历文件夹中的每个csv文件，并将其另存为xlsx格式文件。转换完成后，会有一个消息框提示转换完成。请注意，这段代码只能处理一个文件夹中的csv文件，不会递归子文件夹。</p>
+<h2 id="批量-doc–-gt-docx"><a href="#批量-doc–-gt-docx" class="headerlink" title="批量.doc–&gt;.docx"></a>批量.doc–&gt;.docx</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">Sub ConvertDOC2DOCX()</span><br><span class="line">    Dim strPath As String, strFile As String</span><br><span class="line">    Dim objWord As Object</span><br><span class="line">    </span><br><span class="line">    &#x27;选择文件夹路径</span><br><span class="line">    With Application.FileDialog(msoFileDialogFolderPicker)</span><br><span class="line">        .Title = &quot;选择文件夹&quot;</span><br><span class="line">        .Show</span><br><span class="line">        </span><br><span class="line">        If .SelectedItems.Count &gt; 0 Then</span><br><span class="line">            strPath = .SelectedItems(1) &amp; &quot;\&quot;</span><br><span class="line">        Else</span><br><span class="line">            MsgBox &quot;未选择文件夹！&quot;, vbExclamation</span><br><span class="line">            Exit Sub</span><br><span class="line">        End If</span><br><span class="line">    End With</span><br><span class="line">    </span><br><span class="line">    &#x27;处理文件夹中的doc文件</span><br><span class="line">    strFile = Dir(strPath &amp; &quot;*.doc&quot;)</span><br><span class="line">    Do While strFile &lt;&gt; &quot;&quot;</span><br><span class="line">        Set objWord = CreateObject(&quot;Word.Application&quot;)</span><br><span class="line">        </span><br><span class="line">        With objWord.Documents.Open(FileName:=strPath &amp; strFile, ReadOnly:=True)</span><br><span class="line">            .SaveAs2 Replace(.FullName, &quot;.doc&quot;, &quot;.docx&quot;), FileFormat:=wdFormatXMLDocument</span><br><span class="line">            .Close SaveChanges:=False</span><br><span class="line">        End With</span><br><span class="line">        </span><br><span class="line">        objWord.Quit</span><br><span class="line">        </span><br><span class="line">        strFile = Dir</span><br><span class="line">    Loop</span><br><span class="line">    </span><br><span class="line">    MsgBox &quot;转换完成！&quot;, vbInformation</span><br><span class="line">End Sub</span><br></pre></td></tr></table></figure>
+
+<p>上述代码会弹出一个对话框用于选择包含要转换的doc文件的文件夹。然后，它会遍历文件夹中的每个doc文件，并将其另存为docx格式文件。转换完成后，会有一个消息框提示转换完成。请注意，为了运行此代码，您需要在VBA编辑器中添加对”Microsoft Word xx.x Object Library”的引用（其中xx.x是安装在您计算机上的版本号）。</p>
+<h2 id="批量将word–-gt-pdf"><a href="#批量将word–-gt-pdf" class="headerlink" title="批量将word–&gt;pdf"></a>批量将word–&gt;pdf</h2><p>提供一些关于使用VBA语言将Word文档批量转换为PDF格式的一般性指导：</p>
+<ol>
+<li>打开一个新的Excel工作簿。</li>
+<li>按Alt+F11打开Visual Basic for Applications编辑器。</li>
+<li>在项目浏览窗格中，选择你要添加代码的工作簿对象。</li>
+<li>在菜单栏上选择<code>插入</code>-&gt;<code>模块</code>，然后在编辑区域中输入以下VBA代码：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">Sub ConvertWordToPDF()</span><br><span class="line">    Dim objWord As Object</span><br><span class="line">    Dim objDoc As Object</span><br><span class="line">    Dim filePath As String</span><br><span class="line">    Dim exportPath As String</span><br><span class="line">    </span><br><span class="line">    &#x27; 设置文件夹路径</span><br><span class="line">    filePath = &quot;C:\Your\Word\Documents\Folder\&quot;</span><br><span class="line">    exportPath = &quot;C:\Your\Export\PDF\Folder\&quot;</span><br><span class="line"></span><br><span class="line">    &#x27; 创建一个Word应用程序对象</span><br><span class="line">    Set objWord = CreateObject(&quot;Word.Application&quot;)</span><br><span class="line">    </span><br><span class="line">    &#x27; 如果不想显示打开的Word文档，可以将下一行代码取消注释</span><br><span class="line">    &#x27; objWord.Visible = False</span><br><span class="line"></span><br><span class="line">    &#x27; 循环处理文件夹中的所有Word文档</span><br><span class="line">    FileSearch filePath, &quot;*.docx&quot;, objWord, exportPath</span><br><span class="line"></span><br><span class="line">    &#x27; 关闭Word应用程序</span><br><span class="line">    objWord.Quit</span><br><span class="line">    </span><br><span class="line">    &#x27; 释放对象的引用</span><br><span class="line">    Set objDoc = Nothing</span><br><span class="line">    Set objWord = Nothing</span><br><span class="line">    </span><br><span class="line">    MsgBox &quot;转换完成！&quot;</span><br><span class="line"></span><br><span class="line">End Sub</span><br><span class="line"></span><br><span class="line">Sub FileSearch(sourceFolder As String, fileMask As String, objWord As Object, exportPath As String)</span><br><span class="line">    Dim fileName As Variant</span><br><span class="line">    Dim subFolder As Variant</span><br><span class="line">    </span><br><span class="line">    &#x27; 遍历文件夹中的所有子文件和子文件夹</span><br><span class="line">    fileName = Dir(sourceFolder &amp; fileMask)</span><br><span class="line">    </span><br><span class="line">    Do While fileName &lt;&gt; &quot;&quot;</span><br><span class="line">        ExportPDF objWord, sourceFolder, fileName, exportPath</span><br><span class="line">        </span><br><span class="line">        fileName = Dir</span><br><span class="line">    Loop</span><br><span class="line">    </span><br><span class="line">    subFolder = Dir(sourceFolder, vbDirectory)</span><br><span class="line">    </span><br><span class="line">    Do While subFolder &lt;&gt; &quot;&quot;</span><br><span class="line">        If (subFolder &lt;&gt; &quot;.&quot;) And (subFolder &lt;&gt; &quot;..&quot;) Then</span><br><span class="line">            FileSearch sourceFolder &amp; subFolder &amp; &quot;\&quot;, fileMask, objWord, exportPath</span><br><span class="line">        End If</span><br><span class="line">        </span><br><span class="line">        subFolder = Dir</span><br><span class="line">    Loop</span><br><span class="line">End Sub</span><br><span class="line"></span><br><span class="line">Sub ExportPDF(objWord As Object, sourceFolder As String, fileName As String, exportPath As String)</span><br><span class="line">    Dim objDoc As Object</span><br><span class="line">    </span><br><span class="line">    &#x27; 打开Word文档</span><br><span class="line">    Set objDoc = objWord.Documents.Open(sourceFolder &amp; fileName)</span><br><span class="line">    </span><br><span class="line">    &#x27; 设置为生成PDF格式的输出选项</span><br><span class="line">    objDoc.ExportAsFixedFormat outputFileName:=exportPath &amp; Left(fileName, Len(fileName) - 4) &amp; &quot;.pdf&quot;, _</span><br><span class="line">        ExportFormat:=17, OpenAfterExport:=False</span><br><span class="line"></span><br><span class="line">    &#x27; 关闭Word文档</span><br><span class="line">    objDoc.Close SaveChanges:=False</span><br><span class="line">End Sub</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>修改代码中的<code>filePath</code>和<code>exportPath</code>变量为实际的文件夹路径。确保你的Word文档在<code>filePath</code>指定的文件夹下，并且希望导出的PDF文件将保存在<code>exportPath</code>指定的文件夹下。</li>
+<li>按F5运行代码。</li>
+</ol>
+<p>这段VBA代码会递归遍历指定文件夹下的所有Word文档（.docx文件），并将它们批量转换为PDF格式保存在指定的输出文件夹中。</p>
+<p>请注意，在使用此代码之前，你可能需要确保Microsoft Word已经安装在你的计算机上，并正确引用了Word对象库。可以通过依次选择<code>工具</code>-&gt;<code>引用</code>来添加对<code>Microsoft Word XX.X Object Library</code>的引用，其中的XX.X表示你所安装的Word版本。</p>
+<h1 id="将多个Excel文件合并成一个"><a href="#将多个Excel文件合并成一个" class="headerlink" title="将多个Excel文件合并成一个"></a>将多个Excel文件合并成一个</h1><p>您好，您可以使用下面的VBA代码来将多个Excel文件合并成一个文件。这个代码会弹出一个对话框，让您选择要合并的Excel文件所在的文件夹，然后将该文件夹中的所有Excel文件合并到一个新的Excel文件中：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Sub</span> merge_excel_files()</span><br><span class="line">    <span class="keyword">Dim</span> sDir <span class="keyword">As</span> <span class="type">String</span></span><br><span class="line">    <span class="keyword">Dim</span> result_dir <span class="keyword">As</span> <span class="type">String</span></span><br><span class="line">    <span class="keyword">With</span> Application.FileDialog(msoFileDialogFolderPicker)</span><br><span class="line">        .Title = <span class="string">&quot;请选择要合并的Excel文件所在的文件夹&quot;</span></span><br><span class="line">        .Show</span><br><span class="line">        result_dir = .SelectedItems(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">End</span> <span class="keyword">With</span></span><br><span class="line">    ChDir result_dir</span><br><span class="line">    sDir = Dir(result_dir &amp; <span class="string">&quot;\*.xlsx&quot;</span>)</span><br><span class="line">    <span class="keyword">Dim</span> newWB <span class="keyword">As</span> Workbook</span><br><span class="line">    <span class="keyword">Set</span> newWB = Workbooks.Add</span><br><span class="line">    <span class="keyword">While</span> Len(sDir)</span><br><span class="line">        <span class="keyword">Dim</span> tempWB <span class="keyword">As</span> Workbook</span><br><span class="line">        <span class="keyword">Set</span> tempWB = Workbooks.Open(Filename:=result_dir &amp; <span class="string">&quot;\&quot;</span> &amp; sDir)</span><br><span class="line">        <span class="keyword">For</span> <span class="keyword">Each</span> ws <span class="keyword">In</span> tempWB.Sheets</span><br><span class="line">            ws.Copy After:=newWB.Sheets(newWB.Sheets.Count)</span><br><span class="line">        <span class="keyword">Next</span> ws</span><br><span class="line">        tempWB.Close SaveChanges:=<span class="literal">False</span></span><br><span class="line">        sDir = Dir</span><br><span class="line">    Wend</span><br><span class="line">    newWB.SaveAs Filename:=result_dir &amp; <span class="string">&quot;\merged.xlsx&quot;</span>, _</span><br><span class="line">    FileFormat:=xlOpenXMLWorkbook, Password:=<span class="string">&quot;&quot;</span>, WriteResPassword:=<span class="string">&quot;&quot;</span>, _</span><br><span class="line">    ReadOnlyRecommended:=<span class="literal">False</span>, CreateBackup:=<span class="literal">False</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://daokun.eu.org">阿福</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://daokun.eu.org/2023/07/17/%E4%BD%BF%E7%94%A8ChatGPT%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8A%9E%E5%85%AC/">https://daokun.eu.org/2023/07/17/使用ChatGPT自动化办公/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://daokun.eu.org" target="_blank">道坤</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/default_top_img.jpg" data-sites="wechat,weibo,qq,facebook,twitter"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/loading.gif" data-original="/img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/loading.gif" data-original="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/07/21/%E5%9F%BA%E4%BA%8EServerless%E8%BF%9B%E8%A1%8CAIGC%E7%BB%98%E5%9B%BE%E5%88%9B%E4%BD%9C/"><img class="prev-cover" src="/img/loading.gif" data-original="/img/aliyun.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">基于Serverless进行AIGC绘图创作</div></div></a></div><div class="next-post pull-right"><a href="/2023/07/10/MySQL%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%97%A5%E5%BF%97%E5%92%8C%E6%85%A2%E6%97%A5%E5%BF%97%E7%9A%84%E5%BC%80%E5%90%AF%E6%9F%A5%E8%AF%A2/"><img class="next-cover" src="/img/loading.gif" data-original="/img/mysql.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">MySQL二进制日志和慢日志的开启查询</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/loading.gif" data-original="/img/avatar.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">阿福</div><div class="author-info__description">遇见就是缘分</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">83</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/daokunn/daokunn.github.io"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">小心肝啊！别熬夜了！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%87%86%E5%A4%87"><span class="toc-number">1.</span> <span class="toc-text">准备</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ChatGPT%E7%BC%96%E5%86%99VBA%E7%A8%8B%E5%BA%8F"><span class="toc-number">2.</span> <span class="toc-text">ChatGPT编写VBA程序</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E8%BD%AC%E6%8D%A2"><span class="toc-number">3.</span> <span class="toc-text">格式转换</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%B9%E9%87%8F-xls%E2%80%93-gt-xlsx"><span class="toc-number">3.1.</span> <span class="toc-text">批量.xls–&gt;.xlsx</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%B9%E9%87%8F-CSV-gt-xlsx"><span class="toc-number">3.2.</span> <span class="toc-text">批量.CSV-&gt;.xlsx</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%B9%E9%87%8F-doc%E2%80%93-gt-docx"><span class="toc-number">3.3.</span> <span class="toc-text">批量.doc–&gt;.docx</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%B9%E9%87%8F%E5%B0%86word%E2%80%93-gt-pdf"><span class="toc-number">3.4.</span> <span class="toc-text">批量将word–&gt;pdf</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B0%86%E5%A4%9A%E4%B8%AAExcel%E6%96%87%E4%BB%B6%E5%90%88%E5%B9%B6%E6%88%90%E4%B8%80%E4%B8%AA"><span class="toc-number">4.</span> <span class="toc-text">将多个Excel文件合并成一个</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/05/16/Centos7-9%E8%AE%BE%E7%BD%AE%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC-%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E8%84%9A%E6%9C%AC/" title="Centos7.9设置定时执行脚本+开机自启脚本"><img src="/img/loading.gif" data-original="/img/linux.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Centos7.9设置定时执行脚本+开机自启脚本"/></a><div class="content"><a class="title" href="/2024/05/16/Centos7-9%E8%AE%BE%E7%BD%AE%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC-%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E8%84%9A%E6%9C%AC/" title="Centos7.9设置定时执行脚本+开机自启脚本">Centos7.9设置定时执行脚本+开机自启脚本</a><time datetime="2024-05-16T02:38:48.000Z" title="发表于 2024-05-16 10:38:48">2024-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/15/K8s%E7%BB%84%E4%BB%B6%E5%92%8C%E6%9E%B6%E6%9E%84%E7%9A%84%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A/" title="K8s组件和架构的名词解释"><img src="/img/loading.gif" data-original="/img/k8s.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="K8s组件和架构的名词解释"/></a><div class="content"><a class="title" href="/2024/05/15/K8s%E7%BB%84%E4%BB%B6%E5%92%8C%E6%9E%B6%E6%9E%84%E7%9A%84%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A/" title="K8s组件和架构的名词解释">K8s组件和架构的名词解释</a><time datetime="2024-05-15T14:08:45.000Z" title="发表于 2024-05-15 22:08:45">2024-05-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/15/K8s%E7%BB%84%E4%BB%B6%E5%92%8C%E6%9E%B6%E6%9E%84%E7%9A%84%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A1/" title="K8s组件和架构的名词解释"><img src="/img/loading.gif" data-original="/img/k8s.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="K8s组件和架构的名词解释"/></a><div class="content"><a class="title" href="/2024/05/15/K8s%E7%BB%84%E4%BB%B6%E5%92%8C%E6%9E%B6%E6%9E%84%E7%9A%84%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A1/" title="K8s组件和架构的名词解释">K8s组件和架构的名词解释</a><time datetime="2024-05-15T14:08:45.000Z" title="发表于 2024-05-15 22:08:45">2024-05-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/15/%E9%80%9A%E4%BA%BA%E6%80%A7%E5%8C%96%E7%9A%84YAML%E5%85%A5%E9%97%A8/" title="通人性化的YAML入门"><img src="/img/loading.gif" data-original="/img/yaml.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="通人性化的YAML入门"/></a><div class="content"><a class="title" href="/2024/05/15/%E9%80%9A%E4%BA%BA%E6%80%A7%E5%8C%96%E7%9A%84YAML%E5%85%A5%E9%97%A8/" title="通人性化的YAML入门">通人性化的YAML入门</a><time datetime="2024-05-15T06:32:11.000Z" title="发表于 2024-05-15 14:32:11">2024-05-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/14/Linux%E5%AD%98%E5%82%A8%E4%B8%93%E9%A2%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9AGlusterFS/" title="Linux存储专题（一）：GlusterFS"><img src="/img/loading.gif" data-original="/img/Gluster.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux存储专题（一）：GlusterFS"/></a><div class="content"><a class="title" href="/2024/05/14/Linux%E5%AD%98%E5%82%A8%E4%B8%93%E9%A2%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9AGlusterFS/" title="Linux存储专题（一）：GlusterFS">Linux存储专题（一）：GlusterFS</a><time datetime="2024-05-14T07:16:43.000Z" title="发表于 2024-05-14 15:16:43">2024-05-14</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/default_top_img.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2024 By 阿福</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a><br>
+<imgsrc="/img/loading.gif" data-original="https://haiyong.site/img/icp.png">
+<a href="https://beian.miit.gov.cn/#/Integrated/index"  style="color:white" target="_blank">赣ICP备2023004169号-1</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'TC3zGNHX95voCrjm3zIGGDtM-gzGzoHsz',
+      appKey: 'KLVEwzS0mvYkxYOwbpUJjG5k',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><canvas class="fireworks" mobile="true"></canvas><script src="/%5Bobject%20Object%5D"></script><script defer="defer" id="ribbon" src="/%5Bobject%20Object%5D" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="/%5Bobject%20Object%5D"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script>(function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/5b735920.js","daovoice")
+</script><script>var isChatBtn = true
+daovoice('init', {
+  app_id: '5b735920',},{
+  launcher: { 
+     disableLauncherIcon: isChatBtn // 悬浮 ICON 是否显示
+  },
+});
+daovoice('update');
+
+if (isChatBtn) {
+  var chatBtnFn = () => {
+    var chatBtn = document.getElementById("chat_btn")
+    chatBtn.addEventListener("click", function(){
+      daovoice('show')
+    });
+  }
+  chatBtnFn()
+} else {
+  if (true) {
+    function chatBtnHide () {
+      daovoice('update', {},{
+        launcher: { 
+        disableLauncherIcon: true // 悬浮 ICON 是否显示
+        },
+      });
+    }
+    function chatBtnShow () {
+      daovoice('update', {},{
+        launcher: { 
+        disableLauncherIcon: false // 悬浮 ICON 是否显示
+        },
+      });
+    }
+  }
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/meting@1.2/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"left","width":200,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script>
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script></body></html>

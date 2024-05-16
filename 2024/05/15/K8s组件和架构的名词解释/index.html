@@ -1,0 +1,380 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>K8s组件和架构的名词解释 | 道坤</title><meta name="keywords" content="k8s"><meta name="author" content="阿福"><meta name="copyright" content="阿福"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="组件Node和Pod下图矩形是node,node包含两个pod。一个是my-app（应用程序）,一个是DB（数据库）   一个node可以由多个pod。 pod可以放多个容器去运行，但是为了降低耦合度，一般是一个pod里面运行一个容器。 Service和IngressService  pod和pod之间通过IP进行通讯，但是pod死亡以后，新的pod会获取新的ip,那这样的话，就会很复杂，比如上图">
+<meta property="og:type" content="article">
+<meta property="og:title" content="K8s组件和架构的名词解释">
+<meta property="og:url" content="https://daokun.eu.org/2024/05/15/K8s%E7%BB%84%E4%BB%B6%E5%92%8C%E6%9E%B6%E6%9E%84%E7%9A%84%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A/index.html">
+<meta property="og:site_name" content="道坤">
+<meta property="og:description" content="组件Node和Pod下图矩形是node,node包含两个pod。一个是my-app（应用程序）,一个是DB（数据库）   一个node可以由多个pod。 pod可以放多个容器去运行，但是为了降低耦合度，一般是一个pod里面运行一个容器。 Service和IngressService  pod和pod之间通过IP进行通讯，但是pod死亡以后，新的pod会获取新的ip,那这样的话，就会很复杂，比如上图">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://daokun.eu.org/img/k8s.jpg">
+<meta property="article:published_time" content="2024-05-15T14:08:45.000Z">
+<meta property="article:modified_time" content="2024-05-16T02:42:22.808Z">
+<meta property="article:author" content="阿福">
+<meta property="article:tag" content="k8s">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://daokun.eu.org/img/k8s.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://daokun.eu.org/2024/05/15/K8s%E7%BB%84%E4%BB%B6%E5%92%8C%E6%9E%B6%E6%9E%84%E7%9A%84%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="baidu-site-verification" content="code-mCgJ2GybwQ"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bfd0e8d34358f7b5477c5fccfd340d45";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'K8s组件和架构的名词解释',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-05-16 10:42:22'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/loading.gif" data-original="/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">83</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E5%88%86%E7%B1%BB/"><i class="fa-fw fa fa-archive"></i><span> 工具教程</span></a></li><li><a class="site-page child" href="/%E6%A0%87%E7%AD%BE/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E7%9B%B8%E5%86%8C/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/%E9%9F%B3%E4%B9%90/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/%E5%BD%B1%E8%A7%86/"><i class="fa-fw fas fa-video"></i><span> 影视</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/%E7%95%99%E8%A8%80%E6%9D%BF/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link"><i class="fa-fw fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/%E5%85%B3%E4%BA%8E%E7%AC%94%E8%80%85/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/k8s.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">道坤</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E5%88%86%E7%B1%BB/"><i class="fa-fw fa fa-archive"></i><span> 工具教程</span></a></li><li><a class="site-page child" href="/%E6%A0%87%E7%AD%BE/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E7%9B%B8%E5%86%8C/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/%E9%9F%B3%E4%B9%90/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/%E5%BD%B1%E8%A7%86/"><i class="fa-fw fas fa-video"></i><span> 影视</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/%E7%95%99%E8%A8%80%E6%9D%BF/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link"><i class="fa-fw fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/%E5%85%B3%E4%BA%8E%E7%AC%94%E8%80%85/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">K8s组件和架构的名词解释</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-05-15T14:08:45.000Z" title="发表于 2024-05-15 22:08:45">2024-05-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-05-16T02:42:22.808Z" title="更新于 2024-05-16 10:42:22">2024-05-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/K8s/">K8s</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="K8s组件和架构的名词解释"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h1><h2 id="Node和Pod"><a href="#Node和Pod" class="headerlink" title="Node和Pod"></a>Node和Pod</h2><p>下图矩形是node,node包含两个pod。一个是my-app（应用程序）,一个是DB（数据库）</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240514162912701.png" alt="image-20240514162912701" style="zoom:33%;">
+
+<p>一个node可以由多个pod。</p>
+<p>pod可以放多个容器去运行，但是为了降低耦合度，一般是一个pod里面运行一个容器。</p>
+<h2 id="Service和Ingress"><a href="#Service和Ingress" class="headerlink" title="Service和Ingress"></a>Service和Ingress</h2><h3 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h3><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240514163238480.png" alt="image-20240514163238480" style="zoom:33%;">
+
+<p>pod和pod之间通过IP进行通讯，但是pod死亡以后，新的pod会获取新的ip,那这样的话，就会很复杂，比如上图连接的数据库pod死了，那我又得重新配置，很麻烦。所以这个IP是永久的，不变的。</p>
+<h3 id="Ingress"><a href="#Ingress" class="headerlink" title="Ingress"></a>Ingress</h3><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240514164123627.png" alt="image-20240514164123627" style="zoom:33%;">
+
+<p>对于自己的应用，我们需要暴露出去，让浏览器能够访问。但是对于数据库内部访问足以，这要暴露出去，不是没事找事吗。</p>
+<p>my-app的外部URL（service）基本都不怎么用,一般用来做测试。暴露出去http:my-app-ip:port是一个网址，例如http:10.1.3.4:80,这样不合适，一般是网址的形式，例如https:my-app.com</p>
+<p>那my-app的请求就先到达Ingress,由ingress去转发。</p>
+<h2 id="Configmap和-Secret"><a href="#Configmap和-Secret" class="headerlink" title="Configmap和 Secret"></a>Configmap和 Secret</h2><h3 id="Configmap"><a href="#Configmap" class="headerlink" title="Configmap"></a>Configmap</h3><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240514170357679.png" alt="image-20240514170357679" style="zoom:33%;">
+
+<p>你现在DB的service是mongo-db-service,现在你要改了，改成下面的mongo-db。</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240514170530410.png" alt="image-20240514170530410" style="zoom: 25%;">
+
+<p>改了之后可麻烦了，你要重新构建这个应用程序，然后推送到仓库，接着在弄进你的pod。那有没有办法解决这个问题呢？有，那就是<strong>Configmap</strong></p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240514170923591.png" alt="image-20240514170923591" style="zoom:33%;">
+
+<p>你的配置数据，例如数据库的URL那就直接放在<strong>ConfigMap</strong>,如果你要修改的话，可以在<strong>ConfigMap</strong>修改。</p>
+<p><strong>ConfigMap</strong>就是存放外部配置的组件。</p>
+<h3 id="Secret"><a href="#Secret" class="headerlink" title="Secret"></a>Secret</h3><p>想一个问题，你的数据库账号密码能不能刚在<strong>ConfigMap</strong>呢？</p>
+<p>答案是能！但有安全风险！有安全风险，那怎么办？</p>
+<p>那就放在一个加密的组件<strong>Secret</strong>。</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240514171535421.png" alt="image-20240514171535421" style="zoom:33%;">
+
+<p><strong>Secret</strong>和<strong>ConfigMap</strong>功能差不多，你可以认为是<strong>ConfigMap</strong>的pro max版本。用来存储机密数据。</p>
+<h2 id="Volumes"><a href="#Volumes" class="headerlink" title="Volumes"></a>Volumes</h2><p>数据存储也是很重要的。</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240514172019562.png" alt="image-20240514172019562" style="zoom:33%;">
+
+<p>看上图的DB会产生一些数据，这些数据在pod重启之后就会“死掉”。数据无价，数据可是很重要的东西。重启就丢掉了。那怎么能行呢？肯定要一个<strong>持久化存储</strong>的东西，这就是<strong>Volumes</strong>。</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240514232056354.png" alt="image-20240514232056354" style="zoom:33%;">
+
+<p><strong>Volumes</strong>基本原理是将硬盘驱动器的物理存储连接到pod，并且可以存储在本地计算机上（也就是可以和pod运行的同一服务器节点上），当然也可以云存储。<strong>Volumes</strong>不属于k8s集群，所以你只需要对它进行外部引用。</p>
+<h2 id="Deployment-and-StatefulSet"><a href="#Deployment-and-StatefulSet" class="headerlink" title="Deployment and StatefulSet"></a>Deployment and StatefulSet</h2><h3 id="Deployment"><a href="#Deployment" class="headerlink" title="Deployment"></a>Deployment</h3><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240514232735944.png" alt="image-20240514232735944" style="zoom:50%;">
+
+
+
+<p>如果my-app这个pod挂掉了，在传统中，需要停机去修复，重新部署，在这期间用户是不能访问应用的。</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240514233303243.png" alt="image-20240514233303243" style="zoom:33%;">
+
+<p>在k8s中，就不一样的，my-app这样的pod多的是，挂掉一个，其他相同的pod顶上。其他节点的my-app(副本)就会去连接service（带有dns功能的持久性静态IP）。</p>
+<p><strong>service</strong>同时也是LoadBlance,可以实现负载均衡。把请求转发到最不忙的pod。</p>
+<p>本节主角还是<strong>Deployment</strong> ，回到主题，既然pod副本多的是，那这些副本是怎么来的呢？你手动一个一个去创建吗？理论和实际都可以，如果有1000个pod呢？那不如直接定义一个蓝图，这个蓝图指定运行该pod的多少副本。这个蓝图组件就是<strong>Deployment</strong> </p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240514235210308.png" alt="image-20240514235210308" style="zoom:50%;">
+
+
+
+<p>这个<strong>Deployment</strong> 是pod的抽象层，使得我们更加方便的去控制pod,与pod交互，复制pod等操作。在实践中，我们主要使用<strong>Deployment</strong> 而不是pod。</p>
+<h3 id="StatefulSet"><a href="#StatefulSet" class="headerlink" title="StatefulSet"></a>StatefulSet</h3><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240514235821948.png" alt="image-20240514235821948" style="zoom:50%;">
+
+<p>DB挂掉之后应用也是不能访问的。那好办，多弄几个副本，使用<strong>Deployment</strong> 去创建一堆DB的副本pod。听起来不错，但是数据库有状态，即数据。这些DB的副本需要访问的相同的共享数据存储，而且需要某种机制来管理哪些部分当前正在写入，哪些部分当前正在存储中读取，以避免数据不一致。这种功能<strong>Deployment</strong> 是做不到的。</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240515000848596.png" alt="image-20240515000848596" style="zoom: 33%;">
+
+<p><strong>StatefulSet</strong>（有状态集）因此而生，就是这些有状态的应用的蓝图。作用和<strong>Deployment</strong> 差不多，也能复制pod,扩展或者缩小pod的规模，且保持数据一致。使用<strong>有状态集</strong>部署数据库应用会比<strong>Deployment</strong> 更难。所以k8s集群外部托管数据库应用也是一种常见的作法。</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240515001720116.png" alt="image-20240515001720116" style="zoom:50%;">
+
+<p>我们现在my-app有两个pod,DB有两个pod，还要两个负载均衡（service）,一种一套(my-app和DB)重新启动或者崩溃，在修复之前，用户依然正常访问，这样就可以避免停机。</p>
+<h1 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h1><p>这是一个整体的架构图，看不明白没关系，先放在这里。</p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240514161115275.png" alt="image-20240514161115275"></p>
+<h2 id="工作节点（从节点）"><a href="#工作节点（从节点）" class="headerlink" title="工作节点（从节点）"></a><strong>工作节点（从节点</strong>）</h2><p>必须三个进程安装<strong>Work Node</strong>：</p>
+<ol>
+<li><strong>Container runtime</strong></li>
+<li><strong>Kubelet</strong></li>
+<li><strong>Kube Proxy</strong></li>
+</ol>
+<p>Work Node才是实际干活的,也就在工作节点。</p>
+<h3 id="Container-runtime"><a href="#Container-runtime" class="headerlink" title="Container runtime"></a><strong>Container runtime</strong></h3><p>首先来看<strong>Container runtime</strong>，这个是用来运行容器的，可以是<strong>docker</strong>,也可以是其他的容器技术。</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240515174554303.png" alt="image-20240515174554303" style="zoom:50%;">
+
+
+
+<h3 id="Kubelet"><a href="#Kubelet" class="headerlink" title="Kubelet"></a>Kubelet</h3><p>对<strong>Pod</strong>和下面<strong>Container runtime</strong>的进程进行调度的是<strong>kubelet</strong>,这是k8s本身的进程。</p>
+<p><strong>kubelet</strong>和<strong>Container runtime</strong>不同，它拥有<strong>Container runtime</strong>和工作节点的接口。<strong>kubelet</strong>负责获取配置并且实际运行<strong>Pod</strong>，然后和资源（例如cpu,内存，硬盘）从该节点分配给容器</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240515174929020.png" alt="image-20240515174929020" style="zoom:50%;">
+
+<h3 id="Kube-Proxy"><a href="#Kube-Proxy" class="headerlink" title="Kube Proxy"></a>Kube Proxy</h3><p>通常k8s集群由多个节点组成，这些节点必须安装Container runtime和kubelet,除此之外，这么多的节点是需要通讯的。而通讯用的是之前的组件service,它也是一个负载均衡器，把请求转发到Pod的第三个进程——<strong>Kube Proxy</strong>。它具有智能转发逻辑，确保通信能以低开销高性能的方式工作。</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240515175757743.png" alt="image-20240515175757743" style="zoom:50%;">
+
+
+
+<p>总结，<strong>Work Node</strong>三个进程如下</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240515180052061.png" alt="image-20240515180052061" style="zoom:50%;">
+
+
+
+<h2 id="Master（主节点）"><a href="#Master（主节点）" class="headerlink" title="Master（主节点）"></a>Master（主节点）</h2><p>如何去调度pod?</p>
+<p>如何去监视pod的状态？</p>
+<p>如何重新调度或者重新启动它？</p>
+<p>如果有一台服务器，如何让它加入集群，成为Node并且在这服务器上创建pod或者其他组件?</p>
+<p>答案是<strong>Master Node</strong></p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240515180833261.png" alt="image-20240515180833261" style="zoom:50%;">
+
+
+
+<p><strong>Master Node</strong> 有四个进程。</p>
+<h3 id="Api-Server"><a href="#Api-Server" class="headerlink" title="Api-Server"></a>Api-Server</h3><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240515180937598.png" alt="image-20240515180937598" style="zoom: 33%;">
+
+<p><strong>Api-Server</strong>:</p>
+<ol>
+<li>是集群的大门，网关。获取集群中任何更新的初始请求，是交互的同一接口。</li>
+<li>就像保安一样看住大门，对请求做验证。如果你的请求正常，那么它就把你都请求转发给其他进程。</li>
+</ol>
+<h3 id="Scheduler"><a href="#Scheduler" class="headerlink" title="Scheduler"></a>Scheduler</h3><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240515211739703.png" alt="image-20240515211739703" style="zoom:33%;">
+
+<p>另外一个重要的进程是<strong>Scheduler</strong>。</p>
+<p>负责调度：</p>
+<ol>
+<li>先查看请求的应用程序需要多少资源（多少cpu,多少内存，多少存储空间）</li>
+<li>然后智能调度。<strong>Scheduler</strong>会遍历所有的工作节点<strong>Work Node</strong>，查看每一个<strong>Node</strong>的可用资源。</li>
+<li>当看到<strong>Node</strong>的信息，最不忙或者拥有最多可用资源的时候，就在该<strong>Node</strong>上调度新的<strong>Pod</strong></li>
+</ol>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240515212544788.png" alt="image-20240515212544788" style="zoom: 33%;">
+
+
+
+<p>这里要注意的是，<strong>Scheduler</strong>只是决定哪一个<strong>Node</strong>应该被调度，也就是只是决策者，但是不具体执行。实际上执行调度的进程，是从节点的<strong>Kubelet</strong>，<strong>kubelet</strong>从<strong>Scheduler</strong>获取请求</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240515213145886.png" alt="image-20240515213145886" style="zoom: 33%;">
+
+
+
+
+
+<h3 id="Controller-manager"><a href="#Controller-manager" class="headerlink" title="Controller manager"></a>Controller manager</h3><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240515213506131.png" alt="image-20240515213506131" style="zoom: 50%;">
+
+<p><strong>Controller manager</strong> 也是一个很重要的进程。它的作用是检测这些<strong>Node</strong>的状态，然后尽快恢复集群状态。然后向<strong>Scheduler</strong>发送请求，<strong>Scheduler</strong>去计算所需的的资源以及智能调度，然后发消息给<strong>Kubelet</strong>,让它执行。</p>
+<h3 id="Etcd"><a href="#Etcd" class="headerlink" title="Etcd"></a>Etcd</h3><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240515214807561.png" alt="image-20240515214807561" style="zoom:50%;">
+
+<p>最后一个<strong>Master</strong>进程是<strong>etcd</strong>,是集群状态的键值存储，你可以认为是集群的大脑，集群的状态信息都会保存在<strong>etcd</strong>中</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240515214856547.png" alt="image-20240515214856547" style="zoom:50%;">
+
+
+
+<p><strong>Api-Server</strong> 如何知道集群是否健康？</p>
+<p><strong>Scheduler</strong>如何知道可用资源？</p>
+<p><strong>Controller manager</strong> 如何知道集群状态改变？</p>
+<p>这些集群的的数据都是存储在<strong>etcd</strong>，所以要从<strong>etcd</strong>获取。</p>
+<p><strong>注意etcd只存储k8s集群的信息，用于Master和Work Node进行通讯。业务的数据在Volumes，请不要混淆了！！！</strong></p>
+<p>参考视频：</p>
+<ol>
+<li><p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Krpb44XR0bk&list=PLy7NrYWoggjziYQIDorlXjTvvwweTYoNC&index=3">Kubernetes Components explained! Pods, Services, Secrets, ConfigMap | Kubernetes Tutorial 14 - YouTube</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=umXEmn3cMWY&list=PLy7NrYWoggjziYQIDorlXjTvvwweTYoNC&index=3">Kubernetes Architecture explained | Kubernetes Tutorial 15 (youtube.com)</a></p>
+</li>
+</ol>
+<p>架构图来自：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Nw4m1U7Xt?p=7&vd_source=197cd9faf9dfebb5668cf8cff4737d21">1.k8s是什么_哔哩哔哩_bilibili</a></p>
+<p>感谢Nana女士的讲解，同时本人的英语水平不高，难免有些翻译错误和理解不到位的地方。请大佬指正，各位大佬阅读后也可移步去上面网址。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://daokun.eu.org">阿福</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://daokun.eu.org/2024/05/15/K8s%E7%BB%84%E4%BB%B6%E5%92%8C%E6%9E%B6%E6%9E%84%E7%9A%84%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A/">https://daokun.eu.org/2024/05/15/K8s组件和架构的名词解释/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://daokun.eu.org" target="_blank">道坤</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/k8s/">k8s</a></div><div class="post_share"><div class="social-share" data-image="/img/k8s.jpg" data-sites="wechat,weibo,qq,facebook,twitter"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/loading.gif" data-original="/img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/loading.gif" data-original="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/05/16/Centos7-9%E8%AE%BE%E7%BD%AE%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC-%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E8%84%9A%E6%9C%AC/"><img class="prev-cover" src="/img/loading.gif" data-original="/img/linux.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Centos7.9设置定时执行脚本+开机自启脚本</div></div></a></div><div class="next-post pull-right"><a href="/2024/05/15/K8s%E7%BB%84%E4%BB%B6%E5%92%8C%E6%9E%B6%E6%9E%84%E7%9A%84%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A1/"><img class="next-cover" src="/img/loading.gif" data-original="/img/k8s.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">K8s组件和架构的名词解释</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/05/15/K8s%E7%BB%84%E4%BB%B6%E5%92%8C%E6%9E%B6%E6%9E%84%E7%9A%84%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A1/" title="K8s组件和架构的名词解释"><img class="cover" src="/img/loading.gif" data-original="/img/k8s.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-15</div><div class="title">K8s组件和架构的名词解释</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/loading.gif" data-original="/img/avatar.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">阿福</div><div class="author-info__description">遇见就是缘分</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">83</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/daokunn/daokunn.github.io"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">小心肝啊！别熬夜了！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6"><span class="toc-number">1.</span> <span class="toc-text">组件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Node%E5%92%8CPod"><span class="toc-number">1.1.</span> <span class="toc-text">Node和Pod</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Service%E5%92%8CIngress"><span class="toc-number">1.2.</span> <span class="toc-text">Service和Ingress</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Service"><span class="toc-number">1.2.1.</span> <span class="toc-text">Service</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ingress"><span class="toc-number">1.2.2.</span> <span class="toc-text">Ingress</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Configmap%E5%92%8C-Secret"><span class="toc-number">1.3.</span> <span class="toc-text">Configmap和 Secret</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Configmap"><span class="toc-number">1.3.1.</span> <span class="toc-text">Configmap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Secret"><span class="toc-number">1.3.2.</span> <span class="toc-text">Secret</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Volumes"><span class="toc-number">1.4.</span> <span class="toc-text">Volumes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deployment-and-StatefulSet"><span class="toc-number">1.5.</span> <span class="toc-text">Deployment and StatefulSet</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Deployment"><span class="toc-number">1.5.1.</span> <span class="toc-text">Deployment</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#StatefulSet"><span class="toc-number">1.5.2.</span> <span class="toc-text">StatefulSet</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84"><span class="toc-number">2.</span> <span class="toc-text">架构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E8%8A%82%E7%82%B9%EF%BC%88%E4%BB%8E%E8%8A%82%E7%82%B9%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">工作节点（从节点）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Container-runtime"><span class="toc-number">2.1.1.</span> <span class="toc-text">Container runtime</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Kubelet"><span class="toc-number">2.1.2.</span> <span class="toc-text">Kubelet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Kube-Proxy"><span class="toc-number">2.1.3.</span> <span class="toc-text">Kube Proxy</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Master%EF%BC%88%E4%B8%BB%E8%8A%82%E7%82%B9%EF%BC%89"><span class="toc-number">2.2.</span> <span class="toc-text">Master（主节点）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Api-Server"><span class="toc-number">2.2.1.</span> <span class="toc-text">Api-Server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Scheduler"><span class="toc-number">2.2.2.</span> <span class="toc-text">Scheduler</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Controller-manager"><span class="toc-number">2.2.3.</span> <span class="toc-text">Controller manager</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Etcd"><span class="toc-number">2.2.4.</span> <span class="toc-text">Etcd</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/05/16/Centos7-9%E8%AE%BE%E7%BD%AE%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC-%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E8%84%9A%E6%9C%AC/" title="Centos7.9设置定时执行脚本+开机自启脚本"><img src="/img/loading.gif" data-original="/img/linux.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Centos7.9设置定时执行脚本+开机自启脚本"/></a><div class="content"><a class="title" href="/2024/05/16/Centos7-9%E8%AE%BE%E7%BD%AE%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC-%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E8%84%9A%E6%9C%AC/" title="Centos7.9设置定时执行脚本+开机自启脚本">Centos7.9设置定时执行脚本+开机自启脚本</a><time datetime="2024-05-16T02:38:48.000Z" title="发表于 2024-05-16 10:38:48">2024-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/15/K8s%E7%BB%84%E4%BB%B6%E5%92%8C%E6%9E%B6%E6%9E%84%E7%9A%84%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A/" title="K8s组件和架构的名词解释"><img src="/img/loading.gif" data-original="/img/k8s.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="K8s组件和架构的名词解释"/></a><div class="content"><a class="title" href="/2024/05/15/K8s%E7%BB%84%E4%BB%B6%E5%92%8C%E6%9E%B6%E6%9E%84%E7%9A%84%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A/" title="K8s组件和架构的名词解释">K8s组件和架构的名词解释</a><time datetime="2024-05-15T14:08:45.000Z" title="发表于 2024-05-15 22:08:45">2024-05-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/15/K8s%E7%BB%84%E4%BB%B6%E5%92%8C%E6%9E%B6%E6%9E%84%E7%9A%84%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A1/" title="K8s组件和架构的名词解释"><img src="/img/loading.gif" data-original="/img/k8s.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="K8s组件和架构的名词解释"/></a><div class="content"><a class="title" href="/2024/05/15/K8s%E7%BB%84%E4%BB%B6%E5%92%8C%E6%9E%B6%E6%9E%84%E7%9A%84%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A1/" title="K8s组件和架构的名词解释">K8s组件和架构的名词解释</a><time datetime="2024-05-15T14:08:45.000Z" title="发表于 2024-05-15 22:08:45">2024-05-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/15/%E9%80%9A%E4%BA%BA%E6%80%A7%E5%8C%96%E7%9A%84YAML%E5%85%A5%E9%97%A8/" title="通人性化的YAML入门"><img src="/img/loading.gif" data-original="/img/yaml.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="通人性化的YAML入门"/></a><div class="content"><a class="title" href="/2024/05/15/%E9%80%9A%E4%BA%BA%E6%80%A7%E5%8C%96%E7%9A%84YAML%E5%85%A5%E9%97%A8/" title="通人性化的YAML入门">通人性化的YAML入门</a><time datetime="2024-05-15T06:32:11.000Z" title="发表于 2024-05-15 14:32:11">2024-05-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/14/Linux%E5%AD%98%E5%82%A8%E4%B8%93%E9%A2%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9AGlusterFS/" title="Linux存储专题（一）：GlusterFS"><img src="/img/loading.gif" data-original="/img/Gluster.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux存储专题（一）：GlusterFS"/></a><div class="content"><a class="title" href="/2024/05/14/Linux%E5%AD%98%E5%82%A8%E4%B8%93%E9%A2%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9AGlusterFS/" title="Linux存储专题（一）：GlusterFS">Linux存储专题（一）：GlusterFS</a><time datetime="2024-05-14T07:16:43.000Z" title="发表于 2024-05-14 15:16:43">2024-05-14</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/k8s.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2024 By 阿福</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a><br>
+<imgsrc="/img/loading.gif" data-original="https://haiyong.site/img/icp.png">
+<a href="https://beian.miit.gov.cn/#/Integrated/index"  style="color:white" target="_blank">赣ICP备2023004169号-1</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'TC3zGNHX95voCrjm3zIGGDtM-gzGzoHsz',
+      appKey: 'KLVEwzS0mvYkxYOwbpUJjG5k',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><canvas class="fireworks" mobile="true"></canvas><script src="/%5Bobject%20Object%5D"></script><script defer="defer" id="ribbon" src="/%5Bobject%20Object%5D" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="/%5Bobject%20Object%5D"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script>(function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/5b735920.js","daovoice")
+</script><script>var isChatBtn = true
+daovoice('init', {
+  app_id: '5b735920',},{
+  launcher: { 
+     disableLauncherIcon: isChatBtn // 悬浮 ICON 是否显示
+  },
+});
+daovoice('update');
+
+if (isChatBtn) {
+  var chatBtnFn = () => {
+    var chatBtn = document.getElementById("chat_btn")
+    chatBtn.addEventListener("click", function(){
+      daovoice('show')
+    });
+  }
+  chatBtnFn()
+} else {
+  if (true) {
+    function chatBtnHide () {
+      daovoice('update', {},{
+        launcher: { 
+        disableLauncherIcon: true // 悬浮 ICON 是否显示
+        },
+      });
+    }
+    function chatBtnShow () {
+      daovoice('update', {},{
+        launcher: { 
+        disableLauncherIcon: false // 悬浮 ICON 是否显示
+        },
+      });
+    }
+  }
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/meting@1.2/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"left","width":200,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script>
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script></body></html>

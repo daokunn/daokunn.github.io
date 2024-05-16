@@ -1,0 +1,360 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>数据库上云迁移 | 道坤</title><meta name="keywords" content="云数据库"><meta name="author" content="阿福"><meta name="copyright" content="阿福"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="本次实验的MySQL源数据库在ECS，目标数据库是RDS 查看源数据库 ssh远程连接ECS  登录数据库 123mysql -u root -pEnter password:  （输入123456，输入的密码不会显示）  查看源数据库bakery、其中的表customer和product，以及表中的数据。 1mysql&gt; show databases;    切换数据库为bakery：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库上云迁移">
+<meta property="og:url" content="https://daokun.eu.org/2023/07/27/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8A%E4%BA%91%E8%BF%81%E7%A7%BB/index.html">
+<meta property="og:site_name" content="道坤">
+<meta property="og:description" content="本次实验的MySQL源数据库在ECS，目标数据库是RDS 查看源数据库 ssh远程连接ECS  登录数据库 123mysql -u root -pEnter password:  （输入123456，输入的密码不会显示）  查看源数据库bakery、其中的表customer和product，以及表中的数据。 1mysql&gt; show databases;    切换数据库为bakery：">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://daokun.eu.org/img/aliyun.jpg">
+<meta property="article:published_time" content="2023-07-27T12:51:09.000Z">
+<meta property="article:modified_time" content="2023-07-28T13:12:06.915Z">
+<meta property="article:author" content="阿福">
+<meta property="article:tag" content="云数据库">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://daokun.eu.org/img/aliyun.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://daokun.eu.org/2023/07/27/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8A%E4%BA%91%E8%BF%81%E7%A7%BB/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="baidu-site-verification" content="code-mCgJ2GybwQ"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bfd0e8d34358f7b5477c5fccfd340d45";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '数据库上云迁移',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-07-28 21:12:06'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/loading.gif" data-original="/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">83</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E5%88%86%E7%B1%BB/"><i class="fa-fw fa fa-archive"></i><span> 工具教程</span></a></li><li><a class="site-page child" href="/%E6%A0%87%E7%AD%BE/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E7%9B%B8%E5%86%8C/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/%E9%9F%B3%E4%B9%90/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/%E5%BD%B1%E8%A7%86/"><i class="fa-fw fas fa-video"></i><span> 影视</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/%E7%95%99%E8%A8%80%E6%9D%BF/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link"><i class="fa-fw fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/%E5%85%B3%E4%BA%8E%E7%AC%94%E8%80%85/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/aliyun.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">道坤</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E5%88%86%E7%B1%BB/"><i class="fa-fw fa fa-archive"></i><span> 工具教程</span></a></li><li><a class="site-page child" href="/%E6%A0%87%E7%AD%BE/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E7%9B%B8%E5%86%8C/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/%E9%9F%B3%E4%B9%90/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/%E5%BD%B1%E8%A7%86/"><i class="fa-fw fas fa-video"></i><span> 影视</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/%E7%95%99%E8%A8%80%E6%9D%BF/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link"><i class="fa-fw fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/%E5%85%B3%E4%BA%8E%E7%AC%94%E8%80%85/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">数据库上云迁移</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-07-27T12:51:09.000Z" title="发表于 2023-07-27 20:51:09">2023-07-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-07-28T13:12:06.915Z" title="更新于 2023-07-28 21:12:06">2023-07-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%BA%91%E6%95%B0%E6%8D%AE%E5%BA%93/">云数据库</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>3分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="数据库上云迁移"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>本次实验的MySQL源数据库在ECS，目标数据库是RDS</p>
+<h1 id="查看源数据库"><a href="#查看源数据库" class="headerlink" title="查看源数据库"></a>查看源数据库</h1><ol>
+<li><p>ssh远程连接ECS</p>
+</li>
+<li><p>登录数据库</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql <span class="operator">-</span>u root <span class="operator">-</span>p</span><br><span class="line"></span><br><span class="line">Enter password:  （输入<span class="number">123456</span>，输入的密码不会显示）</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看源数据库bakery、其中的表customer和product，以及表中的数据。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">show</span> databases;</span><br></pre></td></tr></table></figure>
+
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/b71de00c736447c786822f098c0ff307.png" style="zoom:50%;">
+
+<p>切换数据库为bakery：</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/df536873510246a9ac273dfff3f3257b.png" style="zoom:50%;">
+
+
+<p>查看表中数据:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">show</span> columns <span class="keyword">from</span> customer;</span><br><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">show</span> columns <span class="keyword">from</span> product;</span><br><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> customer;</span><br><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> product;</span><br></pre></td></tr></table></figure>
+
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/36513047d95141988fd547e35d029696.png" style="zoom:67%;"></li>
+</ol>
+<h1 id="建立目标数据"><a href="#建立目标数据" class="headerlink" title="建立目标数据"></a>建立目标数据</h1><h2 id="创建实例"><a href="#创建实例" class="headerlink" title="创建实例"></a>创建实例</h2><blockquote>
+<p>顶部导航栏处点击 <strong>产品与服务</strong> ，下拉菜单中，<strong>数据库</strong> 中选择 <strong>云数据库RDS版</strong> ，进入阿里云RDS管理控制台。</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/61795ee41a064bbaa21e4165d8887dbe.png" alt="img" style="zoom:50%;">
+
+<p>进入实验资源 <strong>云数据库RDS实例</strong> 的管理控制台。</p>
+<p>在左侧地址栏，点击 <strong>实例列表</strong></p>
+</blockquote>
+<h2 id="点击管理"><a href="#点击管理" class="headerlink" title="点击管理"></a>点击管理</h2><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/97a94efc60c04eccbc3a347d6eb2d39e.png" style="zoom:67%;">
+
+
+
+<h2 id="创建账号"><a href="#创建账号" class="headerlink" title="创建账号"></a>创建账号</h2><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/c1e314b5a6fe4f1f9a76883134abdd3c.png" style="zoom:67%;">
+
+<p>1）<strong>数据库账号</strong>：请根据 <strong>输入框</strong> 下端的 <strong>命名规则</strong> ，输入 数据库账号名称，例如：<strong>lab_user</strong> 。</p>
+<p>2）<strong>密码账号类型</strong> ：请选择 <strong>普通账号</strong></p>
+<p>3）<strong>密码</strong> ：请根据 <strong>输入框</strong> 下端的 <strong>密码规则</strong> ，输入 密码，例如：<strong>Passw0rd</strong>；</p>
+<p>4）<strong>确认密码</strong>：再次输入创建的密码。</p>
+<p>5）完成如上信息后，点击 <strong>创建</strong> 。</p>
+<h2 id="数据库创建"><a href="#数据库创建" class="headerlink" title="数据库创建"></a>数据库创建</h2><p>1）点击左侧栏的 <strong>数据库管理</strong> ，进入数据库管理页面。</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/8c9766fc15c2469bb4e2652f97700853.png" alt="img" style="zoom:67%;">
+
+<p>2）在右侧的 <strong>数据库管理</strong> 页面，点击左上角的 <strong>创建数据库</strong> ，进入创建页面。</p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/2b29324f554f494fb8efdbb76aac2ba1.png" alt="img"></p>
+<h2 id="数据库-数据库账号关联"><a href="#数据库-数据库账号关联" class="headerlink" title="数据库+数据库账号关联"></a>数据库+数据库账号关联</h2><p>1）<strong>数据库（DB）名称</strong>：请根据 <strong>输入框</strong> 下端的 <strong>命名规则</strong> ，输入 <strong>数据库名称</strong>，例如：lab_db 。</p>
+<p>2）<strong>支持字符集</strong>：默认设为 <strong>utf8</strong> 。</p>
+<p>3）<strong>授权帐号</strong>：选择新建数据库账号 <strong>lab_user</strong>。</p>
+<p>4）完成如上配置信息后，点击底部的 <strong>创建</strong> ，完成数据库的创建。</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/57d3491f90c4427db4276ce0a0670542.png" alt="img" style="zoom:67%;">
+
+<p>6）在 <strong>数据库管理</strong> 页面中，等待1分钟左右，点击右上角的 <strong>刷新</strong> ，可以查看到数据库 <strong>lab_db</strong> 的 <strong>数据库状态</strong> 为 <strong>运行中</strong> ，且 <strong>绑定账号</strong> 为 新建数据库账号 lab_user 。</p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/d122bd9d123b4c6aaa3cfc485e2e1f1e.png" alt="img"></p>
+<h1 id="数据库迁移"><a href="#数据库迁移" class="headerlink" title="数据库迁移"></a>数据库迁移</h1><p>将ECS的MySQL中的源数据库中的数据迁移到RDS的新建目标数据库 <strong>lab_db</strong>。</p>
+<ol>
+<li>通过如下步骤，进入数据迁移管理页面：</li>
+</ol>
+<p>1）点击左侧地址栏 <strong>实例列表</strong>，然后点击 <strong>数据导入</strong> 。进入 <strong>数据迁移服务</strong> 的管理页面。</p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/89efe106308f4827aeeb946189c61de6.png" alt="img"></p>
+<p>2）点击左侧栏 <strong>数据迁移</strong> ，进入数据迁移的管理页面。</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/f482ba5679624b89844cfa764cd8a956.png" alt="img" style="zoom:50%;">
+
+<p>3）点击 <strong>数据迁移</strong> 左上角的 <strong>创建迁移任务</strong> 。</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/5be049120a4840b2a88d061a16682812.png" alt="img" style="zoom:50%;">
+
+
+
+<ol start="2">
+<li>新建一个迁移任务，按照如下步骤，输入 <strong>源库信息</strong> 的配置信息：</li>
+</ol>
+<p>1）<strong>任务名称</strong>：自定义一个名称，以便能找到自己的数据迁移任务。</p>
+<p>2）<strong>数据库类型</strong>：选择 <strong>MySQL</strong> 。</p>
+<p>3）<strong>接入方式</strong>：选择ECS自建数据库</p>
+<p>4）<strong>实例类型</strong>：选择 <strong>有公网IP的自建数据库</strong> 。</p>
+<p>5）<strong>实例地区</strong>：选择 <strong>实验资源</strong> 中分配的 <strong>地域</strong> ，例如：<strong>华东2</strong></p>
+<p>6）<strong>主机名或IP地址</strong>：输入 <strong>实验资源</strong> 中分配的 <strong>MySQL源数据库</strong> ECS实例的 <strong>弹性IP</strong>。</p>
+<p>7）<strong>端口</strong>：使用默认端口号 <strong>3306</strong></p>
+<p>8）<strong>数据库账号</strong>：输入ECS上自建MySQL的 <strong>数据库账号</strong> ，<strong>root</strong>；<strong>数据库密码</strong>：自建MySQL的访问密码，<strong>123456</strong></p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/99d78a237534432d86de44a05d298a43.png" alt="img" style="zoom: 67%;">
+
+<ol start="5">
+<li>通过如下步骤，配置迁移任务的 <strong>迁移类型及列表</strong>：</li>
+</ol>
+<p>1）<strong>任务步骤</strong>：选择 <strong>库表结构迁移</strong> 和 <strong>全量迁移</strong></p>
+<p>2）勾选左侧 <strong>迁移对象</strong> 中的本地MySQL数据库中的bakery</p>
+<p>3）点击 <strong>&gt;</strong></p>
+<p>4）数据库 <strong>bakery</strong> 移动到 <strong>已选择对象</strong> 的列表中。</p>
+<p>5）完成如上配置后，点击面的 <strong>下一步高级配置</strong> 。</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/6213d49fb9564db6b71c5dcf4242352d.png" alt="img" style="zoom:50%;">
+
+
+
+<p>6）在高级配置页面，直接点击 <strong>下一步保存任务并预检查</strong></p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/e6fec454f0de4454947d3a34144259b1.png" alt="img" style="zoom:50%;">
+
+<ol start="6">
+<li><p>等待3秒钟左右，完成预检查，检查结果为 预检查通过100% ，点击 <strong>下一步购买</strong> 。</p>
+<blockquote>
+<p>说明：若预检查未通过，请根据错误提示和如上的操作步骤，核对迁移任务的配置是否正确。</p>
+</blockquote>
+</li>
+<li><p>按照如下内容，购买迁移任务的配置</p>
+<p>1）<strong>链路规格</strong>：选择 <strong>small</strong></p>
+<p>2）勾选 《<strong>数据传输（按量付费）服务条款》</strong></p>
+<p>3）完成如上配置后，点击 <strong>购买并启动</strong></p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/460639d71b784c1aa69e4290c79f6c49.png" alt="img" style="zoom:50%;">
+
+
+
+<p>4）点击<strong>确认</strong></p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/c2b1fd24b8cc422b9c8775f3adb3bf54.png" alt="img" style="zoom: 50%;">
+
+<p>8.此时，页面迁移任务的状态为 <strong>迁移中</strong> ，等待3-4分钟，状态变为 <strong>已完成</strong> 。</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/eaca6109db9445668708070d196f3c6f.png" alt="img" style="zoom:50%;"></li>
+</ol>
+<h1 id="查阅迁移结果"><a href="#查阅迁移结果" class="headerlink" title="查阅迁移结果"></a>查阅迁移结果</h1><p>在RDS的管理控制台，查看数据迁移结果。</p>
+<p>1.进入RDS管理控制台。在 <strong>实例列表</strong> 界面中，点击右上角的 <strong>登录数据库</strong> ，进入数据库管理登录界面。</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/1aae02b8d0404ddb8ebb75298da944d9.png" alt="img" style="zoom:50%;">
+
+
+
+
+
+<p>● <strong>用户名</strong>：输入新建数据库账号 <strong>lab_user</strong></p>
+<p>● <strong>密码</strong>：输入新建数据库密码 <strong>Passw0rd</strong></p>
+<p>完成后，点击 <strong>登录</strong> 。</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/dccc3b739126487caf146660c263f2e0.png" alt="img" style="zoom:33%;">
+
+<p>进入数据库管理页面，证明数据库迁移成功。</p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/82f87f77c52a455c9588a2bdeddad14c.png" alt="img"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://daokun.eu.org">阿福</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://daokun.eu.org/2023/07/27/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8A%E4%BA%91%E8%BF%81%E7%A7%BB/">https://daokun.eu.org/2023/07/27/数据库上云迁移/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://daokun.eu.org" target="_blank">道坤</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E4%BA%91%E6%95%B0%E6%8D%AE%E5%BA%93/">云数据库</a></div><div class="post_share"><div class="social-share" data-image="/img/aliyun.jpg" data-sites="wechat,weibo,qq,facebook,twitter"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/loading.gif" data-original="/img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/loading.gif" data-original="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/07/28/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E4%B8%8E%E5%AE%89%E5%85%A8/"><img class="prev-cover" src="/img/loading.gif" data-original="/img/aliyun.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">对象存储管理与安全</div></div></a></div><div class="next-post pull-right"><a href="/2023/07/21/%E5%9F%BA%E4%BA%8EServerless%E8%BF%9B%E8%A1%8CAIGC%E7%BB%98%E5%9B%BE%E5%88%9B%E4%BD%9C/"><img class="next-cover" src="/img/loading.gif" data-original="/img/aliyun.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">基于Serverless进行AIGC绘图创作</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/loading.gif" data-original="/img/avatar.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">阿福</div><div class="author-info__description">遇见就是缘分</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">83</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/daokunn/daokunn.github.io"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">小心肝啊！别熬夜了！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%BA%90%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">1.</span> <span class="toc-text">查看源数据库</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E7%9B%AE%E6%A0%87%E6%95%B0%E6%8D%AE"><span class="toc-number">2.</span> <span class="toc-text">建立目标数据</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BE%8B"><span class="toc-number">2.1.</span> <span class="toc-text">创建实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%82%B9%E5%87%BB%E7%AE%A1%E7%90%86"><span class="toc-number">2.2.</span> <span class="toc-text">点击管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E8%B4%A6%E5%8F%B7"><span class="toc-number">2.3.</span> <span class="toc-text">创建账号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%9B%E5%BB%BA"><span class="toc-number">2.4.</span> <span class="toc-text">数据库创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%B4%A6%E5%8F%B7%E5%85%B3%E8%81%94"><span class="toc-number">2.5.</span> <span class="toc-text">数据库+数据库账号关联</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%81%E7%A7%BB"><span class="toc-number">3.</span> <span class="toc-text">数据库迁移</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9F%A5%E9%98%85%E8%BF%81%E7%A7%BB%E7%BB%93%E6%9E%9C"><span class="toc-number">4.</span> <span class="toc-text">查阅迁移结果</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/05/16/Centos7-9%E8%AE%BE%E7%BD%AE%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC-%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E8%84%9A%E6%9C%AC/" title="Centos7.9设置定时执行脚本+开机自启脚本"><img src="/img/loading.gif" data-original="/img/linux.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Centos7.9设置定时执行脚本+开机自启脚本"/></a><div class="content"><a class="title" href="/2024/05/16/Centos7-9%E8%AE%BE%E7%BD%AE%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC-%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E8%84%9A%E6%9C%AC/" title="Centos7.9设置定时执行脚本+开机自启脚本">Centos7.9设置定时执行脚本+开机自启脚本</a><time datetime="2024-05-16T02:38:48.000Z" title="发表于 2024-05-16 10:38:48">2024-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/15/K8s%E7%BB%84%E4%BB%B6%E5%92%8C%E6%9E%B6%E6%9E%84%E7%9A%84%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A/" title="K8s组件和架构的名词解释"><img src="/img/loading.gif" data-original="/img/k8s.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="K8s组件和架构的名词解释"/></a><div class="content"><a class="title" href="/2024/05/15/K8s%E7%BB%84%E4%BB%B6%E5%92%8C%E6%9E%B6%E6%9E%84%E7%9A%84%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A/" title="K8s组件和架构的名词解释">K8s组件和架构的名词解释</a><time datetime="2024-05-15T14:08:45.000Z" title="发表于 2024-05-15 22:08:45">2024-05-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/15/K8s%E7%BB%84%E4%BB%B6%E5%92%8C%E6%9E%B6%E6%9E%84%E7%9A%84%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A1/" title="K8s组件和架构的名词解释"><img src="/img/loading.gif" data-original="/img/k8s.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="K8s组件和架构的名词解释"/></a><div class="content"><a class="title" href="/2024/05/15/K8s%E7%BB%84%E4%BB%B6%E5%92%8C%E6%9E%B6%E6%9E%84%E7%9A%84%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A1/" title="K8s组件和架构的名词解释">K8s组件和架构的名词解释</a><time datetime="2024-05-15T14:08:45.000Z" title="发表于 2024-05-15 22:08:45">2024-05-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/15/%E9%80%9A%E4%BA%BA%E6%80%A7%E5%8C%96%E7%9A%84YAML%E5%85%A5%E9%97%A8/" title="通人性化的YAML入门"><img src="/img/loading.gif" data-original="/img/yaml.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="通人性化的YAML入门"/></a><div class="content"><a class="title" href="/2024/05/15/%E9%80%9A%E4%BA%BA%E6%80%A7%E5%8C%96%E7%9A%84YAML%E5%85%A5%E9%97%A8/" title="通人性化的YAML入门">通人性化的YAML入门</a><time datetime="2024-05-15T06:32:11.000Z" title="发表于 2024-05-15 14:32:11">2024-05-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/14/Linux%E5%AD%98%E5%82%A8%E4%B8%93%E9%A2%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9AGlusterFS/" title="Linux存储专题（一）：GlusterFS"><img src="/img/loading.gif" data-original="/img/Gluster.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux存储专题（一）：GlusterFS"/></a><div class="content"><a class="title" href="/2024/05/14/Linux%E5%AD%98%E5%82%A8%E4%B8%93%E9%A2%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9AGlusterFS/" title="Linux存储专题（一）：GlusterFS">Linux存储专题（一）：GlusterFS</a><time datetime="2024-05-14T07:16:43.000Z" title="发表于 2024-05-14 15:16:43">2024-05-14</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/aliyun.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2024 By 阿福</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a><br>
+<imgsrc="/img/loading.gif" data-original="https://haiyong.site/img/icp.png">
+<a href="https://beian.miit.gov.cn/#/Integrated/index"  style="color:white" target="_blank">赣ICP备2023004169号-1</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'TC3zGNHX95voCrjm3zIGGDtM-gzGzoHsz',
+      appKey: 'KLVEwzS0mvYkxYOwbpUJjG5k',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><canvas class="fireworks" mobile="true"></canvas><script src="/%5Bobject%20Object%5D"></script><script defer="defer" id="ribbon" src="/%5Bobject%20Object%5D" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="/%5Bobject%20Object%5D"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script>(function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/5b735920.js","daovoice")
+</script><script>var isChatBtn = true
+daovoice('init', {
+  app_id: '5b735920',},{
+  launcher: { 
+     disableLauncherIcon: isChatBtn // 悬浮 ICON 是否显示
+  },
+});
+daovoice('update');
+
+if (isChatBtn) {
+  var chatBtnFn = () => {
+    var chatBtn = document.getElementById("chat_btn")
+    chatBtn.addEventListener("click", function(){
+      daovoice('show')
+    });
+  }
+  chatBtnFn()
+} else {
+  if (true) {
+    function chatBtnHide () {
+      daovoice('update', {},{
+        launcher: { 
+        disableLauncherIcon: true // 悬浮 ICON 是否显示
+        },
+      });
+    }
+    function chatBtnShow () {
+      daovoice('update', {},{
+        launcher: { 
+        disableLauncherIcon: false // 悬浮 ICON 是否显示
+        },
+      });
+    }
+  }
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/meting@1.2/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"left","width":200,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script>
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script></body></html>

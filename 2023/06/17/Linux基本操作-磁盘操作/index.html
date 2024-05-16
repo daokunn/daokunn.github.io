@@ -1,0 +1,437 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Linux基本操作:磁盘操作 | 道坤</title><meta name="keywords" content="Linux"><meta name="author" content="阿福"><meta name="copyright" content="阿福"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="为了区分存储内容的不同，以及快速定位寻址文件，也需要采取分区的形式。 硬盘分区和文件系统分区标准最重要的是分区表。分区表用于记录硬盘怎么分的一张表。 现在的主流标准是MBR和GPT。  MBR分区  MBR的分区表存储在硬盘最开始的512字节，但是还有别的东西，例如系统启动加载器。MBR真正能用的是64字节。所以最多只有四个分区。 随着硬盘容量变大，人们需要更多的分区，但是最多只有四个分区。这个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux基本操作:磁盘操作">
+<meta property="og:url" content="https://daokun.eu.org/2023/06/17/Linux%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C-%E7%A3%81%E7%9B%98%E6%93%8D%E4%BD%9C/index.html">
+<meta property="og:site_name" content="道坤">
+<meta property="og:description" content="为了区分存储内容的不同，以及快速定位寻址文件，也需要采取分区的形式。 硬盘分区和文件系统分区标准最重要的是分区表。分区表用于记录硬盘怎么分的一张表。 现在的主流标准是MBR和GPT。  MBR分区  MBR的分区表存储在硬盘最开始的512字节，但是还有别的东西，例如系统启动加载器。MBR真正能用的是64字节。所以最多只有四个分区。 随着硬盘容量变大，人们需要更多的分区，但是最多只有四个分区。这个">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://daokun.eu.org/img/linux.jpg">
+<meta property="article:published_time" content="2023-06-17T09:02:27.000Z">
+<meta property="article:modified_time" content="2024-05-16T02:36:55.884Z">
+<meta property="article:author" content="阿福">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://daokun.eu.org/img/linux.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://daokun.eu.org/2023/06/17/Linux%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C-%E7%A3%81%E7%9B%98%E6%93%8D%E4%BD%9C/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="baidu-site-verification" content="code-mCgJ2GybwQ"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bfd0e8d34358f7b5477c5fccfd340d45";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Linux基本操作:磁盘操作',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-05-16 10:36:55'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/loading.gif" data-original="/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">83</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E5%88%86%E7%B1%BB/"><i class="fa-fw fa fa-archive"></i><span> 工具教程</span></a></li><li><a class="site-page child" href="/%E6%A0%87%E7%AD%BE/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E7%9B%B8%E5%86%8C/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/%E9%9F%B3%E4%B9%90/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/%E5%BD%B1%E8%A7%86/"><i class="fa-fw fas fa-video"></i><span> 影视</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/%E7%95%99%E8%A8%80%E6%9D%BF/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link"><i class="fa-fw fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/%E5%85%B3%E4%BA%8E%E7%AC%94%E8%80%85/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/linux.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">道坤</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E5%88%86%E7%B1%BB/"><i class="fa-fw fa fa-archive"></i><span> 工具教程</span></a></li><li><a class="site-page child" href="/%E6%A0%87%E7%AD%BE/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E7%9B%B8%E5%86%8C/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/%E9%9F%B3%E4%B9%90/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/%E5%BD%B1%E8%A7%86/"><i class="fa-fw fas fa-video"></i><span> 影视</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/%E7%95%99%E8%A8%80%E6%9D%BF/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link"><i class="fa-fw fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/%E5%85%B3%E4%BA%8E%E7%AC%94%E8%80%85/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Linux基本操作:磁盘操作</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-06-17T09:02:27.000Z" title="发表于 2023-06-17 17:02:27">2023-06-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-05-16T02:36:55.884Z" title="更新于 2024-05-16 10:36:55">2024-05-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Linux/">Linux</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Linux基本操作:磁盘操作"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><img src="/img/loading.gif" data-original="https://img-blog.csdnimg.cn/20210418224626979.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xYV2FsYXoxczFz,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p>为了区分存储内容的不同，以及快速定位寻址文件，也需要采取分区的形式。</p>
+<h1 id="硬盘分区和文件系统"><a href="#硬盘分区和文件系统" class="headerlink" title="硬盘分区和文件系统"></a>硬盘分区和文件系统</h1><h2 id="分区标准"><a href="#分区标准" class="headerlink" title="分区标准"></a>分区标准</h2><p>最重要的是<strong>分区表</strong>。分区表用于记录硬盘怎么分的一张表。</p>
+<p>现在的主流标准是<strong>MBR</strong>和<strong>GPT</strong>。</p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230617180625050.png" alt="image-20230617180625050"></p>
+<h3 id="MBR分区"><a href="#MBR分区" class="headerlink" title="MBR分区"></a><strong>MBR</strong>分区</h3><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230617180831611.png" alt="image-20230617180831611" style="zoom: 50%;">
+
+<p>MBR的分区表存储在硬盘最开始的512字节，但是还有别的东西，例如系统启动加载器。MBR真正能用的是64字节。所以最多只有四个分区。</p>
+<p>随着硬盘容量变大，人们需要更多的分区，但是最多只有四个分区。这个时候，拿出其中一个分区作为扩展部分，分区表里面不再记录分区信息，而是记录另一张分区表的信息。</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230617181515947.png" alt="image-20230617181515947" style="zoom:33%;">
+
+
+
+<p>为了避免原先分区和扩展部分的分区混淆，之前的叫做主分区，扩展的叫做扩展分区。因为有了之前64字节的坑，所以扩展分区可以记录无数的分区，这些新的分区，就叫做逻辑分区。</p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230617181531893.png" alt="image-20230617181531893"></p>
+<p>缺点:无法支持2TB的大硬盘。</p>
+<h3 id="GPT"><a href="#GPT" class="headerlink" title="GPT"></a><strong>GPT</strong></h3><p>GPT舒服的多，没有那么多乱七八糟的分区，只有一种分区——主分区。</p>
+<p>分区数量没有限制，支持2TB以上的。</p>
+<p>GPT是UEFI的一部分，使用GUID或者Linux中的UUID来定义分区和分区类型。</p>
+<p>GPT会分出一个ESP分区，用来做系统引导启动。</p>
+<h2 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h2><p>分好区之后，需要格式化，格式化的时候，需要选择一个文件系统。</p>
+<p>文件系统是操作系统用于明确存储设备（常见的是磁盘，也有基于NAND Flash的<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E5%9B%BA%E6%80%81%E7%A1%AC%E7%9B%98&spm=1001.2101.3001.7020">固态硬盘</a>）或分区上的文件的方法和数据结构，即在存储设备上组织文件的方法。</p>
+<p>常见的文件系统类型</p>
+<p><strong>FAT</strong></p>
+<p>在Win 9X下，FAT16支持的分区最大为2GB。我们知道计算机将信息保存在硬盘上称为“簇”的区域内。使用的簇越小，保存信息的效率就越高。在FAT16的情况下，分区越大簇就相应的要大，存储效率就越低，势必造成存储空间的浪费。并且随着计算机硬件和应用的不断提高，FAT16文件系统已不能很好地适应系统的要求。在这种情况下，推出了增强的文件系统FAT32。</p>
+<p><strong>NTFS</strong></p>
+<p>NTFS文件系统是一个基于安全性的文件系统，是Windows NT所采用的独特的文件系统结构，它是建立在保护文件和目录数据基础上，同时照顾节省存储资源、减少磁盘占用量的一种先进的文件系统。使用非常广泛的Windows NT 4.0采用的就是NTFS 4.0文件系统，相信它所带来的强大的系统安全性一定给广大用户留下了深刻的印象。Win 2000采用了更新版本的NTFS文件系统NTFS 5.0，它的推出使得用户不但可以像Win 9X那样方便快捷地操作和管理计算机，同时也可享受到NTFS所带来的系统安全性。</p>
+<p><strong>exFAT</strong></p>
+<p>全称Extended File Allocation Table File System，扩展FAT，即扩展文件分配表，是Microsoft在Windows Embeded 5.0以上（包括Windows CE 5.0、6.0、Windows Mobile5、6、6.1）中引入的一种适合于闪存的文件系统，为了解决FAT32等不支持4G及其更大的文件而推出。</p>
+<p><strong>RAW</strong></p>
+<p>RAW文件系统是一种磁盘未经处理或者未经格式化产生的文件系统，一般来说有这几种可能造成正常文件系统变成RAW文件系统：没有格式化、格式化中途取消操作、硬盘出现坏道、硬盘出现不可预知的错误、毒所致。</p>
+<p>解决RAW文件系统的最快的方法是立即格式化，并且使用杀毒软件全盘杀毒。当然，如果文件很重要的话可以用迷你兔数据恢复软件先救出数据，然后再格式化和杀毒。</p>
+<p><strong>Ext</strong></p>
+<p>Ext2：Ext是GNU&#x2F;Linux 系统中标准的文件系统，其特点为存取文件的性能极好，对于中小型的文件更显示出优势，这主要得利于其簇快取层的优良设计。</p>
+<p>Ext3：是一种日志式文件系统，是对ext2系统的扩展，它兼容ext2。日志式文件系统的优越性在于：由于文件系统都有快取层参与运作，如不使用时必须将文件系统卸下，以便将快取层的资料写回磁盘中。因此每当系统要关机时，必须将其所有的文件系统全部shutdown后才能进行关机。</p>
+<p>Ext4：Linux kernel 自 2.6.28 开始正式支持新的文件系统 Ext4。Ext4 是 Ext3 的改进版，修改了 Ext3 中部分重要的数据结构，而不仅仅像 Ext3 对 Ext2 那样，只是增加了一个日志功能而已。Ext4 可以提供更佳的性能和可靠性，还有更为丰富的功能。</p>
+<p><strong>HFS</strong></p>
+<p>分层文件系统（Hierarchical File System，HFS）是一种由苹果电脑开发，并使用在Mac OS上的文件系统。最初被设计用于软盘和硬盘，同时也可以在在只读媒体如CD-ROM上见到。</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230617182229744.png" alt="image-20230617182229744" style="zoom:50%;">
+
+
+
+<h1 id="Linux的存储结构"><a href="#Linux的存储结构" class="headerlink" title="Linux的存储结构"></a>Linux的存储结构</h1><p>Linux的根目录是’&#x2F;‘</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230617182843459.png" alt="image-20230617182843459" style="zoom:50%;">
+
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230617182917364.png" alt="image-20230617182917364" style="zoom:50%;">
+
+
+
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230618113456182.png" alt="image-20230618113456182" style="zoom: 67%;">
+
+
+
+
+
+<h1 id="Linux的文件系统"><a href="#Linux的文件系统" class="headerlink" title="Linux的文件系统"></a>Linux的文件系统</h1><p>上面也介绍过文件的作用。文件系统就是如何对磁盘空间管理，如何组织和如何访问的方式。</p>
+<p>Linux支持的文件有很多，常见的有:</p>
+<ol>
+<li><strong>Ext家族</strong></li>
+</ol>
+<ul>
+<li>Ext2:Linux第一个商业级文件系统，最早在1992年。因为不包含日志读写功能，数据丢失的可能性很大，所以能不用就不用</li>
+<li>Ext3：一款日志文件系统。会把整个硬盘写入动作的细节预先记录下来，然后再实际操作，这样的话，宕机后可以回溯追踪到被中断的部分。但是硬盘容量很大的时候，修复时间会很长，有风险。</li>
+<li>Ext4:在Ext3的基础上，解决大容量问题。支持的存储容量高达1EB（1，043，741，824GB），无限多的子目录。批量分配block(块)，提高读写效率。</li>
+</ul>
+<ol start="2">
+<li><strong>XFS</strong></li>
+</ol>
+<p>这个是一个高性能的日志文件系统，比Ext4厉害。官方说宕机之后可以快速修复，而且强大的日志功只花费很低的系统资源，最高支持18EB那么牛逼。刘遄老师测试过，性能并没有比Ext4压倒性优势，读者可以去实测一下。</p>
+<h1 id="Linux挂载硬件设备"><a href="#Linux挂载硬件设备" class="headerlink" title="Linux挂载硬件设备"></a>Linux挂载硬件设备</h1><p>流程:</p>
+<ol>
+<li>首先要有硬件设备，确认硬件设备，可以是设备名字，或者UUID</li>
+<li>使用挂载命令，让Linux系统识别</li>
+</ol>
+<h2 id="确认硬件设备"><a href="#确认硬件设备" class="headerlink" title="确认硬件设备"></a>确认硬件设备</h2><p>直接看<strong>设备名字</strong></p>
+<p>如果是网络设备，名字变来变去，不如直接使用“身份证”——<strong>UUID</strong>。</p>
+<p>查看UUID: <code>blkid [设备名]</code>    (<code>blkid</code>是block id缩写)</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230618115942779.png" alt="image-20230618115942779" style="zoom:33%;">
+
+
+
+<p>或者使用<code>lsblk -f</code></p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230618120113714.png" alt="image-20230618120113714" style="zoom:33%;">
+
+
+
+<h2 id="使用挂载命令"><a href="#使用挂载命令" class="headerlink" title="使用挂载命令"></a>使用挂载命令</h2><p>确认好硬件设备之后，我们开始挂载。</p>
+<h4 id="临时挂载-重启失效-mount-硬件设备-挂载目录"><a href="#临时挂载-重启失效-mount-硬件设备-挂载目录" class="headerlink" title="临时挂载(重启失效):mount  硬件设备 挂载目录"></a><strong>临时挂载</strong>(重启失效):<code>mount  硬件设备 挂载目录</code></h4><p>(其实还有好多参数，读者可以百度一下)</p>
+<ol>
+<li>设别名字挂载</li>
+</ol>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230618121058776.png" alt="image-20230618121058776" style="zoom:33%;">
+
+<ol start="2">
+<li>UUID挂载</li>
+</ol>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230618121231484.png" alt="image-20230618121231484" style="zoom:33%;">
+
+<h4 id="永久挂载-mount-a"><a href="#永久挂载-mount-a" class="headerlink" title="永久挂载:mount -a"></a><strong>永久挂载</strong>:<code>mount -a</code></h4><ol>
+<li>先要在<code>/etc/fstab</code>写入信息</li>
+</ol>
+<p>格式:<code>设备文件 挂载目录 格式类型 权限选项 是否备份 是否自检</code></p>
+<ul>
+<li>设备文件:一般是设备路径+设备名称，也可以是UUID</li>
+<li>挂载目录:指定挂载位置，要提前创建好</li>
+<li>格式类型:文件系统，可以是Ext4,Ext3,XFS等等</li>
+<li>权限设置: defaults就好</li>
+<li>是否备份:1表示开机用dump备份，0不备份</li>
+<li>是否自检:1开机自检，0不自检</li>
+</ul>
+<p>这些记不住没关系，写的时候上面有提示</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230618122157130.png" alt="image-20230618122157130" style="zoom:33%;">
+
+<p>写完不会立即生效，需要<code>mount -a</code></p>
+<ol start="2">
+<li>使用<code>mount -a 设备 挂载路径</code></li>
+</ol>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230618122614105.png" alt="image-20230618122614105" style="zoom: 33%;">
+
+
+
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230618122634340.png" alt="image-20230618122634340" style="zoom:50%;">
+
+
+
+<p>读者朋友注意: Ext4会报错，直接写ext4就好(Centos7.9测试)</p>
+<h4 id="FAT32挂载"><a href="#FAT32挂载" class="headerlink" title="FAT32挂载"></a>FAT32挂载</h4><p>这里是属于其他文件系统挂载,以FAT3举例。FAT32是windows系统使用，在Linux系统，你可以不需要驱动，工具，直接挂载即可。</p>
+<p><code>mount -t ntfs /dev/sda1 /home/disk #/dev/sda1需替换为自己的硬盘名</code></p>
+<blockquote>
+<p> 参数-t是指定文件系统，mount有很多参数，我不想长篇大论，所以在具体场景中使用一下。</p>
+<p>ext2 ：linux目前常用的文件系统</p>
+<p>msdos ： MS-DOS的fat，就是fat16</p>
+<p>vfat ： windows98常用的fat32</p>
+<p>nfs ： 网络文件系统</p>
+<p>iso9660 ：CD-ROM光盘标准文件系统</p>
+<p>ntfs ： windows NT&#x2F;2000&#x2F;XP的文件系统</p>
+<p>auto ：自动检测文件系统</p>
+</blockquote>
+<h4 id="卸载设备"><a href="#卸载设备" class="headerlink" title="卸载设备"></a>卸载设备</h4><p>命令:<code>umount  设备名字/UUID/挂载目录</code>(三选一即可)</p>
+<h1 id="Linux磁盘操作命令"><a href="#Linux磁盘操作命令" class="headerlink" title="Linux磁盘操作命令"></a>Linux磁盘操作命令</h1><h2 id="查看磁盘空间使用df"><a href="#查看磁盘空间使用df" class="headerlink" title="查看磁盘空间使用df"></a>查看磁盘空间使用df</h2><p>命令:<code>df</code></p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230618123842006.png" alt="image-20230618123842006" style="zoom: 33%;">
+
+
+
+<p>看的让人懵逼，加一个参数<code>-h</code></p>
+<p>再来<code>df -h</code></p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230618123943903.png" alt="image-20230618123943903" style="zoom:33%;">
+
+<p>舒服多了</p>
+<p><code>fdisk  -l 磁盘</code>(后面有提)是看硬盘信息，和<code>df</code>区别，大家看图理解。</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230618152715721.png" alt="image-20230618152715721" style="zoom:33%;">
+
+<h2 id="查看占用大小du"><a href="#查看占用大小du" class="headerlink" title="查看占用大小du"></a>查看占用大小du</h2><p>这个命令用来查看分区或者目录所占磁盘容量的大小，建议带上参数</p>
+<p>与df命令不同的是Linux du命令是对文件和目录磁盘使用的空间的查看</p>
+<p><code>du -sh 目录名称/分区</code></p>
+<p>eg: <code>du -sh /* </code>查看Linux系统根目录下所有一级目录分别占用的空间大小</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230618124418022.png" alt="image-20230618124418022" style="zoom:33%;">
+
+
+
+<h2 id="新硬盘格式化"><a href="#新硬盘格式化" class="headerlink" title="新硬盘格式化"></a>新硬盘格式化</h2><p>注意:格式化的时候，<strong>不能在挂载状态！</strong></p>
+<p>新来的硬盘空盘一般不能用，硬盘要先分区，还要格式化。</p>
+<h3 id="fdisk分区"><a href="#fdisk分区" class="headerlink" title="fdisk分区"></a><strong>fdisk分区</strong></h3><p><code>fdisk</code>用来新建，修改，转换分区以及删除磁盘分区表信息，全称”format disk”</p>
+<p>语法格式:<code>fdisk 磁盘名称</code></p>
+<p>参数如下</p>
+<ul>
+<li>-m : 查看全部可用参数</li>
+<li>-n  : 添加新的分区</li>
+<li>-d  : 删除分区</li>
+<li>-l   : 列出所有可用分区</li>
+<li>-t  : 改变分区的类型</li>
+<li>-p : 查看分区表信息</li>
+<li>-w : 保存并退出</li>
+<li>-q  : 直接退出，不保存</li>
+</ul>
+<p>分区信息如果没有同步给Linux内核，可用使用<code>partprobe</code>,再用<code>file 文件名</code>查看信息 。</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230618154018113.png" alt="image-20230618154018113" style="zoom:33%;">
+
+<h3 id="硬盘格式化"><a href="#硬盘格式化" class="headerlink" title="硬盘格式化"></a>硬盘格式化</h3><p>格式化命令:<code>mkfs.xxx 设备名称</code> </p>
+<p>例如: <code>mkfs.xfs /dev/sdb</code></p>
+<h3 id="添加硬盘实践"><a href="#添加硬盘实践" class="headerlink" title="添加硬盘实践"></a>添加硬盘实践</h3><p><code>fdisk /dev/sdb</code></p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230618152900867.png" alt="image-20230618152900867" style="zoom:33%;">
+
+
+
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230618153007835.png" alt="image-20230618153007835" style="zoom:33%;">
+
+
+
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230618154018113.png" style="zoom:33%;">
+
+<p>如果在挂载，<code>umount /dev/sdb</code>,然后如下</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230618154336852.png" alt="image-20230618154336852" style="zoom:33%;">
+
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230618154549020.png" alt="image-20230618154549020" style="zoom:33%;">
+
+
+
+
+
+<p>如果有错误或者更好的建议，请朋友们不吝赐教！</p>
+<p>最后感谢：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wsmzyzdw/article/details/82908736">什么是文件系统</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Tb411t7Fc/?spm_id_from=333.880.my_history.page.click&vd_source=197cd9faf9dfebb5668cf8cff4737d21">硬盘分区和文件系统</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.linuxprobe.com/basic-learning-06.html">Linuxprobe-[第6章 存储结构与管理硬盘]</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41084756/article/details/129183007">挂载ntfs</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://daokun.eu.org">阿福</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://daokun.eu.org/2023/06/17/Linux%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C-%E7%A3%81%E7%9B%98%E6%93%8D%E4%BD%9C/">https://daokun.eu.org/2023/06/17/Linux基本操作-磁盘操作/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://daokun.eu.org" target="_blank">道坤</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Linux/">Linux</a></div><div class="post_share"><div class="social-share" data-image="/img/linux.jpg" data-sites="wechat,weibo,qq,facebook,twitter"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/loading.gif" data-original="/img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/loading.gif" data-original="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/06/18/%E4%BA%91%E7%9B%91%E6%8E%A7%E5%88%9D%E4%BD%93%E9%AA%8C/"><img class="prev-cover" src="/img/loading.gif" data-original="/img/aliyun.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">云监控初体验</div></div></a></div><div class="next-post pull-right"><a href="/2023/06/17/k8s%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/"><img class="next-cover" src="/img/loading.gif" data-original="/img/k8s.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">k8s入门学习</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/05/16/Centos7-9%E8%AE%BE%E7%BD%AE%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC-%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E8%84%9A%E6%9C%AC/" title="Centos7.9设置定时执行脚本+开机自启脚本"><img class="cover" src="/img/loading.gif" data-original="/img/linux.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-16</div><div class="title">Centos7.9设置定时执行脚本+开机自启脚本</div></div></a></div><div><a href="/2022/11/28/Centos7%E4%B8%8B%E5%AE%89%E8%A3%85Python3/" title="Centos7下安装Python3"><img class="cover" src="/img/loading.gif" data-original="/img/default_top_img.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-28</div><div class="title">Centos7下安装Python3</div></div></a></div><div><a href="/2022/11/28/Centos7%E7%B3%BB%E7%BB%9F%E7%9A%84yum%E6%BA%90%E6%9B%B4%E6%8D%A2/" title="Centos7系统的yum源更换"><img class="cover" src="/img/loading.gif" data-original="/img/python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-28</div><div class="title">Centos7系统的yum源更换</div></div></a></div><div><a href="/2022/07/10/GCC-GDB-makefile%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/" title="GCC+GDB+makefile工具的使用"><img class="cover" src="/img/loading.gif" data-original="/img/linux_vim.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-10</div><div class="title">GCC+GDB+makefile工具的使用</div></div></a></div><div><a href="/2022/12/22/Linux%E7%94%A8%E6%88%B7%E5%92%8C%E7%BB%84%E7%AE%A1%E7%90%86/" title="Linux用户和组管理"><img class="cover" src="/img/loading.gif" data-original="/img/default_top_img.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-22</div><div class="title">Linux用户和组管理</div></div></a></div><div><a href="/2023/06/27/Python%E8%BF%90%E7%BB%B4%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4/" title="Python获取系统基础信息"><img class="cover" src="/img/loading.gif" data-original="/img/default_top_img.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-27</div><div class="title">Python获取系统基础信息</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/loading.gif" data-original="/img/avatar.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">阿福</div><div class="author-info__description">遇见就是缘分</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">83</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/daokunn/daokunn.github.io"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">小心肝啊！别熬夜了！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A1%AC%E7%9B%98%E5%88%86%E5%8C%BA%E5%92%8C%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.</span> <span class="toc-text">硬盘分区和文件系统</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E5%8C%BA%E6%A0%87%E5%87%86"><span class="toc-number">1.1.</span> <span class="toc-text">分区标准</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MBR%E5%88%86%E5%8C%BA"><span class="toc-number">1.1.1.</span> <span class="toc-text">MBR分区</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GPT"><span class="toc-number">1.1.2.</span> <span class="toc-text">GPT</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.2.</span> <span class="toc-text">文件系统</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux%E7%9A%84%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84"><span class="toc-number">2.</span> <span class="toc-text">Linux的存储结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux%E7%9A%84%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="toc-number">3.</span> <span class="toc-text">Linux的文件系统</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux%E6%8C%82%E8%BD%BD%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87"><span class="toc-number">4.</span> <span class="toc-text">Linux挂载硬件设备</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A1%AE%E8%AE%A4%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87"><span class="toc-number">4.1.</span> <span class="toc-text">确认硬件设备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%8C%82%E8%BD%BD%E5%91%BD%E4%BB%A4"><span class="toc-number">4.2.</span> <span class="toc-text">使用挂载命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%B4%E6%97%B6%E6%8C%82%E8%BD%BD-%E9%87%8D%E5%90%AF%E5%A4%B1%E6%95%88-mount-%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87-%E6%8C%82%E8%BD%BD%E7%9B%AE%E5%BD%95"><span class="toc-number">4.2.0.1.</span> <span class="toc-text">临时挂载(重启失效):mount  硬件设备 挂载目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B0%B8%E4%B9%85%E6%8C%82%E8%BD%BD-mount-a"><span class="toc-number">4.2.0.2.</span> <span class="toc-text">永久挂载:mount -a</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FAT32%E6%8C%82%E8%BD%BD"><span class="toc-number">4.2.0.3.</span> <span class="toc-text">FAT32挂载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%B8%E8%BD%BD%E8%AE%BE%E5%A4%87"><span class="toc-number">4.2.0.4.</span> <span class="toc-text">卸载设备</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux%E7%A3%81%E7%9B%98%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="toc-number">5.</span> <span class="toc-text">Linux磁盘操作命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E4%BD%BF%E7%94%A8df"><span class="toc-number">5.1.</span> <span class="toc-text">查看磁盘空间使用df</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%8D%A0%E7%94%A8%E5%A4%A7%E5%B0%8Fdu"><span class="toc-number">5.2.</span> <span class="toc-text">查看占用大小du</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B0%E7%A1%AC%E7%9B%98%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="toc-number">5.3.</span> <span class="toc-text">新硬盘格式化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#fdisk%E5%88%86%E5%8C%BA"><span class="toc-number">5.3.1.</span> <span class="toc-text">fdisk分区</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A1%AC%E7%9B%98%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="toc-number">5.3.2.</span> <span class="toc-text">硬盘格式化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E7%A1%AC%E7%9B%98%E5%AE%9E%E8%B7%B5"><span class="toc-number">5.3.3.</span> <span class="toc-text">添加硬盘实践</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/05/16/Centos7-9%E8%AE%BE%E7%BD%AE%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC-%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E8%84%9A%E6%9C%AC/" title="Centos7.9设置定时执行脚本+开机自启脚本"><img src="/img/loading.gif" data-original="/img/linux.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Centos7.9设置定时执行脚本+开机自启脚本"/></a><div class="content"><a class="title" href="/2024/05/16/Centos7-9%E8%AE%BE%E7%BD%AE%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC-%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E8%84%9A%E6%9C%AC/" title="Centos7.9设置定时执行脚本+开机自启脚本">Centos7.9设置定时执行脚本+开机自启脚本</a><time datetime="2024-05-16T02:38:48.000Z" title="发表于 2024-05-16 10:38:48">2024-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/15/K8s%E7%BB%84%E4%BB%B6%E5%92%8C%E6%9E%B6%E6%9E%84%E7%9A%84%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A/" title="K8s组件和架构的名词解释"><img src="/img/loading.gif" data-original="/img/k8s.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="K8s组件和架构的名词解释"/></a><div class="content"><a class="title" href="/2024/05/15/K8s%E7%BB%84%E4%BB%B6%E5%92%8C%E6%9E%B6%E6%9E%84%E7%9A%84%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A/" title="K8s组件和架构的名词解释">K8s组件和架构的名词解释</a><time datetime="2024-05-15T14:08:45.000Z" title="发表于 2024-05-15 22:08:45">2024-05-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/15/K8s%E7%BB%84%E4%BB%B6%E5%92%8C%E6%9E%B6%E6%9E%84%E7%9A%84%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A1/" title="K8s组件和架构的名词解释"><img src="/img/loading.gif" data-original="/img/k8s.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="K8s组件和架构的名词解释"/></a><div class="content"><a class="title" href="/2024/05/15/K8s%E7%BB%84%E4%BB%B6%E5%92%8C%E6%9E%B6%E6%9E%84%E7%9A%84%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A1/" title="K8s组件和架构的名词解释">K8s组件和架构的名词解释</a><time datetime="2024-05-15T14:08:45.000Z" title="发表于 2024-05-15 22:08:45">2024-05-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/15/%E9%80%9A%E4%BA%BA%E6%80%A7%E5%8C%96%E7%9A%84YAML%E5%85%A5%E9%97%A8/" title="通人性化的YAML入门"><img src="/img/loading.gif" data-original="/img/yaml.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="通人性化的YAML入门"/></a><div class="content"><a class="title" href="/2024/05/15/%E9%80%9A%E4%BA%BA%E6%80%A7%E5%8C%96%E7%9A%84YAML%E5%85%A5%E9%97%A8/" title="通人性化的YAML入门">通人性化的YAML入门</a><time datetime="2024-05-15T06:32:11.000Z" title="发表于 2024-05-15 14:32:11">2024-05-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/14/Linux%E5%AD%98%E5%82%A8%E4%B8%93%E9%A2%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9AGlusterFS/" title="Linux存储专题（一）：GlusterFS"><img src="/img/loading.gif" data-original="/img/Gluster.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux存储专题（一）：GlusterFS"/></a><div class="content"><a class="title" href="/2024/05/14/Linux%E5%AD%98%E5%82%A8%E4%B8%93%E9%A2%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9AGlusterFS/" title="Linux存储专题（一）：GlusterFS">Linux存储专题（一）：GlusterFS</a><time datetime="2024-05-14T07:16:43.000Z" title="发表于 2024-05-14 15:16:43">2024-05-14</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/linux.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2024 By 阿福</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a><br>
+<imgsrc="/img/loading.gif" data-original="https://haiyong.site/img/icp.png">
+<a href="https://beian.miit.gov.cn/#/Integrated/index"  style="color:white" target="_blank">赣ICP备2023004169号-1</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'TC3zGNHX95voCrjm3zIGGDtM-gzGzoHsz',
+      appKey: 'KLVEwzS0mvYkxYOwbpUJjG5k',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><canvas class="fireworks" mobile="true"></canvas><script src="/%5Bobject%20Object%5D"></script><script defer="defer" id="ribbon" src="/%5Bobject%20Object%5D" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="/%5Bobject%20Object%5D"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script>(function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/5b735920.js","daovoice")
+</script><script>var isChatBtn = true
+daovoice('init', {
+  app_id: '5b735920',},{
+  launcher: { 
+     disableLauncherIcon: isChatBtn // 悬浮 ICON 是否显示
+  },
+});
+daovoice('update');
+
+if (isChatBtn) {
+  var chatBtnFn = () => {
+    var chatBtn = document.getElementById("chat_btn")
+    chatBtn.addEventListener("click", function(){
+      daovoice('show')
+    });
+  }
+  chatBtnFn()
+} else {
+  if (true) {
+    function chatBtnHide () {
+      daovoice('update', {},{
+        launcher: { 
+        disableLauncherIcon: true // 悬浮 ICON 是否显示
+        },
+      });
+    }
+    function chatBtnShow () {
+      daovoice('update', {},{
+        launcher: { 
+        disableLauncherIcon: false // 悬浮 ICON 是否显示
+        },
+      });
+    }
+  }
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/meting@1.2/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"left","width":200,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script>
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script></body></html>
