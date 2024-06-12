@@ -1,0 +1,810 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>MongoDB学习 | 道坤</title><meta name="keywords" content="MongoDB"><meta name="author" content="阿福"><meta name="copyright" content="阿福"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="阿里云特性      MongoDB适合场景传统的关系型数据库(MySQL),在数据的“三高”需求以及web2.0网站的需求，力不从心。 三高需求:  高并发 高访问 高可扩展性&amp;&amp;高可用性  具体的应用场景:  社交场景:存储用户信息，以及用户发表的朋友圈，通过地理位置索引实现附近的人  物流场景:使用MongoDB存储订单信息，订单信息在运输工程中会不断更新  游戏场景，业务快">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MongoDB学习">
+<meta property="og:url" content="https://daokun.eu.org/2023/06/22/MongoDB%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="道坤">
+<meta property="og:description" content="阿里云特性      MongoDB适合场景传统的关系型数据库(MySQL),在数据的“三高”需求以及web2.0网站的需求，力不从心。 三高需求:  高并发 高访问 高可扩展性&amp;&amp;高可用性  具体的应用场景:  社交场景:存储用户信息，以及用户发表的朋友圈，通过地理位置索引实现附近的人  物流场景:使用MongoDB存储订单信息，订单信息在运输工程中会不断更新  游戏场景，业务快">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://daokun.eu.org/img/mongodb.jpeg">
+<meta property="article:published_time" content="2023-06-22T06:18:19.000Z">
+<meta property="article:modified_time" content="2023-07-12T01:56:38.490Z">
+<meta property="article:author" content="阿福">
+<meta property="article:tag" content="MongoDB">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://daokun.eu.org/img/mongodb.jpeg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://daokun.eu.org/2023/06/22/MongoDB%E5%AD%A6%E4%B9%A0/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="baidu-site-verification" content="code-mCgJ2GybwQ"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bfd0e8d34358f7b5477c5fccfd340d45";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'MongoDB学习',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-07-12 09:56:38'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/loading.gif" data-original="/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">85</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">28</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E5%88%86%E7%B1%BB/"><i class="fa-fw fa fa-archive"></i><span> 工具教程</span></a></li><li><a class="site-page child" href="/%E6%A0%87%E7%AD%BE/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E7%9B%B8%E5%86%8C/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/%E9%9F%B3%E4%B9%90/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/%E5%BD%B1%E8%A7%86/"><i class="fa-fw fas fa-video"></i><span> 影视</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/%E7%95%99%E8%A8%80%E6%9D%BF/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link"><i class="fa-fw fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/%E5%85%B3%E4%BA%8E%E7%AC%94%E8%80%85/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/mongodb.jpeg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">道坤</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E5%88%86%E7%B1%BB/"><i class="fa-fw fa fa-archive"></i><span> 工具教程</span></a></li><li><a class="site-page child" href="/%E6%A0%87%E7%AD%BE/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E7%9B%B8%E5%86%8C/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/%E9%9F%B3%E4%B9%90/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/%E5%BD%B1%E8%A7%86/"><i class="fa-fw fas fa-video"></i><span> 影视</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/%E7%95%99%E8%A8%80%E6%9D%BF/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link"><i class="fa-fw fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/%E5%85%B3%E4%BA%8E%E7%AC%94%E8%80%85/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">MongoDB学习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-06-22T06:18:19.000Z" title="发表于 2023-06-22 14:18:19">2023-06-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-07-12T01:56:38.490Z" title="更新于 2023-07-12 09:56:38">2023-07-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Linux/">Linux</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>14分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="MongoDB学习"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="阿里云特性"><a href="#阿里云特性" class="headerlink" title="阿里云特性"></a>阿里云特性</h1><p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230622142013329.png" alt="image-20230622142013329"></p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230622142125143.png" alt="image-20230622142125143"></p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230622142234416.png" alt="image-20230622142234416"></p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230622142337415.png" alt="image-20230622142337415"></p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230622142416539.png" alt="image-20230622142416539"></p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230622142443072.png" alt="image-20230622142443072"></p>
+<h2 id="MongoDB适合场景"><a href="#MongoDB适合场景" class="headerlink" title="MongoDB适合场景"></a>MongoDB适合场景</h2><p>传统的关系型数据库(MySQL),在数据的“三高”需求以及web2.0网站的需求，力不从心。</p>
+<p>三高需求:</p>
+<ul>
+<li>高并发</li>
+<li>高访问</li>
+<li>高可扩展性&amp;&amp;高可用性</li>
+</ul>
+<p>具体的应用场景:</p>
+<ul>
+<li><p>社交场景:存储用户信息，以及用户发表的朋友圈，通过地理位置索引实现附近的人</p>
+</li>
+<li><p>物流场景:使用MongoDB存储订单信息，订单信息在运输工程中会不断更新</p>
+</li>
+<li><p>游戏场景，业务快速增长，数据结构动态变更</p>
+</li>
+<li><p>自动驾驶</p>
+</li>
+<li><p>物联网设备</p>
+</li>
+<li><p>视频直播，存储用户信息，点赞互动等</p>
+</li>
+</ul>
+<p>上面的应用场景，数据操作方面的共同特点:</p>
+<ol>
+<li>数据量大</li>
+<li>读写操作频繁</li>
+<li>价值较低的数据，对于事务性要求不高</li>
+</ol>
+<h1 id="MongoDB简介"><a href="#MongoDB简介" class="headerlink" title="MongoDB简介"></a>MongoDB简介</h1><p>MongoDB是一个开源，高性能，无模式的文档型数据库，当初的设计就是为了简化开发和方便扩展，是最像关系型数据库的非关系型数据库。</p>
+<p>它支持的数据结构非常松散，是一种类似于JSON格式的BSON，所以可以存储比较复杂的数据类型，又相当灵活。</p>
+<p>MongoDB中的记录是一个文档，由字段和值对(filed:value)组成的数据结构。MongoDB的文档类似json,一个文档就认为是一个对象。</p>
+<h2 id="体系结构"><a href="#体系结构" class="headerlink" title="体系结构"></a>体系结构</h2><p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230622151354641.png" alt="image-20230622151354641"></p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230622151442226.png" alt="image-20230622151442226"></p>
+<h1 id="MongoDB原理介绍"><a href="#MongoDB原理介绍" class="headerlink" title="MongoDB原理介绍"></a>MongoDB原理介绍</h1><p>MongoDB的存储引擎:<strong>WireTiger</strong></p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230623094539667.png" alt="image-20230623094539667"></p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230623094900600.png" alt="image-20230623094900600"></p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230623095022602.png" alt="image-20230623095022602"></p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230623153141791.png" alt="image-20230623153141791"></p>
+<h1 id="MongoDB开发"><a href="#MongoDB开发" class="headerlink" title="MongoDB开发"></a>MongoDB开发</h1><p>准备:公共数据集；github源码；mongoDB compass</p>
+<p>利用MongoDB构建一个UFO观测记录网站。</p>
+<ol>
+<li><p>下载公共数据集(<a target="_blank" rel="noopener" href="https://www.kaggle.com/datasets/NUFORC/ufo-sightings?select=scrubbed.csv">https://www.kaggle.com/datasets/NUFORC/ufo-sightings?select=scrubbed.csv</a>)</p>
+</li>
+<li><p>下载MongoDB compass(<a target="_blank" rel="noopener" href="https://www.mongodb.com/try/download/shell">MongoDB Compass Download (GUI) | MongoDB</a>)</p>
+</li>
+<li><p>构建MongoDB数据库和表，并导入数据。</p>
+</li>
+<li><p>下载github源码，构建虚拟环境(<a target="_blank" rel="noopener" href="https://github.com/getsendy/UFO-Spotter/tree/codespace-getsendy-ufo-spotter">https://github.com/getsendy/UFO-Spotter/tree/codespace-getsendy-ufo-spotter</a>)</p>
+</li>
+<li><p>修改代码，运行运用。</p>
+</li>
+</ol>
+<p>功能:</p>
+<p>可以选择城市，查询UFO记录</p>
+<p>提交新的UFO数据</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h2 id="Windows安装"><a href="#Windows安装" class="headerlink" title="Windows安装"></a>Windows安装</h2><p>详细查看<a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/1073999#slide-7">windows下的安装</a></p>
+<h2 id="centos7-9安装"><a href="#centos7-9安装" class="headerlink" title="centos7.9安装"></a>centos7.9安装</h2><p>其他 Linux 版本可点击链接查看:<a target="_blank" rel="noopener" href="https://www.mongodb.com/docs/manual/administration/install-on-linux/?spm=a2c6h.12873639.article-detail.7.a06a1292Os18iP">Install MongoDB Community Edition on Linux — MongoDB Manual</a></p>
+<h3 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h3><p>安装前我们需要安装各个 Linux 平台依赖包。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install libcurl openssl</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="官网下载"><a href="#官网下载" class="headerlink" title="官网下载"></a>官网下载</h3><p>官网链接:<a target="_blank" rel="noopener" href="https://www.mongodb.com/try/download/community">Download MongoDB Community Server | MongoDB</a></p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230622180216964.png" alt="image-20230622180216964"></p>
+<p>我复制的地址是:<code>https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-rhel70-6.0.6.tgz</code></p>
+<p>使用<code>wget</code>：<code>wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-rhel70-6.0.6.tgz</code></p>
+<h3 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h3><p>解压命令:<code>tar -zxvf 版本.tgz           </code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf mongodb-linux-x86_64-rhel70-6.0.6.tgz</span><br></pre></td></tr></table></figure>
+
+<p>移动到指定目录:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mv</span> mongodb-linux-x86_64-rhel70-6.0.6  /usr/local/mongodb4     </span><br></pre></td></tr></table></figure>
+
+
+
+<p>MongoDB 的可执行文件位于 bin 目录下，所以可以将其添加到 <strong>PATH</strong> 路径中:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=&lt;mongodb安装路径&gt;/bin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure>
+
+<p>例如我的安装路径 <strong>&#x2F;usr&#x2F;local&#x2F;mongodb4</strong></p>
+<h3 id="MongoDB安装"><a href="#MongoDB安装" class="headerlink" title="MongoDB安装"></a>MongoDB安装</h3><ol>
+<li>下载安装包</li>
+</ol>
+<p>可以选择在官网下载好安装包</p>
+<p>或者<code>wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-rhel80-6.0.2.tgz</code></p>
+<p>查看下载好的安装包<code>ls</code></p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230622163753073.png" alt="image-20230622163753073"></p>
+<ol start="2">
+<li>解压并将目录重命名为<code>mongodb</code></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar -zxf mongodb-linux-x86_64-rhel80-6.0.2.tgz </span><br><span class="line"><span class="built_in">ls</span></span><br><span class="line"><span class="built_in">mv</span> mongodb-linux-x86_64-rhel80-6.0.2 mongodb</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="3">
+<li>进入安装包目录</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> mongodb</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230622163956967.png" alt="image-20230622163956967"></p>
+<p>其中，<code>bin</code> 目录存放数据库提供的命令</p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230622164021179.png" alt="image-20230622164021179"></p>
+<h3 id="MongoDB-Shell-安装"><a href="#MongoDB-Shell-安装" class="headerlink" title="MongoDB Shell 安装"></a>MongoDB Shell 安装</h3><ol>
+<li>下载安装包</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://downloads.mongodb.com/compass/mongosh-1.6.0-linux-x64.tgz</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="2">
+<li>解压</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxf mongosh-1.6.0-linux-x64.tgz  </span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>重命名解压后的目录</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mv</span> mongosh-1.6.0-linux-x64.tgz mongosh</span><br></pre></td></tr></table></figure>
+
+
+
+<p>在 <code>mongosh/bin</code> 目录下提供了 <code>mongosh</code> 命令用于连接到 MongoDB 数据库服务</p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230622164916797.png" alt="image-20230622164916797"></p>
+<ol start="4">
+<li>将 bin 目录添加到 Path 中</li>
+</ol>
+<p>有两个bin目录:</p>
+<ul>
+<li>目前 <code>mongod</code> 命令所在目录路径是 <code>~/mongodb/bin</code> </li>
+<li><code>mongosh</code> 命令所在目录路径是 <code>~/mongosh/bin</code></li>
+</ul>
+<p>需要将这两个路径添加到 Path 环境变量中。</p>
+<p>使用 vim 编辑文件（<strong>临时生效</strong>）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=&lt;mongodb安装目录&gt;/bin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure>
+
+<p>本次安装是<code>/root/mongodb</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=/root/mongodb/bin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>注:修改 &#x2F;etc&#x2F;profile 文件是所有用户，永久生效</p>
+<p>在 <code>Path</code> 最后追加这两个目录，然后保存退出：</p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230622170611053.png" alt="image-20230622170611053"></p>
+<p>然后执行<code>source</code> 命令，重新加载环境变量，使刚才的配置生效</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h1><p>MongoDB 服务在<strong>启动时需要指定数据存储的目录</strong>。如果没有指定的话，默认会去找 <code>/data/db/</code> 目录。</p>
+<p>如果<strong>数据目录不存在或不可写，那么服务器端将无法启动</strong>。因此在启动 MongoDB 服务之前，一定要确保数据目录存在且对该目录有写权限。</p>
+<p>先建立两个目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /data/mongodb/data</span><br><span class="line"><span class="built_in">mkdir</span> -p /data/mongodb/log</span><br></pre></td></tr></table></figure>
+
+
+
+<p>使用 <code>mongod</code> 命令启动数据库服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongod  --dbpath=/data/mongodb/data</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>–fork：在基于 Unix 的系统中，使用 fork 创建服务器进程，将 MongoDB 服务作为守护进程运行。如果指定了 –fork，则必须同时指定 –logpath。</li>
+<li>–dbpath：指定存放 MongoDB 数据的目录，启动服务时必须指定。</li>
+<li>–logpath：默认日志是打印在命令行中的，使用该选项指定日志输出的文件。如果对此目录有写权限且文件不存在，则会自动创建该文件。如果日志文件已经存在，默认会覆盖掉该文件，并删除所有旧的日志。如果希望保留旧的日志，除了使用 –logpath 之外，还应该使用 –logappend 选项。</li>
+</ul>
+<p>内容</p>
+<p><a target="_blank" rel="noopener" href="https://developer.aliyun.com/trainingcamp/83fa92f8ecf2498d9e31296738b7d706?spm=5176.8068049.0.0.d2c26d19vqxUSJ">阿里云MongoDB特色办公</a></p>
+<p><a target="_blank" rel="noopener" href="https://learn.mongodb.com/learning-paths">MongoDB官方培训</a></p>
+<h1 id="阿里云云数据库MongoDB实践"><a href="#阿里云云数据库MongoDB实践" class="headerlink" title="阿里云云数据库MongoDB实践"></a>阿里云云数据库MongoDB实践</h1><p>先在阿里云创建云数据库<strong>MongoDB</strong></p>
+<h2 id="登录云数据库MongoDB实例"><a href="#登录云数据库MongoDB实例" class="headerlink" title="登录云数据库MongoDB实例"></a>登录云数据库<strong>MongoDB</strong>实例</h2><ol>
+<li>先进入MongoDB控制台</li>
+<li>点击左侧的，副本实例列表</li>
+</ol>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230623175026024.png" alt="image-20230623175026024"></p>
+<ol start="3">
+<li>切换资源所在地(选择你购买的所在地)</li>
+</ol>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230623175205574.png" alt="image-20230623175205574"></p>
+<ol start="4">
+<li>在<strong>副本集实例列表</strong>进入实例</li>
+</ol>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230623175348069.png" alt="image-20230623175348069"></p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230623175412717.png" alt="image-20230623175412717"></p>
+<ol start="5">
+<li><strong>重置密码</strong></li>
+</ol>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230623175545838.png" alt="image-20230623175545838"></p>
+<ol start="6">
+<li><strong>设置白名单</strong></li>
+</ol>
+<p>更换成<code>0.0.0.0/0</code></p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230623175931034.png" alt="image-20230623175931034"></p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230623175950090.png" alt="image-20230623175950090"></p>
+<ol start="7">
+<li>登录数据库</li>
+</ol>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230623180321521.png" alt="image-20230623180321521"></p>
+<p>8. </p>
+<p>在登录实例对话框中，输入<strong>数据库账号</strong>和<strong>数据库密码</strong>，单击<strong>登录</strong>。如忘记密码，可以在账号管理页面进行重置密码。（上面有密码重置）</p>
+<p><strong>参数说明：</strong></p>
+<ol>
+<li>数据库账号：输入云产品资源中创建的MongoDB数据库账号(我的是root)。</li>
+<li>数据库密码：输入云产品资源中创建的MongoDB数据库密码(你自己设置的)。</li>
+</ol>
+<h2 id="创建数据库和用户"><a href="#创建数据库和用户" class="headerlink" title="创建数据库和用户"></a>创建数据库和用户</h2><ol>
+<li>进入数据库管理</li>
+</ol>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230623180718633.png" alt="image-20230623180718633"></p>
+<p>然后</p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230623180816563.png" alt="image-20230623180816563"></p>
+<ol start="2">
+<li>创建数据库</li>
+</ol>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230623180927220.png" alt="image-20230623180927220"></p>
+<ol start="3">
+<li>左侧导航，单击账号管理</li>
+</ol>
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_02c54db2249e43c6a65d4e71e7f94e75.png"></p>
+<ol start="4">
+<li>创建用户</li>
+</ol>
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_a9fc1fb8d0a34bcca96e6042ac0304c1.png"></p>
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_ca69212ba47d4b3fbf1be8458138df79.png"></p>
+<ul>
+<li>目标库：选择刚刚创建的数据库(阿里云的是mymonogdb，我的是daokunn)。</li>
+<li>用户名：自定义用户名，本示例为mytest。</li>
+<li>密码：自定义密码。</li>
+<li>确认密码：再次输入密码。</li>
+<li>普通操作角色：勾选read和readWrite</li>
+</ul>
+<ol start="5">
+<li>查看用户</li>
+</ol>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230623181840980.png" alt="image-20230623181840980" style="zoom:33%;">
+
+
+
+<h2 id="创建集合"><a href="#创建集合" class="headerlink" title="创建集合"></a>创建集合</h2><p>集合就是MongoDB文档组，类似于RDBMS（关系数据库管理系统：Relational Database Management System）中的表格。集合存在于数据库中，集合没有固定的结构，这意味着您在对集合可以插入不同格式和类型的数据，但通常情况下我们插入集合的数据都会有一定的关联性。</p>
+<p>这里是一些基础语法的学习。</p>
+<p>在上面的步奏，我们创建了数据库账号、数据库名称和数据库密码。用这个作为测试。</p>
+<ol>
+<li>进入我们创建的数据库</li>
+</ol>
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/e2239915e60545eb8f6e16cf5a75f00c.png"></p>
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/d34489724a084fa6ac418f656826bfaa.png"></p>
+<p>之后进入以下的界面</p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230623182431932.png" alt="image-20230623182431932"></p>
+<ol start="2">
+<li>创建一个集合，名称为testcollection，单击执行</li>
+</ol>
+<p>语法</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.createCollection(&quot;testcollection&quot;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230623185514872.png" alt="image-20230623185514872"></p>
+<h2 id="文档操作的使用"><a href="#文档操作的使用" class="headerlink" title="文档操作的使用"></a>文档操作的使用</h2><p>文档是一组键值（key-value）对（即BSON）。MongoDB的文档不需要设置相同的字段，并且相同的字段不需要相同的数据类型，这与关系型数据库有很大的区别，也是MongoDB非常突出的特点。</p>
+<ol>
+<li>插入文档。使用insert()方法插入。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.COLLECTION_NAME.insert(document);</span><br></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<ul>
+<li>COLLECTION_NAME：集合名称。</li>
+<li>document：要写入的文档内容。</li>
+</ul>
+<p>实验中，我们写</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">db.testcollection.insert(&#123;title: &#x27;阿里云&#x27;, </span><br><span class="line">    description: &#x27;阿里云官网&#x27;,</span><br><span class="line">    by: &#x27;阿里云&#x27;,</span><br><span class="line">    url: &#x27;https://www.aliyun.com/&#x27;,</span><br><span class="line">    tags: [&#x27;mongodb&#x27;, &#x27;database&#x27;, &#x27;NoSQL&#x27;],</span><br><span class="line">    likes: 100</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_17be65bbaa0f47698719c74b4cf22557.png"></p>
+<p>点击确认</p>
+<p>执行的结果如下，表示表示已经成功插入一条文档。</p>
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_6c99edc135334ca6a8d8e8e27501acef.png" alt="img"></p>
+<ol start="2">
+<li>查询文档。使用find()方法。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.collection.find(query,projection);</span><br></pre></td></tr></table></figure>
+
+
+
+<p>参数说明：</p>
+<ul>
+<li>query：可选，使用查询操作符指定查询条件。</li>
+<li>projection：可选，使用投影操作符指定返回的键。查询时如果您需要返回文档中所有键值，只需省略该参数即可（默认省略）。</li>
+</ul>
+<p>在SQLConsole中，输入如下SQL，单击执行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.testcollection.find();</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_81d74dfa8be64fd981258906a48da8e1.png" alt="img"></p>
+<p>在下方执行结果中，您可以看到查询的返回结果。</p>
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_75fcb2e0d50a4792bead8a7be5808a75.png" alt="img"></p>
+<ol start="3">
+<li>更新文档。使用方法update()来更新集合中的文档，语法格式如下。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">db.collection.update(</span><br><span class="line">        &lt;query&gt;,</span><br><span class="line">        &lt;update&gt;,</span><br><span class="line">        &#123;</span><br><span class="line">            upsert:&lt;boolean&gt;,</span><br><span class="line">            multi:&lt;boolean&gt;,</span><br><span class="line">            writeConcern:&lt;document&gt;</span><br><span class="line">        &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+
+
+<p>参数说明：</p>
+<ul>
+<li>query：必填， update的查询条件，类似sql update查询内where后面的条件。</li>
+<li>update：必填，update的对象和一些更新的操作符（如$,$inc…）等，也可以理解为sql update查询内set后面的部分。</li>
+<li>upsert：可选，该参数表示，如果不存在update的记录，是否插入objNew。取值：true（表示插入）|false（默认，表示不插入）。</li>
+<li>multi：可选，该参数表示，是否更新按条件查询到的全部记录。取值：true（表示更新查询到的全部记录）| false（默认，表示只更新查询到的第一条记录）。</li>
+<li>writeConcern：可选，抛出异常的级别。</li>
+</ul>
+<p>a. 在SQLConsole中，输入如下SQL，单击执行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.testcollection.update(&#123;&#x27;title&#x27;:&#x27;阿里云&#x27;&#125;,&#123;$set:&#123;&#x27;title&#x27;:&#x27;aliyun阿里云官方网站&#x27;&#125;&#125;);</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_cb14045ce68b486695ed132b0a25d765.png" alt="img"></p>
+<p>b. 在执行确认对话框中，单击确认。</p>
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_402e4595f81c41238cb8115a36e9139e.png" alt="img"></p>
+<p>下方的执行结果中，您可以看到已经成功更新一条文档。</p>
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_fafe975c60db4968bad7bec9ff410cca.png" alt="img"></p>
+<p>c. 在SQLConsole中，输入如下SQL，单击执行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.testcollection.find();</span><br></pre></td></tr></table></figure>
+
+
+
+<p>在下方的执行结果中，您可以看到文档的title已经被更新了。</p>
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_ec51f34840d9409182d4bd5c8f395c99.png" alt="img"></p>
+<ol start="4">
+<li>删除文档。使用deleteMany()方法来删除文档，语法如下。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">db.collection.deleteMany(</span><br><span class="line">   &lt;filter&gt;,</span><br><span class="line">   &#123;</span><br><span class="line">      writeConcern: &lt;document&gt;,</span><br><span class="line">      collation: &lt;document&gt;</span><br><span class="line">   &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>参数说明：</p>
+<ul>
+<li>filter：表示过滤条件，用于规定一个查询规则，筛选出符合该查询条件的所有文档。删除操作将作用于经过该查询条件筛选之后的文档，类似于关系型数据库的where后面的过滤条件。如果要删除集合中的所有文档，请传入一个空文档（{ }）。</li>
+<li>writeConcern：可选参数，写入关注，其值为一个文档。</li>
+<li>collation：可选参数，指定用于操作的collation。collation允许用户指定特定语言的字符串进行比较规则。</li>
+</ul>
+<p>a. 在SQLConsole中，输入如下SQL，单击执行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.testcollection.deleteMany(&#123; title : &quot;aliyun阿里云官方网站&quot; &#125;);</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_b75c29e8dde44d9caacf5a08d43a2730.png" alt="img"></p>
+<p>b. 在执行确认对话框中，单击确认。</p>
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_2c2ed9c72e1c47febebd619f565efc7c.png" alt="img"></p>
+<p>在下方的执行结果中，您可以看到已经成功删除一条文档。</p>
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_19272781f299448d83c560a753788055.png" alt="img"></p>
+<p>c. 在SQLConsole中，输入如下SQL，单击执行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.testcollection.find();</span><br></pre></td></tr></table></figure>
+
+
+
+<p>在下方的执行结果中，您可以看到runoob集合中没有文档。</p>
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_b5ac3012b6d54603912111fc716b9bb9.png" alt="img"></p>
+<h2 id="MongoDB-条件操作符的使用"><a href="#MongoDB-条件操作符的使用" class="headerlink" title="MongoDB 条件操作符的使用"></a>MongoDB 条件操作符的使用</h2><p>条件操作符用于比较两个表达式并从mongoDB集合中获取数据。</p>
+<p>MongoDB中条件操作符有：</p>
+<ul>
+<li>大于：$gt</li>
+<li>小于：$lt</li>
+<li>大于等于：$gte</li>
+<li>小于等于：$lte</li>
+</ul>
+<ol>
+<li>在SQLConsole中，输入如下三条插入文档SQL，单击执行。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">db.testcollection.insert(&#123;</span><br><span class="line">    title: &#x27;阿里云官网&#x27;, </span><br><span class="line">    description: &#x27;阿里云官方网址。&#x27;,</span><br><span class="line">    by: &#x27;阿里云&#x27;,</span><br><span class="line">    url: &#x27;https://www.aliyun.com/&#x27;,</span><br><span class="line">    tags: [&#x27;aliyun1&#x27;],</span><br><span class="line">    likes: 200</span><br><span class="line">&#125;);</span><br><span class="line">db.testcollection.insert(&#123;title: &#x27;帮助中心&#x27;, </span><br><span class="line">    description: &#x27;阿里云帮助中心网址。&#x27;,</span><br><span class="line">    by: &#x27;阿里云&#x27;,</span><br><span class="line">    url: &#x27;https://help.aliyun.com/&#x27;,</span><br><span class="line">    tags: [&#x27;aliyun2&#x27;],</span><br><span class="line">    likes: 150</span><br><span class="line">&#125;);</span><br><span class="line">db.testcollection.insert(&#123;title: &#x27;体验实验室&#x27;, </span><br><span class="line">    description: &#x27;体验实验室网址&#x27;,</span><br><span class="line">    by: &#x27;阿里云&#x27;,</span><br><span class="line">    url: &#x27;https://developer.aliyun.com/&#x27;,</span><br><span class="line">    tags: [&#x27;aliyun3&#x27;],</span><br><span class="line">    likes: 100</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_7dd5d175612b400ca2fd9bab801997ef.png" alt="img"></p>
+<ol start="2">
+<li>在执行sql过程中，会出现三次执行确认对话框，需要三次单击确认，。</li>
+</ol>
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_3baac4da7191418aaa778e283dbd07c0.png" alt="img"></p>
+<p>下方的执行结果中，您可以看到已经成功插入三条文档。</p>
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_da8bdeaf22a846479157e053533a41f4.png" alt="img"></p>
+<ol start="3">
+<li>使用大于操作符（$gt）。</li>
+</ol>
+<p>在SQLConsole中，输入如下SQL，获取testcollection集合中 “likes” 大于100的数据，单击执行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.testcollection.find(&#123;likes : &#123;$gt : 100&#125;&#125;);</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_76c83e31ad734242aeb0992844c97c0c.png" alt="img"></p>
+<p>执行结果如下。</p>
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_9d0749e742854ff2a704e997017bec09.png" alt="img"></p>
+<ol start="4">
+<li>使用大于等于操作符（$gte）。</li>
+</ol>
+<p>在SQLConsole中，输入如下SQL，获取testcollection集合中 “likes” 大于等于100的数据，单击执行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.testcollection.find(&#123;likes : &#123;$gte : 100&#125;&#125;);</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_8a3dc286421a44aea411ab07ff26e0a3.png" alt="img"></p>
+<p>执行结果如下。</p>
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_297870c6074b49a0a88e443217d33104.png" alt="img"></p>
+<ol start="5">
+<li>使用小于操作符（$lt）。</li>
+</ol>
+<p>在SQLConsole中，输入如下SQL，获取testcollection集合中 “likes” 小于150的数据，单击执行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.testcollection.find(&#123;likes : &#123;$lt : 150&#125;&#125;);</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_4c051ee6c690401884253f5b00771fd5.png" alt="img"></p>
+<p>执行结果如下。</p>
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_19edb7445f6142fa8c105daa075a633e.png" alt="img"></p>
+<ol start="6">
+<li>使用小于等于操作符（$lte）。</li>
+</ol>
+<p>在SQLConsole中，输入如下SQL，获取testcollection集合中 “likes” 小于等于150的数据，单击执行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.testcollection.find(&#123;likes : &#123;$lte : 150&#125;&#125;);</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_4761af6e702040538061d1cfa0898224.png" alt="img"></p>
+<p>执行结果如下。</p>
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_40bfb018b9f04476ad0a62f57e2d2498.png" alt="img"></p>
+<h2 id="MongoDB条件操作符-type的使用"><a href="#MongoDB条件操作符-type的使用" class="headerlink" title="MongoDB条件操作符$type的使用"></a>MongoDB条件操作符$type的使用</h2><p>$type操作符是基于BSON类型来检索集合中匹配的数据类型，并返回结果。</p>
+<p>在SQLConsole中，输入如下SQL，获取testcollection集合中“title”为String的数据，单击执行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.testcollection.find(&#123;&quot;title&quot; : &#123;$type : &#x27;string&#x27;&#125;&#125;);</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_350251b60d5f4bc8affe17ed28cc0978.png" alt="img"></p>
+<p>执行结果如下。</p>
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_e83145a275694d539d83293ffd538c9f.png" alt="img"></p>
+<h2 id="MongoDB的limit与skip方法"><a href="#MongoDB的limit与skip方法" class="headerlink" title="MongoDB的limit与skip方法"></a>MongoDB的limit与skip方法</h2><ol>
+<li>MongoDB的limit()方法。limit()方法用于MongoDB中读取指定数量的数据。limit()方法接受一个数字参数，该参数指定从MongoDB中读取的记录条数。</li>
+</ol>
+<p>limit()方法基本语法如下所示。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.COLLECTION_NAME.find().limit(NUMBER);</span><br></pre></td></tr></table></figure>
+
+
+
+<p>在SQLConsole中，输入如下SQL，查询文档中的两条数据，单击执行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.testcollection.find().limit(2);</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_1921f380fb7f451d86963635c5810202.png" alt="img"></p>
+<p>执行结果如下。</p>
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_1e054303277d49f4825173938e7376d7.png" alt="img"></p>
+<ol start="2">
+<li>MongoDB的skip()方法。我们除了可以使用limit()方法来读取指定数量的数据外，还可以使用skip()方法来跳过指定数量的数据，skip方法同样接受一个数字参数作为跳过的记录条数。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.COLLECTION_NAME.find().limit(NUMBER).skip(NUMBER);</span><br></pre></td></tr></table></figure>
+
+
+
+<p>在SQLConsole中，输入如下SQL，查询文档中的指定的一条并跳过一条的数据，单击执行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.testcollection.find().limit(1).skip(1);</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_cc583f5baedb4bdb9df598156d533e37.png" alt="img"></p>
+<p>执行结果如下。</p>
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_0a8f228f59bb4319a89a263c9fa72291.png" alt="img"></p>
+<h2 id="清理"><a href="#清理" class="headerlink" title="清理"></a>清理</h2><ul>
+<li><p>如果您不需要继续使用，请及时清理测试数据和试用资源</p>
+</li>
+<li><p><strong>云数据库 MongoDB</strong>资源清理</p>
+</li>
+</ul>
+<p>登录<a target="_blank" rel="noopener" href="https://mongodb.console.aliyun.com/replicate/cn-hangzhou/instances">云数据库 MongoDB控制台</a>，单击<strong>云数据库 MongoDB</strong>实例右侧的<strong>更多</strong>&gt;<strong>退订</strong>，单击<strong>确定</strong>。</p>
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/knxposbsxxvbo_53d244a542544036944e77916910bd17.png" alt="img"></p>
+<ul>
+<li><strong>【重要】</strong>如若您通过试用领取的资源：<strong>云数据库 MongoDB</strong>（3个月内）试用，具有时长限制，使用完请及时清理相关资源。</li>
+</ul>
+<p>地址:<a target="_blank" rel="noopener" href="https://developer.aliyun.com/adc/scenario/exp/0e15a033eb794bbfb6f69821f84edb2b?spm=a2c6h.26504196.trainingCamp.6.4b4a2e6bKzqnXb">MongoDB实验地址</a></p>
+<h1 id="阿里云云数据库MongoDB-快速备份恢复"><a href="#阿里云云数据库MongoDB-快速备份恢复" class="headerlink" title="阿里云云数据库MongoDB 快速备份恢复"></a>阿里云云数据库MongoDB 快速备份恢复</h1><h2 id="备份"><a href="#备份" class="headerlink" title="备份"></a>备份</h2><p>备份有<strong>自动备份</strong>和<strong>手动备份</strong>两种。</p>
+<h3 id="设置自动备份"><a href="#设置自动备份" class="headerlink" title="设置自动备份"></a>设置自动备份</h3><ol>
+<li>在目标实例页面的左侧导航栏，单击<strong>备份与恢复</strong>，单击<strong>全量备份</strong>页签，点击<strong>备份设置</strong>。</li>
+</ol>
+<img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/knxposbsxxvbo_51babdb4425c46cdb33070e687e45378.png" alt="img" style="zoom:33%;">
+
+
+
+<ol start="2">
+<li>在备份设置面板，根据业务需求设置以下参数。</li>
+</ol>
+<ul>
+<li>全量备份保留天数：设置全量备份数据保留天数，取值范围为7~730天。默认为30天。</li>
+<li>备份时间：设置数据备份时间。以小时为单位选择任意时段，建议您将备份时间设置为业务低峰期的某个时段。</li>
+<li>星期：设置每周数据备份的频率，默认为7次&#x2F;周。</li>
+<li>日志备份：选择是否需要打开日志备份开关，默认打开。如果后续需要按时间点恢复功能，需要打开日志备份。</li>
+<li>日志备份保留天数：当打开日志备份开关时，您需要设置日志备份保留的天数，取值范围为7~730天，默认为7天。</li>
+</ul>
+<img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_3833157fbb75402f94d24aed6980a6d0.png" alt="img" style="zoom:33%;">
+
+
+
+<ol start="3">
+<li>单击确定，完成自动备份设置，后续就会根据设置好的参数进行自动备份。</li>
+</ol>
+<h3 id="手动备份"><a href="#手动备份" class="headerlink" title="手动备份"></a>手动备份</h3><ol>
+<li>在目标实例页面的左侧导航栏，单击备份与恢复。</li>
+</ol>
+<img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_c3c4d998f09e4af3a4069b3c2c8254b7.png" alt="img" style="zoom: 25%;">
+
+
+
+<ol start="2">
+<li>在目标实例页面右上方，单击备份实例。</li>
+</ol>
+<img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_160fa5fc6b6d469787341baff1db0f85.png" alt="img" style="zoom:25%;">
+
+
+
+<ol start="3">
+<li>在备份实例 面板，选择备份方法-快照备份 。</li>
+</ol>
+<img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_9241148e8b01418098509f354aa80e7b.png" alt="img" style="zoom:25%;">
+
+
+
+<ol start="4">
+<li>单击确定后，会开启备份，备份完成后，在备份列表部分，会列出备份完成的备份集。</li>
+</ol>
+<img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_658229fba69649b4bf01343ef76d97db.png" alt="img" style="zoom:25%;">
+
+
+
+
+
+<h2 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h2><h3 id="按备份点将备份数据恢复至新建实例"><a href="#按备份点将备份数据恢复至新建实例" class="headerlink" title="按备份点将备份数据恢复至新建实例"></a>按备份点将备份数据恢复至新建实例</h3><ol>
+<li>在备份列表部分，点击从备份点创建实例。</li>
+</ol>
+<img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_34f67492492e4e998ac8b586537890a7.png" alt="img" style="zoom: 25%;">
+
+
+
+<ol start="2">
+<li>选择要恢复的数据库。</li>
+</ol>
+<img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_cd27abaaa7414719952d5baf4e485d3b.png" alt="img" style="zoom:25%;">
+
+
+
+<ol start="3">
+<li>单击确定后，跳转到克隆实例页面，勾选对应的参数后，点击立即购买，即可将数据按备份集恢复到新的实例。</li>
+</ol>
+<img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/knxposbsxxvbo_c8797482eca6445ebe00ff99e6014e72.png" alt="img" style="zoom:25%;">
+
+
+
+
+
+<h3 id="按时间点将备份数据恢复至新建实例"><a href="#按时间点将备份数据恢复至新建实例" class="headerlink" title="按时间点将备份数据恢复至新建实例"></a>按时间点将备份数据恢复至新建实例</h3><ol>
+<li>在备份列表部分，点击按时间点创建实例。</li>
+</ol>
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_5ffb8c571aa24a9b8c46838465c26ac3.png" alt="img"></p>
+<ol start="2">
+<li>选择要恢复的时间点和数据库。</li>
+</ol>
+<img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/stgomecigc6ee_232ce35361574f4da0e09c026a2551e3.png" alt="img" style="zoom: 33%;">
+
+
+
+
+
+<ol start="3">
+<li>单击确定后，跳转到克隆实例页面，勾选对应的参数后，点击立即购买，即可将数据按备份集恢复到新的实例。</li>
+</ol>
+<img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/knxposbsxxvbo_993874b2aa8a4c96b1166698b70c30e3.png" alt="img" style="zoom: 25%;">
+
+
+
+
+
+<h2 id="清理-释放数据库"><a href="#清理-释放数据库" class="headerlink" title="清理(释放数据库)"></a>清理(释放数据库)</h2><ul>
+<li><strong>云数据库 MongoDB</strong>资源清理</li>
+</ul>
+<p>登录<a target="_blank" rel="noopener" href="https://mongodb.console.aliyun.com/replicate/cn-hangzhou/instances">云数据库 MongoDB控制台</a>，单击<strong>云数据库 MongoDB</strong>实例右侧的<strong>更多</strong>&gt;<strong>退订</strong>，单击<strong>确定</strong>。</p>
+<p><img src="/img/loading.gif" data-original="https://ucc.alicdn.com/pic/developer-ecology/knxposbsxxvbo_53d244a542544036944e77916910bd17.png" alt="img"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://daokun.eu.org">阿福</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://daokun.eu.org/2023/06/22/MongoDB%E5%AD%A6%E4%B9%A0/">https://daokun.eu.org/2023/06/22/MongoDB学习/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://daokun.eu.org" target="_blank">道坤</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/MongoDB/">MongoDB</a></div><div class="post_share"><div class="social-share" data-image="/img/mongodb.jpeg" data-sites="wechat,weibo,qq,facebook,twitter"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/loading.gif" data-original="/img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/loading.gif" data-original="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/06/25/%E7%9B%91%E6%8E%A7%E6%8A%A5%E8%AD%A6Zabbix/"><img class="prev-cover" src="/img/loading.gif" data-original="/img/zabbix.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">监控报警Zabbix</div></div></a></div><div class="next-post pull-right"><a href="/2023/06/19/%E4%BD%BF%E7%94%A8%E4%BA%91%E7%9B%91%E6%8E%A7%E5%92%8C%E5%BC%B9%E6%80%A7%E4%BC%B8%E7%BC%A9%E5%AE%9E%E7%8E%B0%E5%BC%B9%E6%80%A7%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/"><img class="next-cover" src="/img/loading.gif" data-original="/img/aliyun.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">使用云监控和弹性伸缩实现弹性架构设计</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/loading.gif" data-original="/img/avatar.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">阿福</div><div class="author-info__description">遇见就是缘分</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">85</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">28</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/daokunn/daokunn.github.io"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">小心肝啊！别熬夜了！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%98%BF%E9%87%8C%E4%BA%91%E7%89%B9%E6%80%A7"><span class="toc-number">1.</span> <span class="toc-text">阿里云特性</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MongoDB%E9%80%82%E5%90%88%E5%9C%BA%E6%99%AF"><span class="toc-number">1.1.</span> <span class="toc-text">MongoDB适合场景</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MongoDB%E7%AE%80%E4%BB%8B"><span class="toc-number">2.</span> <span class="toc-text">MongoDB简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="toc-number">2.1.</span> <span class="toc-text">体系结构</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MongoDB%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D"><span class="toc-number">3.</span> <span class="toc-text">MongoDB原理介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MongoDB%E5%BC%80%E5%8F%91"><span class="toc-number">4.</span> <span class="toc-text">MongoDB开发</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">5.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows%E5%AE%89%E8%A3%85"><span class="toc-number">5.1.</span> <span class="toc-text">Windows安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#centos7-9%E5%AE%89%E8%A3%85"><span class="toc-number">5.2.</span> <span class="toc-text">centos7.9安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%86%E5%A4%87"><span class="toc-number">5.2.1.</span> <span class="toc-text">准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%98%E7%BD%91%E4%B8%8B%E8%BD%BD"><span class="toc-number">5.2.2.</span> <span class="toc-text">官网下载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%8E%8B"><span class="toc-number">5.2.3.</span> <span class="toc-text">解压</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MongoDB%E5%AE%89%E8%A3%85"><span class="toc-number">5.2.4.</span> <span class="toc-text">MongoDB安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MongoDB-Shell-%E5%AE%89%E8%A3%85"><span class="toc-number">5.2.5.</span> <span class="toc-text">MongoDB Shell 安装</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5"><span class="toc-number">6.</span> <span class="toc-text">连接</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%98%BF%E9%87%8C%E4%BA%91%E4%BA%91%E6%95%B0%E6%8D%AE%E5%BA%93MongoDB%E5%AE%9E%E8%B7%B5"><span class="toc-number">7.</span> <span class="toc-text">阿里云云数据库MongoDB实践</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%99%BB%E5%BD%95%E4%BA%91%E6%95%B0%E6%8D%AE%E5%BA%93MongoDB%E5%AE%9E%E4%BE%8B"><span class="toc-number">7.1.</span> <span class="toc-text">登录云数据库MongoDB实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8C%E7%94%A8%E6%88%B7"><span class="toc-number">7.2.</span> <span class="toc-text">创建数据库和用户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E9%9B%86%E5%90%88"><span class="toc-number">7.3.</span> <span class="toc-text">创建集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E6%A1%A3%E6%93%8D%E4%BD%9C%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">7.4.</span> <span class="toc-text">文档操作的使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MongoDB-%E6%9D%A1%E4%BB%B6%E6%93%8D%E4%BD%9C%E7%AC%A6%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">7.5.</span> <span class="toc-text">MongoDB 条件操作符的使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MongoDB%E6%9D%A1%E4%BB%B6%E6%93%8D%E4%BD%9C%E7%AC%A6-type%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">7.6.</span> <span class="toc-text">MongoDB条件操作符$type的使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MongoDB%E7%9A%84limit%E4%B8%8Eskip%E6%96%B9%E6%B3%95"><span class="toc-number">7.7.</span> <span class="toc-text">MongoDB的limit与skip方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%85%E7%90%86"><span class="toc-number">7.8.</span> <span class="toc-text">清理</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%98%BF%E9%87%8C%E4%BA%91%E4%BA%91%E6%95%B0%E6%8D%AE%E5%BA%93MongoDB-%E5%BF%AB%E9%80%9F%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D"><span class="toc-number">8.</span> <span class="toc-text">阿里云云数据库MongoDB 快速备份恢复</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%87%E4%BB%BD"><span class="toc-number">8.1.</span> <span class="toc-text">备份</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BD"><span class="toc-number">8.1.1.</span> <span class="toc-text">设置自动备份</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%8B%E5%8A%A8%E5%A4%87%E4%BB%BD"><span class="toc-number">8.1.2.</span> <span class="toc-text">手动备份</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%81%A2%E5%A4%8D"><span class="toc-number">8.2.</span> <span class="toc-text">恢复</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%89%E5%A4%87%E4%BB%BD%E7%82%B9%E5%B0%86%E5%A4%87%E4%BB%BD%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D%E8%87%B3%E6%96%B0%E5%BB%BA%E5%AE%9E%E4%BE%8B"><span class="toc-number">8.2.1.</span> <span class="toc-text">按备份点将备份数据恢复至新建实例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%89%E6%97%B6%E9%97%B4%E7%82%B9%E5%B0%86%E5%A4%87%E4%BB%BD%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D%E8%87%B3%E6%96%B0%E5%BB%BA%E5%AE%9E%E4%BE%8B"><span class="toc-number">8.2.2.</span> <span class="toc-text">按时间点将备份数据恢复至新建实例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%85%E7%90%86-%E9%87%8A%E6%94%BE%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">8.3.</span> <span class="toc-text">清理(释放数据库)</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/06/12/Linux%E5%AE%89%E5%85%A8%EF%BC%9ASSH%E5%8E%9F%E7%90%86/" title="Linux安全：SSH原理"><img src="/img/loading.gif" data-original="/img/default_top_img.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux安全：SSH原理"/></a><div class="content"><a class="title" href="/2024/06/12/Linux%E5%AE%89%E5%85%A8%EF%BC%9ASSH%E5%8E%9F%E7%90%86/" title="Linux安全：SSH原理">Linux安全：SSH原理</a><time datetime="2024-06-12T02:33:00.000Z" title="发表于 2024-06-12 10:33:00">2024-06-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/12/Linux%E9%85%8D%E7%BD%AEgithub%E5%8A%A0%E9%80%9F/" title="Linux配置github加速"><img src="/img/loading.gif" data-original="/img/default_top_img.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux配置github加速"/></a><div class="content"><a class="title" href="/2024/06/12/Linux%E9%85%8D%E7%BD%AEgithub%E5%8A%A0%E9%80%9F/" title="Linux配置github加速">Linux配置github加速</a><time datetime="2024-06-12T02:28:04.000Z" title="发表于 2024-06-12 10:28:04">2024-06-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/20/Python%E4%BD%BF%E7%94%A8paramiko%E5%AE%9E%E7%8E%B0ssh%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95/" title="Python使用paramiko实现ssh远程登录"><img src="/img/loading.gif" data-original="/img/default_top_img.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python使用paramiko实现ssh远程登录"/></a><div class="content"><a class="title" href="/2024/05/20/Python%E4%BD%BF%E7%94%A8paramiko%E5%AE%9E%E7%8E%B0ssh%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95/" title="Python使用paramiko实现ssh远程登录">Python使用paramiko实现ssh远程登录</a><time datetime="2024-05-20T07:12:19.000Z" title="发表于 2024-05-20 15:12:19">2024-05-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/20/Shell%E5%AE%9E%E7%8E%B0%E6%8C%87%E5%AE%9A%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%9A%84%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E6%B8%85%E7%A9%BA/" title="Shell实现指定目录下的指定文件清空"><img src="/img/loading.gif" data-original="/img/default_top_img.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Shell实现指定目录下的指定文件清空"/></a><div class="content"><a class="title" href="/2024/05/20/Shell%E5%AE%9E%E7%8E%B0%E6%8C%87%E5%AE%9A%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%9A%84%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E6%B8%85%E7%A9%BA/" title="Shell实现指定目录下的指定文件清空">Shell实现指定目录下的指定文件清空</a><time datetime="2024-05-20T06:38:22.000Z" title="发表于 2024-05-20 14:38:22">2024-05-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/16/Centos7-9%E8%AE%BE%E7%BD%AE%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC-%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E8%84%9A%E6%9C%AC/" title="Centos7.9设置定时执行脚本+开机自启脚本"><img src="/img/loading.gif" data-original="/img/linux.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Centos7.9设置定时执行脚本+开机自启脚本"/></a><div class="content"><a class="title" href="/2024/05/16/Centos7-9%E8%AE%BE%E7%BD%AE%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC-%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E8%84%9A%E6%9C%AC/" title="Centos7.9设置定时执行脚本+开机自启脚本">Centos7.9设置定时执行脚本+开机自启脚本</a><time datetime="2024-05-16T02:38:48.000Z" title="发表于 2024-05-16 10:38:48">2024-05-16</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/mongodb.jpeg')"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2024 By 阿福</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a><br>
+<imgsrc="/img/loading.gif" data-original="https://haiyong.site/img/icp.png">
+<a href="https://beian.miit.gov.cn/#/Integrated/index"  style="color:white" target="_blank">赣ICP备2023004169号-1</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'TC3zGNHX95voCrjm3zIGGDtM-gzGzoHsz',
+      appKey: 'KLVEwzS0mvYkxYOwbpUJjG5k',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><canvas class="fireworks" mobile="true"></canvas><script src="/%5Bobject%20Object%5D"></script><script defer="defer" id="ribbon" src="/%5Bobject%20Object%5D" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="/%5Bobject%20Object%5D"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script>(function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/5b735920.js","daovoice")
+</script><script>var isChatBtn = true
+daovoice('init', {
+  app_id: '5b735920',},{
+  launcher: { 
+     disableLauncherIcon: isChatBtn // 悬浮 ICON 是否显示
+  },
+});
+daovoice('update');
+
+if (isChatBtn) {
+  var chatBtnFn = () => {
+    var chatBtn = document.getElementById("chat_btn")
+    chatBtn.addEventListener("click", function(){
+      daovoice('show')
+    });
+  }
+  chatBtnFn()
+} else {
+  if (true) {
+    function chatBtnHide () {
+      daovoice('update', {},{
+        launcher: { 
+        disableLauncherIcon: true // 悬浮 ICON 是否显示
+        },
+      });
+    }
+    function chatBtnShow () {
+      daovoice('update', {},{
+        launcher: { 
+        disableLauncherIcon: false // 悬浮 ICON 是否显示
+        },
+      });
+    }
+  }
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/meting@1.2/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div>
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"left","width":200,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>

@@ -1,0 +1,1153 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>基于Centos7.9的网络管理技能 | 道坤</title><meta name="keywords" content="Linux"><meta name="author" content="阿福"><meta name="copyright" content="阿福"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="对于提供互联网应用的服务器，网络防火墙是其抵御攻击破坏的安全屏障，如 何在攻击时及时做出有效的措施是网络应用时时刻刻面对的问题。高昂的硬件防火墙是一般开发者难以接受的。Linux系统的出现，为开发者低成本解决安全问题提供 了一种可行的方案。要熟练应用Linux防火墙，首先需要了解TCP&#x2F;IP网络的基本原理，理解Linux防火墙的工作原理，并熟练掌握Linux系统下提供的各种工具。 如果管">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于Centos7.9的网络管理技能">
+<meta property="og:url" content="https://daokun.eu.org/2023/07/06/%E5%9F%BA%E4%BA%8ECentos7-9%E7%9A%84%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD/index.html">
+<meta property="og:site_name" content="道坤">
+<meta property="og:description" content="对于提供互联网应用的服务器，网络防火墙是其抵御攻击破坏的安全屏障，如 何在攻击时及时做出有效的措施是网络应用时时刻刻面对的问题。高昂的硬件防火墙是一般开发者难以接受的。Linux系统的出现，为开发者低成本解决安全问题提供 了一种可行的方案。要熟练应用Linux防火墙，首先需要了解TCP&#x2F;IP网络的基本原理，理解Linux防火墙的工作原理，并熟练掌握Linux系统下提供的各种工具。 如果管">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://daokun.eu.org/img/centos.jpg">
+<meta property="article:published_time" content="2023-07-06T01:38:14.000Z">
+<meta property="article:modified_time" content="2024-05-29T13:09:34.867Z">
+<meta property="article:author" content="阿福">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://daokun.eu.org/img/centos.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://daokun.eu.org/2023/07/06/%E5%9F%BA%E4%BA%8ECentos7-9%E7%9A%84%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="baidu-site-verification" content="code-mCgJ2GybwQ"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bfd0e8d34358f7b5477c5fccfd340d45";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '基于Centos7.9的网络管理技能',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-05-29 21:09:34'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/loading.gif" data-original="/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">85</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">28</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E5%88%86%E7%B1%BB/"><i class="fa-fw fa fa-archive"></i><span> 工具教程</span></a></li><li><a class="site-page child" href="/%E6%A0%87%E7%AD%BE/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E7%9B%B8%E5%86%8C/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/%E9%9F%B3%E4%B9%90/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/%E5%BD%B1%E8%A7%86/"><i class="fa-fw fas fa-video"></i><span> 影视</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/%E7%95%99%E8%A8%80%E6%9D%BF/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link"><i class="fa-fw fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/%E5%85%B3%E4%BA%8E%E7%AC%94%E8%80%85/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/centos.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">道坤</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E5%88%86%E7%B1%BB/"><i class="fa-fw fa fa-archive"></i><span> 工具教程</span></a></li><li><a class="site-page child" href="/%E6%A0%87%E7%AD%BE/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E7%9B%B8%E5%86%8C/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/%E9%9F%B3%E4%B9%90/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/%E5%BD%B1%E8%A7%86/"><i class="fa-fw fas fa-video"></i><span> 影视</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/%E7%95%99%E8%A8%80%E6%9D%BF/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link"><i class="fa-fw fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/%E5%85%B3%E4%BA%8E%E7%AC%94%E8%80%85/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">基于Centos7.9的网络管理技能</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-07-06T01:38:14.000Z" title="发表于 2023-07-06 09:38:14">2023-07-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-05-29T13:09:34.867Z" title="更新于 2024-05-29 21:09:34">2024-05-29</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Linux/">Linux</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">10.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>37分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="基于Centos7.9的网络管理技能"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>对于提供互联网应用的服务器，网络防火墙是其抵御攻击破坏的安全屏障，如 何在攻击时及时做出有效的措施是网络应用时时刻刻面对的问题。高昂的硬件防火墙是一般开发者难以接受的。Linux系统的出现，为开发者低成本解决安全问题提供 了一种可行的方案。要熟练应用<strong>Linux防火墙</strong>，首先需要了解TCP&#x2F;IP网络的基本原理，理解Linux防火墙的工作原理，并熟练掌握Linux系统下提供的各种工具。</p>
+<p>如果管理的计算机有几十台，初始化服务器配置IP地址、网关和子网掩码等参 数是个烦琐耗时的过程。如果网络结构要更改，需要重新初始化网络参数，使用<strong>动态主机配置协议</strong>（Dynamic Host Configuration Protocol，DHCP）则可以避免 此问题，客户端可以从DHCP服务端检索相关信息并完成相关网络配置，在系统重启 后依然可以工作。尤其在移动办公领域，只要区域内有一台DHCP服务器，用户就可 以在办公室之间自由活动而不必担心网络参数配置的问题。DHCP提供一种动态指定 IP地址和相关网络配置参数的机制。 </p>
+<p>如今互联网应用越来越丰富，如仅仅用IP地址标识网络上的计算机是不可能完成任务的，也没有必要，于是产生了<strong>域名系统</strong>。域名系统通过一系列有意义的名称 标识网络上的计算机，用户按域名请求某个网络服务时，域名系统负责将其解析为 对应的IP地址，这便是DNS。 </p>
+<p>本文的主要内容:</p>
+<ul>
+<li><strong>网络管理协议</strong> </li>
+<li><strong>常用的网络管理命令</strong> </li>
+<li><strong>Linux的网络配置方法</strong></li>
+<li><strong>高级网络配置</strong></li>
+<li><strong>DHCP配置</strong></li>
+<li><strong>DNS配置</strong></li>
+</ul>
+<h1 id="网络管理协议"><a href="#网络管理协议" class="headerlink" title="网络管理协议"></a>网络管理协议</h1><p>这里主要简单介绍<strong>TCP&#x2F;IP协议</strong>，<strong>UDP协议</strong>和<strong>ICMP协议</strong>。更多内容请自行查找。</p>
+<h2 id="TCP-x2F-IP协议"><a href="#TCP-x2F-IP协议" class="headerlink" title="TCP&#x2F;IP协议"></a>TCP&#x2F;IP协议</h2><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706094840340.png" alt="image-20230706094840340" style="zoom:50%;">
+
+<p><strong>网络接口层</strong>:主要为上层提供服务，完成链路控制等功能。</p>
+<p><strong>网际互联层</strong>:主要解决主机到主机之间的通信问题。其主要协议有：网际协议（IP）、地址解析协议 （ARP）、反向地址解析协议（RARP）和互联网控制报文协议（ICMP）。</p>
+<p><strong>传输层</strong>：为应用层提供端到端的通信功能，同时提供流量控制，确保数据完整和正确。TCP协议位于该层，提供一种可靠的、面向连接的数据传输服务；与此对应的是UDP协议，提供不可靠的、无连接的数据报传输服务。</p>
+<p><strong>应用层</strong>:对应于OSI参考模型中的上面3层， 为用户提供所需要的各种应用服务，如FTP、Telnet、DNS、SMTP等。</p>
+<h2 id="网络字节序"><a href="#网络字节序" class="headerlink" title="网络字节序"></a>网络字节序</h2><p>由于不同体系结构的计算机存储数据的格式和顺序都不一样，要使用互联网互联必须定义一个数据的表示标准。如一台计算机发送1个32位的整数至另外一台计算 机，由于机器上存储整数的字节顺序可能不一样，按照源计算机的格式发送到目的 主机可能会改变数字的值。</p>
+<p>TCP&#x2F;IP协议定义了一种所有机器在互联网分组的二进制 字段中必须使用的网络标准字节顺序（network standard byte order），与此对应的是主机字节顺序，主机字节顺序是和各个主机密切相关的。传输时需要遵循 以下转换规则：“<strong>主机字节顺序→网络字节顺序→主机字节顺序</strong>”，即发送方将主 机字节顺序的整数转换为网络字节顺序然后发送出去，接收方收到数据后将网络字 节顺序的整数转换为自己的主机字节顺序然后处理。</p>
+<h2 id="UDP协议"><a href="#UDP协议" class="headerlink" title="UDP协议"></a>UDP协议</h2><p>UDP（User Datagram Protocol）是一种无连接的传输层协议，主要用于不要 求分组顺序到达的传输中，分组传输顺序的检查与排序由应用层完成，提供面向事 务的简单不可靠信息传送服务。由于其不提供数据包分组、组装和不能对数据包进 行排序的缺点，当报文发送之后，是无法得知其是否安全完整到达的，同时流量不 易控制，如网络质量较差，则UDP协议数据包丢失会比较严重。但UDP协议具有资源 消耗小，处理速度快的优点。 </p>
+<h2 id="ICMP协议"><a href="#ICMP协议" class="headerlink" title="ICMP协议"></a><strong>ICMP协议</strong></h2><p>ICMP是Internet Control Message Protocol（Internet控制报文协议）的 缩写，属于TCP&#x2F;IP协议族的一个子协议，用于在IP主机、路由器之间传递控制消 息。控制消息是指网络通不通、主机是否可达、路由是否可用等网络本身的消息。 如经常使用的用于检查网络通不通的ping命令，ping的过程实际上就是ICMP协议工 作的过程。<strong>ICMP唯一的功能是报告问题而不是纠正错误</strong>，纠正错误的任务由发送方 完成。</p>
+<h1 id="网络管理命令"><a href="#网络管理命令" class="headerlink" title="网络管理命令"></a>网络管理命令</h1><h2 id="检查网络通常或速度ping"><a href="#检查网络通常或速度ping" class="headerlink" title="检查网络通常或速度ping"></a>检查网络通常或速度ping</h2><p>ping常常用来测试与目标主机或域名是否可达，通过发送ICMP数据包到网络主 机，并显示响应情况，并根据输出信息来确定目标主机或域名是否可达。ping的结 果通常情况下是可信的，由于有些服务器可以设置禁止ping，从而使ping的结果并不是完全可信的。</p>
+<p>Linux下ping不会自动终止，需要按“Ctrl+c”终止或用参数“-c”指定要求 完成的回应次数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping [-dfnqrRv][-c&lt;完成次数&gt;][-i&lt;间隔秒数&gt;][-I&lt;网络界面&gt;][-l&lt;前置载入&gt;][-p&lt;范本样式&gt;][-s&lt;数据包大小&gt;][-t&lt;存活数值&gt;][主机名称或IP地址]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>-d 使用Socket的SO_DEBUG功能。</li>
+<li>-c &lt;完成次数&gt; 设置完成要求回应的次数。</li>
+<li>-f 极限检测。</li>
+<li>-i&lt;间隔秒数&gt; 指定收发信息的间隔时间。</li>
+<li>-I&lt;网络界面&gt; 使用指定的网络接口送出数据包。</li>
+<li>-l&lt;前置载入&gt; 设置在送出要求信息之前，先行发出的数据包。</li>
+<li>-n 只输出数值。</li>
+<li>-p&lt;范本样式&gt; 设置填满数据包的范本样式。</li>
+<li>-q 不显示指令执行过程，开头和结尾的相关信息除外。</li>
+<li>-r 忽略普通的Routing Table，直接将数据包送到远端主机上。</li>
+<li>-R 记录路由过程。</li>
+<li>-s&lt;数据包大小&gt; 设置数据包的大小。</li>
+<li>-t&lt;存活数值&gt; 设置存活数值TTL的大小。</li>
+<li>-v 详细显示指令的执行过程。</li>
+<li>-w <deadline> 在 deadline 秒后退出。</deadline></li>
+<li>-W <timeout> 在等待 timeout 秒后开始执行。</timeout></li>
+</ul>
+<p>示例如下:</p>
+<ol>
+<li>直接ping(下图是ping的通的情况)</li>
+</ol>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706095853040.png" alt="image-20230706095853040" style="zoom: 33%;">
+
+
+
+<ol start="2">
+<li>ping指定次数</li>
+</ol>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706100025953.png" alt="image-20230706100025953" style="zoom: 50%;">
+
+<ol start="3">
+<li>指定时间间隔和次数限制</li>
+</ol>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706100138368.png" alt="image-20230706100138368" style="zoom:50%;">
+
+
+
+<ol start="4">
+<li>ping公网域名</li>
+</ol>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706100226925.png" alt="image-20230706100226925" style="zoom:50%;">
+
+
+
+
+
+<ol start="5">
+<li>发送周期，设置发送包的大小，设置TTL值</li>
+</ol>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706100800580.png" alt="image-20230706100800580" style="zoom:50%;">
+
+
+
+<p>更多内容:<a target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-comm-ping.html">Linux ping 命令 | 菜鸟教程 (runoob.com)</a></p>
+<h2 id="配置网络或显示当前网络接口状态ifconfig"><a href="#配置网络或显示当前网络接口状态ifconfig" class="headerlink" title="配置网络或显示当前网络接口状态ifconfig"></a>配置网络或显示当前网络接口状态ifconfig</h2><p>ifconfig命令可以用于查看、配置、启用或禁用指定网络接口，如配置网卡的 IP地址、掩码、广播地址、网关等，Windows类似的命令为ipconfig。</p>
+<p>语法如下： </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifconfig [网络设备][down up -allmulti -arp -promisc][add&lt;地址&gt;][del&lt;地址&gt;][&lt;hw&lt;网络设备类型&gt;&lt;硬件地址&gt;][io_addr&lt;I/O地址&gt;][irq&lt;IRQ地址&gt;][media&lt;网络媒介类型&gt;][mem_start&lt;内存地址&gt;][metric&lt;数目&gt;][mtu&lt;字节&gt;][netmask&lt;子网掩码&gt;][tunnel&lt;地址&gt;][-broadcast&lt;地址&gt;][-pointopoint&lt;地址&gt;][IP地址]</span><br></pre></td></tr></table></figure>
+
+<p><strong>参数说明</strong>：</p>
+<ul>
+<li>add&lt;地址&gt; 设置网络设备IPv6的IP地址。</li>
+<li>del&lt;地址&gt; 删除网络设备IPv6的IP地址。</li>
+<li>down 关闭指定的网络设备。</li>
+<li>&lt;hw&lt;网络设备类型&gt;&lt;硬件地址&gt; 设置网络设备的类型与硬件地址。</li>
+<li>io_addr&lt;I&#x2F;O地址&gt; 设置网络设备的I&#x2F;O地址。</li>
+<li>irq&lt;IRQ地址&gt; 设置网络设备的IRQ。</li>
+<li>media&lt;网络媒介类型&gt; 设置网络设备的媒介类型。</li>
+<li>mem_start&lt;内存地址&gt; 设置网络设备在主内存所占用的起始地址。</li>
+<li>metric&lt;数目&gt; 指定在计算数据包的转送次数时，所要加上的数目。</li>
+<li>mtu&lt;字节&gt; 设置网络设备的MTU。</li>
+<li>netmask&lt;子网掩码&gt; 设置网络设备的子网掩码。</li>
+<li>tunnel&lt;地址&gt; 建立IPv4与IPv6之间的隧道通信地址。</li>
+<li>up 启动指定的网络设备。</li>
+<li>-broadcast&lt;地址&gt; 将要送往指定地址的数据包当成广播数据包来处理。</li>
+<li>-pointopoint&lt;地址&gt; 与指定地址的网络设备建立直接连线，此模式具有保密功能。</li>
+<li>-promisc 关闭或启动指定网络设备的promiscuous模式。</li>
+<li>[IP地址] 指定网络设备的IP地址。</li>
+<li>[网络设备] 指定网络设备的名称。</li>
+</ul>
+<p>示例</p>
+<ol>
+<li>显示网络设备信息</li>
+</ol>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706101545068.png" alt="image-20230706101545068" style="zoom:50%;">
+
+<blockquote>
+<p> 第1行：UP表示此网络接口为启用状态，RUNNING表示网卡设备已连接，MULTICAST表示支持组播，MTU为数据包最大传输单元。</p>
+<p>第2行：依次为网卡IP、子网掩码、广播地址。</p>
+<p>第3行：ipv6地址。</p>
+<p>第4行：Ethernet（以太网）表示连接类型，ether为网卡的MAC地 址。</p>
+<p>第5行：接收数据包个数、大小统计信息</p>
+<p> 第6行：异常接收包的数量，如丢包量，错误等。</p>
+<p>第7行：发送数据包个数、大小统计信息。</p>
+<p>第8行：导演发送包的数量，如丢包量，错误等。</p>
+<p>如果第6行和第8行中的丢包量、错误包量较高，通常表示物理链路存在问题。 例如网线干扰过大、距离太长等。</p>
+</blockquote>
+<p>显示指定网卡信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifconfig ens33</span><br></pre></td></tr></table></figure>
+
+
+
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706102228322.png" alt="image-20230706102228322" style="zoom:50%;">
+
+<ol start="2">
+<li>启动关闭指定网卡</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ifconfig ens33 down  <span class="comment"># 关闭</span></span><br><span class="line">ifconfig ens33 up   <span class="comment"># 开启</span></span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="3">
+<li><p>为网卡配置和删除IPv6地址</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ifconfig ens33 add 33ffe:3240:800:1005::2/ 64 //为网卡设置IPv6地址</span><br><span class="line"></span><br><span class="line">ifconfig ens33 del 33ffe:3240:800:1005::2/ 64 //为网卡删除IPv6地址</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>修改MAC地址</p>
+</li>
+</ol>
+<p>用ifconfig修改MAC地址</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ifconfig ens33 down //关闭网卡</span><br><span class="line">ifconfig ens33 hw ether 00:AA:BB:CC:DD:EE //修改MAC地址</span><br><span class="line">ifconfig ens33 up //启动网卡</span><br><span class="line">ifconfig ens33 hw ether 00:1D:1C:1D:1E //关闭网卡并修改MAC地址 </span><br><span class="line">ifconfig ens33 up //启动网卡</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<ol start="5">
+<li><p>启用和关闭ARP协议</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ifconfig ens33 arp  //开启</span><br><span class="line">ifconfig ens33 -arp  //关闭</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置最大传输单元</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># ifconfig ens33 mtu 1500 </span><br><span class="line">//设置能通过的最大数据包大小为 1500 bytes</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>更多内容:<a target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-comm-ifconfig.html">Linux ifconfig命令 | 菜鸟教程 (runoob.com)</a></p>
+<h2 id="显示添加或修改路由表route"><a href="#显示添加或修改路由表route" class="headerlink" title="显示添加或修改路由表route"></a>显示添加或修改路由表route</h2><p><strong>显示所有的路由表</strong></p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706102928181.png" alt="image-20230706102928181" style="zoom:50%;">
+
+<p><strong>添加一条路由</strong></p>
+<p>发往192.168.60.0网段的全部要经过网关192.168.2.1</p>
+<p><code>route add -net 192.168.60.0 netmask 255.255.255.0 gw 192.168.2.1</code></p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706103408029.png" alt="image-20230706103408029" style="zoom:50%;">
+
+<p><strong>删除一条路由</strong></p>
+<p>删除的时候不需要网关</p>
+<p><code>route del -net 192.168.60.0 netmask 255.255.255.0</code></p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706103457551.png" alt="image-20230706103457551" style="zoom:50%;">
+
+
+
+<h2 id="复制文件至其他系统scp"><a href="#复制文件至其他系统scp" class="headerlink" title="复制文件至其他系统scp"></a>复制文件至其他系统scp</h2><p>如本地主机需要和远程主机进行数据迁移或文件传送，可以使用ftp，或搭建 Web服务，另外可选的方法有scp或rsync。</p>
+<p>Linux scp 命令用于 Linux 之间复制文件和目录。也可以用于windows传递数据(前提是安装openssh协议，<a target="_blank" rel="noopener" href="https://blog.csdn.net/denglavender/article/details/109631478">解决办法</a>,<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/542926236">关于scp传输文件踩过的坑(最全!linux与windows相互传输文件</a>)</p>
+<p>scp 是 secure copy 的缩写, scp 是 linux 系统下基于 ssh 登陆进行安全的远程文件拷贝命令。</p>
+<p>scp 是加密的，<a target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-comm-rcp.html">rcp</a> 是不加密的，scp 是 rcp 的加强版。</p>
+<p>注意由于各个发行版不同，scp语法不尽相同，具体使用方法可查看系统帮助。</p>
+<p>语法如下(简易语法):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp [可选参数] file_source file_target </span><br></pre></td></tr></table></figure>
+
+
+
+<p>centos系统ip：192.168.2.6</p>
+<p>ubuntu系统ip: 192.168.2.7</p>
+<p>windows系统：192.168.2.2</p>
+<h3 id="从本地复制到远程"><a href="#从本地复制到远程" class="headerlink" title="从本地复制到远程"></a>从本地复制到远程</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 简单版</span></span><br><span class="line"> scp 本地文件 对端ip:对面目录</span><br><span class="line"><span class="comment"># 指定用户名需要输入密码</span></span><br><span class="line">scp 本地文件目录 远程用户名@对端ip：远程文件目录</span><br></pre></td></tr></table></figure>
+
+<h4 id="Centos7-9到ubuntu20-0（以add-sh为例子）"><a href="#Centos7-9到ubuntu20-0（以add-sh为例子）" class="headerlink" title="Centos7.9到ubuntu20.0（以add.sh为例子）"></a>Centos7.9到ubuntu20.0（以add.sh为例子）</h4><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706110300510.png" alt="image-20230706110300510" style="zoom:50%;">
+
+<p>指定了root用户传输文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp /root/add.sh root@192.168.2.7:/home/daokun/桌面</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">传输目录-r</span><br><span class="line">scp -r /root/test root@192.168.2.7:/home/daokun/桌面</span><br></pre></td></tr></table></figure>
+
+
+</blockquote>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706110553520.png" alt="image-20230706110553520" style="zoom:50%;">
+
+
+
+<p>登录ubuntu查看</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706110943408.png" alt="image-20230706110943408" style="zoom:50%;">
+
+<h4 id="win10到ubuntu"><a href="#win10到ubuntu" class="headerlink" title="win10到ubuntu"></a>win10到ubuntu</h4><p>准备的文件</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706114032344.png" alt="image-20230706114032344" style="zoom:33%;">
+
+<p>命令如下:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp -r /D:/KwDownload/song root@192.168.2.7:/home/daokun</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706114054362.png" alt="image-20230706114054362" style="zoom:50%;">
+
+
+
+<h3 id="从远程到本地"><a href="#从远程到本地" class="headerlink" title="从远程到本地"></a>从远程到本地</h3><p>从远程复制到本地，只要将从本地复制到远程的命令的后2个参数调换顺序即可</p>
+<h4 id="Centos7-9到ubuntu20-0-在ubuntu操作"><a href="#Centos7-9到ubuntu20-0-在ubuntu操作" class="headerlink" title="Centos7.9到ubuntu20.0(在ubuntu操作)"></a>Centos7.9到ubuntu20.0(在ubuntu操作)</h4><p>复制centos系统&#x2F;root&#x2F;test目录到ubuntu系统</p>
+<p>现在centos的ip是192.168.2.5</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp -r root@192.168.2.6:/root/test /home/daokun/桌面</span><br></pre></td></tr></table></figure>
+
+
+
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706122558338.png" alt="image-20230706122558338" style="zoom:50%;">
+
+
+
+
+
+<h2 id="复制文件至其他系统rsync"><a href="#复制文件至其他系统rsync" class="headerlink" title="复制文件至其他系统rsync"></a>复制文件至其他系统rsync</h2><p> rsync是Linux系统下的常用的数据镜像备份工具，用于在不同的主机之间同步文件。</p>
+<p>从字面意思上，rsync 可以理解为 remote sync（远程同步），但它不仅可以远程同步数据（类似于 scp 命令），还可以本地同步数据（类似于 cp 命令）。不同于 cp 或 scp 的一点是，使用 rsync 命令备份数据时，不会直接覆盖以前的数据（如果数据已经存在），而是先判断已经存在的数据和新数据的差异，只有数据不同时才会把不相同的部分覆盖。</p>
+<h3 id="本地文件传送到远程主机-默认在家目录，命名为daokun1-txt"><a href="#本地文件传送到远程主机-默认在家目录，命名为daokun1-txt" class="headerlink" title="本地文件传送到远程主机(默认在家目录，命名为daokun1.txt)"></a>本地文件传送到远程主机(默认在家目录，命名为daokun1.txt)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rsync -v --port 56789 daokun.txt root@192.168.2.7:daokun1.txt</span><br></pre></td></tr></table></figure>
+
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706181503083.png" alt="image-20230706181503083" style="zoom:50%;">
+
+
+
+<h3 id="本地目录传送到远程主机（命名为dao）"><a href="#本地目录传送到远程主机（命名为dao）" class="headerlink" title="本地目录传送到远程主机（命名为dao）"></a>本地目录传送到远程主机（命名为dao）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rsync -avz --port 56789 daokun root@192.168.2.7:dao</span><br></pre></td></tr></table></figure>
+
+
+
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706181550095.png" alt="image-20230706181550095" style="zoom: 33%;">
+
+
+
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706181924970.png" alt="image-20230706181924970"></p>
+<h3 id="远程复制到本机"><a href="#远程复制到本机" class="headerlink" title="远程复制到本机"></a>远程复制到本机</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rsync -av -e <span class="string">&quot;ssh -p 22&quot;</span> root@192.168.0.100:/root/Python-3.7.5.tar /root/</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>用法更多详解:<a target="_blank" rel="noopener" href="http://c.biancheng.net/view/6121.html">Linux rsync命令用法详解 (biancheng.net)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qiuweifan/article/details/122158629"> rsync 从一台服务器远程拉取另一台服务器数据的实践</a></p>
+<h2 id="显示网络连接、路由表或接口状态netstat"><a href="#显示网络连接、路由表或接口状态netstat" class="headerlink" title="显示网络连接、路由表或接口状态netstat"></a>显示网络连接、路由表或接口状态netstat</h2><p>netstat命令用于监控系统网络配置和工作状况，可以显示内核路由表、活动的网络状态以及每个网络接口的有用的统计数字。</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-a</td>
+<td>显示所有连接中的Socket</td>
+</tr>
+<tr>
+<td>-c</td>
+<td>持续列出网络状态</td>
+</tr>
+<tr>
+<td>-h</td>
+<td>在线帮助</td>
+</tr>
+<tr>
+<td>-i</td>
+<td>显示网络界面</td>
+</tr>
+<tr>
+<td>-l</td>
+<td>显示监控中的服务器的Socket</td>
+</tr>
+<tr>
+<td>-n</td>
+<td>直接使用IP地址</td>
+</tr>
+<tr>
+<td>-p</td>
+<td>显示正在使用Socket的程序名</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>显示路由表</td>
+</tr>
+<tr>
+<td>-s</td>
+<td>显示网络工作信息统计表</td>
+</tr>
+<tr>
+<td>-t</td>
+<td>显示TCP端口情况</td>
+</tr>
+<tr>
+<td>-u</td>
+<td>显示UDP端口情况</td>
+</tr>
+<tr>
+<td>-v</td>
+<td>显示命令执行过程</td>
+</tr>
+<tr>
+<td>-V</td>
+<td>显示版本信息</td>
+</tr>
+</tbody></table>
+<p>示例</p>
+<p><strong>显示所有端口，包括UDP、TCP</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -a|<span class="built_in">head</span> -4</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706190019433.png" alt="image-20230706190019433"></p>
+<p><strong>显示所有TCP端口</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -at</span><br></pre></td></tr></table></figure>
+
+<p><strong>显示所有UDP端口</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -au</span><br></pre></td></tr></table></figure>
+
+<p><strong>所有TCP端口并显示对应的进程名称或进程号</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -plnt</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>显示核心路由信息</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -r</span><br></pre></td></tr></table></figure>
+
+<p><strong>显示网络接口列表</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -i</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="下载工具wget"><a href="#下载工具wget" class="headerlink" title="下载工具wget"></a><strong>下载工具wget</strong></h2><p>语法: <code>wget [参数] [软件地址]</code></p>
+<p>参数：</p>
+<ul>
+<li>-b 后台执行</li>
+<li>-nc 不覆盖原有文件</li>
+<li>-c 断点续传</li>
+</ul>
+<p>举例</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -c http://ftp.gnu.org/gnu/wget/wget-1.14.tar.g</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Linux网络配置"><a href="#Linux网络配置" class="headerlink" title="Linux网络配置"></a>Linux网络配置</h1><p>Linux网络配置相关的文件根据不同的发行版目录名称有所不同，但大同小异， 主要有以下目录或文件。</p>
+<p>1）<code>/etc/hostname</code>：主要功能在于修改主机名称。</p>
+<p>2）<code>/etc/sysconfig/network-scrips/ifcfg-enoN</code>：是设置网卡参数的文 件，比如IP地址、子网掩码、广播地址、网关等，N为一串数字。</p>
+<p>3）<code>/etc/resolv.conf</code>：此文件设置了DNS相关的信息，用于将域名解析到 IP。</p>
+<p>4）<code>/etc/hosts</code>：计算机的IP对应的主机名称或域名对应的IP地址，通过设置&#x2F;etc&#x2F;nsswitch.conf中的选项可以选择是DNS解析优先还是本地设置优先。 </p>
+<p>5）<code>/etc/nsswitch.conf</code>name service switch configuration，名字服务切换配置）：规定通过哪些途径，以及按照什么顺序通过这些途径来查找特定类型的信息。</p>
+<h2 id="配置Linux系统的IP地址"><a href="#配置Linux系统的IP地址" class="headerlink" title="配置Linux系统的IP地址"></a>配置Linux系统的IP地址</h2><p>首先进入目录<code>cd /etc/sysconfig/network-scripts</code></p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706191746849.png" alt="image-20230706191746849"></p>
+<p>我们使用的网卡是ens33,所以<code>vim ifcfg-ens33</code></p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706192002745.png" alt="image-20230706192002745" style="zoom: 50%;">
+
+
+
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>TYPE&#x3D;Ethernet</strong></td>
+<td>类型，以太网</td>
+</tr>
+<tr>
+<td>BOOTPROTO&#x3D;none</td>
+<td>置为none禁止DHCP，设置为static启用静态IP地址，设置为dhcp开启DHCP服务</td>
+</tr>
+<tr>
+<td>NETMASK&#x3D;255.255.255.0</td>
+<td>子网掩码</td>
+</tr>
+<tr>
+<td>PREFIX &#x3D; 24</td>
+<td>子网掩码</td>
+</tr>
+<tr>
+<td>NAME</td>
+<td>设备名，此处对应网络接口为ens33</td>
+</tr>
+<tr>
+<td>ONBOOT&#x3D;yes</td>
+<td>是否开机自启</td>
+</tr>
+</tbody></table>
+<p>自己可以添加的</p>
+<table>
+<thead>
+<tr>
+<th>BOOTPROTO&#x3D;none</th>
+<th>设置为static启用静态IP地址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>**DNS1&#x3D;**8.8.8.8，DNS2&#x3D;(dns自行找最优的)</td>
+<td>设置DNS1,DNS2</td>
+</tr>
+<tr>
+<td>IPADDR&#x3D;</td>
+<td>静态IP地址</td>
+</tr>
+<tr>
+<td>GATEWAY&#x3D;</td>
+<td>网关</td>
+</tr>
+</tbody></table>
+<p>设置完ifcfg-ens33文件后，需要重启网络服务才能生效</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service network restart</span><br></pre></td></tr></table></figure>
+
+
+
+<p>ifconfig也可以设置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifconfig ens33 192.168.146.152 netmask 255.255.255.0</span><br></pre></td></tr></table></figure>
+
+<p>记得重启网络</p>
+<h2 id="设置主机名"><a href="#设置主机名" class="headerlink" title="设置主机名"></a>设置主机名</h2><p>临时设置</p>
+<p><code>hostname 名字</code>重新打开终端可以看见，重启失效</p>
+<p>永久设置（直接写入）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/hostname </span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706194105047.png" alt="image-20230706194105047"></p>
+<h2 id="设置默认网关"><a href="#设置默认网关" class="headerlink" title="设置默认网关"></a>设置默认网关</h2><p>设置好IP地址以后，如果要访问其他的子网或Internet，用户还需要设置路 由，在此不做介绍，这里采用设置默认网关的方法。在Linux中，设置默认网关有两 种方法：</p>
+<ul>
+<li>第1种方法就是直接使用route命令，在设置默认网关之前，先用route – n命令查看路由表。执行如下命令设置网关。通常适用于临时测试</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">route add default gw 192.168.1.1</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>第2种方法是在&#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-接口文件中 添加如下字段：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GATEWAY=192.168.1.1</span><br></pre></td></tr></table></figure>
+
+<p>必须重启网络服务来使设置生效，可执行下面 的命令： </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service network restart</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="设置DNS服务器"><a href="#设置DNS服务器" class="headerlink" title="设置DNS服务器"></a>设置DNS服务器</h2><p>设置DNS服务器需修改<code>/etc/resolv.conf</code>文件即可</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706203553162.png" alt="image-20230706203553162" style="zoom:50%;">
+
+<p>其中192.168.3.1为第一名字服务器，192.168.3.2为第二名字服务器， option rotate选项指在这2个dns server之间轮询，option timeout:1表示解析超时时间1s（默认为5s），attempts表示解析域名尝试的次数。如需添加DNS服务器，可直接修改此文件，需要注意的是使用nameserver指定的DNS服务器只有前三条生效。</p>
+<h2 id="Linux防火墙"><a href="#Linux防火墙" class="headerlink" title="Linux防火墙"></a>Linux防火墙</h2><p>在最新版的CentOS 7中，系统安装了两个防火墙<strong>firewalld</strong>和<strong>iptables</strong>，并且默认使用<strong>firewalld</strong>。本文使用firewalld。更多内容<a target="_blank" rel="noopener" href="https://www.linuxprobe.com/basic-learning-08.html">iptables和firewalld详解</a>(本节内容基本选自LinuxProbe)</p>
+<p>iptables与firewalld都不是真正的防火墙，它们都只是用来定义防火墙策略的防火墙管理工具而已；或者说，它们只是一种服务。iptables服务会把配置好的防火墙策略交由内核层面的netfilter网络过滤器来处理，而firewalld服务则是把配置好的防火墙策略交由内核层面的nftables包过滤框架来处理。</p>
+<p>firewalld支持动态更新技术并加入了区域（zone）的概念。简单来说，区域就是firewalld预先准备了几套防火墙策略集合（策略模板）</p>
+<table>
+<thead>
+<tr>
+<th>区域</th>
+<th>默认规则策略</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>trusted</td>
+<td>允许所有的数据包</td>
+</tr>
+<tr>
+<td>home</td>
+<td>拒绝流入的流量，除非与流出的流量相关；而如果流量与ssh、mdns、ipp-client、amba-client与dhcpv6-client服务相关，则允许流量</td>
+</tr>
+<tr>
+<td>internal</td>
+<td>等同于home区域</td>
+</tr>
+<tr>
+<td>work</td>
+<td>拒绝流入的流量，除非与流出的流量相关；而如果流量与ssh、ipp-client与dhcpv6-client服务相关，则允许流量</td>
+</tr>
+<tr>
+<td>public</td>
+<td>拒绝流入的流量，除非与流出的流量相关；而如果流量与ssh、dhcpv6-client服务相关，则允许流量</td>
+</tr>
+<tr>
+<td>external</td>
+<td>拒绝流入的流量，除非与流出的流量相关；而如果流量与ssh服务相关，则允许流量</td>
+</tr>
+<tr>
+<td>dmz</td>
+<td>拒绝流入的流量，除非与流出的流量相关；而如果流量与ssh服务相关，则允许流量</td>
+</tr>
+<tr>
+<td>block</td>
+<td>拒绝流入的流量，除非与流出的流量相关</td>
+</tr>
+<tr>
+<td>drop</td>
+<td>拒绝流入的流量，除非与流出的流量相关</td>
+</tr>
+</tbody></table>
+<h4 id="终端管理工具"><a href="#终端管理工具" class="headerlink" title="终端管理工具"></a>终端管理工具</h4><p>firewall-cmd是firewalld防火墙配置管理工具的CLI（命令行界面）版本。它的参数一般都是以“长格式”来提供的。能用Tab键自动补齐命令</p>
+<p>​                        firewall-cmd命令中使用的参数以及作用</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>–get-default-zone</td>
+<td>查询默认的区域名称</td>
+</tr>
+<tr>
+<td>–set-default-zone&#x3D;&lt;区域名称&gt;</td>
+<td>设置默认的区域，使其永久生效</td>
+</tr>
+<tr>
+<td>–get-zones</td>
+<td>显示可用的区域</td>
+</tr>
+<tr>
+<td>–get-services</td>
+<td>显示预先定义的服务</td>
+</tr>
+<tr>
+<td>–get-active-zones</td>
+<td>显示当前正在使用的区域与网卡名称</td>
+</tr>
+<tr>
+<td>–add-source&#x3D;</td>
+<td>将源自此IP或子网的流量导向指定的区域</td>
+</tr>
+<tr>
+<td>–remove-source&#x3D;</td>
+<td>不再将源自此IP或子网的流量导向某个指定区域</td>
+</tr>
+<tr>
+<td>–add-interface&#x3D;&lt;网卡名称&gt;</td>
+<td>将源自该网卡的所有流量都导向某个指定区域</td>
+</tr>
+<tr>
+<td>–change-interface&#x3D;&lt;网卡名称&gt;</td>
+<td>将某个网卡与区域进行关联</td>
+</tr>
+<tr>
+<td>–list-all</td>
+<td>显示当前区域的网卡配置参数、资源、端口以及服务等信息</td>
+</tr>
+<tr>
+<td>–list-all-zones</td>
+<td>显示所有区域的网卡配置参数、资源、端口以及服务等信息</td>
+</tr>
+<tr>
+<td>–add-service&#x3D;&lt;服务名&gt;</td>
+<td>设置默认区域允许该服务的流量</td>
+</tr>
+<tr>
+<td>–add-port&#x3D;&lt;端口号&#x2F;协议&gt;</td>
+<td>设置默认区域允许该端口的流量</td>
+</tr>
+<tr>
+<td>–remove-service&#x3D;&lt;服务名&gt;</td>
+<td>设置默认区域不再允许该服务的流量</td>
+</tr>
+<tr>
+<td>–remove-port&#x3D;&lt;端口号&#x2F;协议&gt;</td>
+<td>设置默认区域不再允许该端口的流量</td>
+</tr>
+<tr>
+<td>–reload</td>
+<td>让“永久生效”的配置规则立即生效，并覆盖当前的配置规则</td>
+</tr>
+<tr>
+<td>–panic-on</td>
+<td>开启应急状况模式</td>
+</tr>
+<tr>
+<td>–panic-off</td>
+<td>关闭应急状况模式</td>
+</tr>
+</tbody></table>
+<p>使用firewalld配置的防火墙策略默认为运行时（Runtime）模式，又称为当前生效模式，而且会随着系统的重启而失效。如果想让配置策略一直存在，就需要使用永久（Permanent）模式了，方法就是在用firewall-cmd命令正常设置防火墙策略时添加–permanent参数(注意：永久生效模式只有在<strong>系统重启之后才能自动生效</strong>)</p>
+<p>如果想让配置的策略立即生效，需要手动执行<code>firewall-cmd --reload</code>命令。</p>
+<p><strong>1．查看firewalld服务当前所使用的区域。</strong></p>
+<p>这是一步非常重要的操作。在配置防火墙策略前，必须查看当前生效的是哪个区域，否则配置的防火墙策略将不会立即生效。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --get-default-zone</span><br></pre></td></tr></table></figure>
+
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706204629315.png" alt="image-20230706204629315" style="zoom:50%;">
+
+
+
+<p><strong>2．查询指定网卡在firewalld服务中绑定的区域。</strong></p>
+<p>在生产环境中，服务器大多不止有一块网卡。一般来说，充当网关的服务器有两块网卡，一块对公网，另外一块对内网，那么这两块网卡在审查流量时所用的策略肯定也是不一致的。因此，可以根据网卡针对的流量来源，为网卡绑定不同的区域，实现对防火墙策略的灵活管控。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --get-zone-of-interface=ens33</span><br></pre></td></tr></table></figure>
+
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706204735769.png" alt="image-20230706204735769" style="zoom:50%;">
+
+<p><strong>3．把网卡默认区域修改为external，并在系统重启后生效。</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --permanent --zone=external --change-interface=ens33</span><br><span class="line">firewall-cmd --permanent --get-zone-of-interface=ens33</span><br></pre></td></tr></table></figure>
+
+<p><strong>4．把firewalld服务的默认区域设置为public。</strong></p>
+<p>默认区域也叫全局配置，指的是对所有网卡都生效的配置，优先级较低。在下面的代码中可以看到，当前默认区域为public，而ens33网卡的区域为external。此时便是以网卡的区域名称为准。</p>
+<p>通俗来说，默认区域就是一种通用的政策。例如，食堂为所有人准备了一次性餐具，而环保主义者则会自己携带碗筷。如果您自带了碗筷，就可以用自己的；反之就用食堂统一提供的。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --set-default-zone=public</span><br><span class="line">firewall-cmd --get-default-zone </span><br><span class="line">firewall-cmd --get-zone-of-interface=ens33</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>5．启动和关闭firewalld防火墙服务的应急状况模式。</strong></p>
+<p>如果想在1s的时间内阻断一切网络连接，有什么好办法呢？大家下意识地会说：“拔掉网线！”这是一个物理级别的高招。但是，如果人在北京，服务器在异地呢？panic紧急模式在这个时候就派上用场了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --panic-on</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --panic-off</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>6．查询SSH和HTTPS协议的流量是否允许放行。</strong></p>
+<p>在工作中可以不使用–zone参数指定区域名称，firewall-cmd命令会自动依据默认区域进行查询，从而减少用户输入量。但是，如果默认区域与网卡所绑定的不一致时，就会发生冲突，因此规范写法的zone参数是一定要加的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --query-service=ssh</span><br><span class="line">firewall-cmd --zone=public --query-service=https</span><br></pre></td></tr></table></figure>
+
+
+
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706210924844.png" alt="image-20230706210924844" style="zoom:50%;">
+
+
+
+<p><strong>7．把HTTPS协议的流量设置为永久允许放行，并立即生效。</strong></p>
+<p>默认情况下进行的修改都属于Runtime模式，即当前生效而重启后失效。因此在工作和考试中尽量避免使用。</p>
+<p>而在使用–permanent参数时，则是当前不会立即看到效果，而在重启或重新加载后方可生效。于是，在添加了允许放行HTTPS流量的策略后，查询当前模式策略，发现依然是不允许放行HTTPS协议的流量：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --permanent --zone=public --add-service=https</span><br><span class="line">firewall-cmd --zone=public --query-service=https</span><br></pre></td></tr></table></figure>
+
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706211424174.png" alt="image-20230706211424174" style="zoom:50%;">
+
+<p>不想重启服务器的话，就用–reload参数吧：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --reload</span><br><span class="line">firewall-cmd --zone=public --query-service=https</span><br></pre></td></tr></table></figure>
+
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706211500480.png" alt="image-20230706211500480" style="zoom:50%;">
+
+<p><strong>8．把HTTP协议的流量设置为永久拒绝，并立即生效。</strong></p>
+<p>由于在默认情况下HTTP协议的流量就没有被允许，所以会有“Warning: NOT_ENABLED: http”这样的提示信息，因此对实际操作没有影响。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --permanent --zone=public --remove-service=http</span><br><span class="line">firewall-cmd --reload </span><br></pre></td></tr></table></figure>
+
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706211612560.png" alt="image-20230706211612560" style="zoom:50%;">
+
+<p><strong>9．把访问8080和8081端口的流量策略设置为允许，但仅限当前生效。</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=8080-8081/tcp</span><br><span class="line">firewall-cmd --zone=public --list-ports</span><br></pre></td></tr></table></figure>
+
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706211714664.png" alt="image-20230706211714664" style="zoom:50%;">
+
+<h4 id="图形管理工具"><a href="#图形管理工具" class="headerlink" title="图形管理工具"></a><strong>图形管理工具</strong></h4><p>在LinuxProbe:<a target="_blank" rel="noopener" href="https://www.linuxprobe.com/basic-learning-08.html">iptables和firewalld</a></p>
+<h1 id="Linux高级网络配置工具"><a href="#Linux高级网络配置工具" class="headerlink" title="Linux高级网络配置工具"></a>Linux高级网络配置工具</h1><p>目前很多Linux在使用之前的arp、ifconfig和route命令。虽然这些工具能够 工作，但它们在Linux 2.2和更高版本的内核上显得有一些落伍。无论对于Linux开 发者还是Linux系统管理员，网络程序调试时数据包的采集和分析是不可少的。</p>
+<p>tcpdump是Linux中强大的数据包采集分析工具之一。本节主要介绍iproute2和 tcpdump的相关知识。</p>
+<h3 id="高级网络管理工具iproute2"><a href="#高级网络管理工具iproute2" class="headerlink" title="高级网络管理工具iproute2"></a>高级网络管理工具iproute2</h3><p>安装<code>yum install -y iproute</code></p>
+<p>检查安装<code>rpm -qa|grep iproute</code></p>
+<p>版本<code>ip -V</code></p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706213602972.png" alt="image-20230706213602972" style="zoom:33%;">
+
+
+
+
+
+<h4 id="ip查看网络配置"><a href="#ip查看网络配置" class="headerlink" title="ip查看网络配置"></a>ip查看网络配置</h4><p><strong>显示网卡参数</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip addr list</span><br></pre></td></tr></table></figure>
+
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706213917728.png" alt="image-20230706213917728" style="zoom:50%;">
+
+
+
+<p><strong>添加新的网络地址</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ip addr add 192.168.128.140/24 dev ens33</span><br><span class="line">ip addr list</span><br></pre></td></tr></table></figure>
+
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706214213973.png" alt="image-20230706214213973" style="zoom:50%;">
+
+
+
+<p><strong>删除网络地址</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip addr del 192.168.128.140/24 dev ens33</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="网络数据采集与分析工具tcpdump"><a href="#网络数据采集与分析工具tcpdump" class="headerlink" title="网络数据采集与分析工具tcpdump"></a>网络数据采集与分析工具tcpdump</h3><p>tcpdump即dump traffic on a network，根据使用者的定义对网络上的数据包进行截获的包分析工具。对于系统管理员来说，在网络性能急剧下降的时候，可 以通过tcpdump工具分析原因，找出造成网络阻塞的来源。对于程序开发者来说， 可以通过tcpdump工具来调试程序。<strong>tcpdump支持针对网络层、协议、主机、网络或端口的过滤</strong>，并提供and、or、not等逻辑语句过滤不必要的信息。</p>
+<p>Linux系统下tcpdump普通用户是不能正常执行，<strong>一般通过root用户执行</strong>。</p>
+<p>安装:<code> yum install -y tcpdump</code></p>
+<p>语法:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump [ -adeflnNOpqStvx ] [ -c 数量 ] [ -F 文件名 ] [ -i 网络接口 ] [ -r 文件名] [ -s snaplen ] [ -T 类型 ] [ -w 文件名 ] [表达式 ]</span><br></pre></td></tr></table></figure>
+
+<p>详细参数说明:<a target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-comm-tcpdump.html">tcpdump-菜鸟教程</a></p>
+<p><strong>简单使用</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -i any</span><br></pre></td></tr></table></figure>
+
+<p>tcpdump会从系 统接口列表中搜寻编号最小的已配置好的接口，不包括loopback接口，一旦找到第 1个符合条件的接口，搜寻马上结束，并将获取的数据包打印出来。ctrl+c停止</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706215958506.png" alt="image-20230706215958506" style="zoom: 33%;">
+
+<p><strong>过滤</strong></p>
+<p>tcpdump利用表达式作为过滤数据包的条件，表达式可以是正则表达式。如果数据包符合表达式，则数据包被截获；如果没有给出任何条件，则接口上所有的信息包将会被截获。</p>
+<p>表达式中一般有如下几种关键字：</p>
+<ul>
+<li><p>第1种是关于类型的关键字，如<strong>host</strong>、<strong>net</strong>和<strong>port</strong>。例如host 192.168.16.150指明192.168.16.150为一台主机，而net 192.168.16.150则表 示192.168.16.150为一个网络地址。如果没有指定类型，默认的类型是host。 </p>
+</li>
+<li><p>第2种是确定数据包传输方向的关键字，包含src、dst、dst or src和 dst and src，这些关键字指明了数据包的传输方向。例如src 192.168.16.150 指明数据包中的源地址是192.168.16.150，而dst 192.168.16.150则指明数据包 中的目的地址是192.168.16.150。如果没有指明方向关键字，则默认是src or dst关键字。</p>
+</li>
+<li><p>第3种是协议的关键字，如指明是TCP还是UDP协议。</p>
+</li>
+<li><p>还有3种逻辑运算，取非运算 是“not”或“!”，与运算是“and”或“&amp;&amp;”，或运算是“or”或“||”。通过 这些关键字的组合可以实现复杂强大的条件。</p>
+</li>
+</ul>
+<p>过滤主机：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -i any host 192.168.2.1</span><br></pre></td></tr></table></figure>
+
+<p>过滤端口：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -i any port 80</span><br></pre></td></tr></table></figure>
+
+<p>过滤某一网段:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -i any net 192.168.0.0/16</span><br></pre></td></tr></table></figure>
+
+<p>过滤协议：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -i eth1 arp/ip/tcp/udp/icmp</span><br></pre></td></tr></table></figure>
+
+<p>指定20个包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -c 20</span><br></pre></td></tr></table></figure>
+
+<p>精简显示抓10个包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -c 10 -q //精简模式显示 10个包</span><br></pre></td></tr></table></figure>
+
+
+
+<p>tcpdump更多使用:<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/74812069">Linux系统 tcpdump 抓包命令使用教程</a>,<a target="_blank" rel="noopener" href="https://blog.csdn.net/mukouping82/article/details/116249400">抓包语法</a></p>
+<h1 id="动态主机配置协议（DHCP）"><a href="#动态主机配置协议（DHCP）" class="headerlink" title="动态主机配置协议（DHCP）"></a>动态主机配置协议（DHCP）</h1><p>DHCP基于C&#x2F;S模式，主要用于 大型网络。DHCP提供一种动态指定IP地址和相关网络配置参数的机制。</p>
+<h2 id="DHCP工作原理"><a href="#DHCP工作原理" class="headerlink" title="DHCP工作原理"></a>DHCP工作原理</h2><p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706223906646.png" alt="image-20230706223906646"></p>
+<p>客户端请求IP地址和配置参数的过程有以下几个步骤：</p>
+<ol>
+<li><p>客户端需要寻求网络IP地址和其他网络参数，然后向网络中广 播，客户端发出的请求名称叫DHCPDISCOVER。如广播网络中有可以分配IP地址 的服务器，服务器会返回相应应答，告诉客户端可以分配，服务器返回包的名 称叫DHCPOFFER，包内包含可用的IP地址和参数。</p>
+</li>
+<li><p>如果客户在发出DHCPOFFER包后一段时间内没有接收到响应，会重新发送请求，如广播区域内有多于一台的DHCP服务器，由客户端决定使用哪个（一般是谁先回应就用谁的）。 </p>
+</li>
+<li><p>当客户端选定了某个目标服务器后，会广播DHCPREQUEST包，用以通知选定的DHCP服务器和未选定的DHCP服务器。</p>
+</li>
+<li><p>服务端收到DHCPREQUEST后会检查收到的包，如果包内的地址和所提供的地址一致，证明现在客户端接收的是自己提供的地址；如果不是，则说明自己提供的地址未被采纳。如被选定的服务器在接收到DHCPREQUEST包以 后，因为某些原因可能不能向客户端提供这个IP地址或参数，可以向客户端发送DHCPNAK包。</p>
+</li>
+<li><p>客户端在收到包后，检查内部的IP地址和租用时间，如发现有问题，则发包拒绝这个地址，然后重新发送DHCPDISCOVER包。如无问题，就接受 这个配置参数。</p>
+</li>
+</ol>
+<h2 id="配置DHCP服务器"><a href="#配置DHCP服务器" class="headerlink" title="配置DHCP服务器"></a>配置DHCP服务器</h2><p>查看是否安装:<code>rpm -qa|grep dhcp</code></p>
+<p>软件安装<code>yum install -y dhcp</code></p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230706224524786.png" alt="image-20230706224524786"></p>
+<p><strong>&#x2F;etc&#x2F;dhcp&#x2F;dhcpd.conf</strong>为DHCP主配置文件。 <strong>&#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;dhcpd.service</strong> DHCP服务单元。</p>
+<h3 id="DHCP服务端配置"><a href="#DHCP服务端配置" class="headerlink" title="DHCP服务端配置"></a>DHCP服务端配置</h3><p>编辑配置文件**&#x2F;etc&#x2F;dhcp&#x2F;dhcpd.conf**</p>
+<p>本示例实现的功能为当前网络内的服务器分配指定IP段的IP地址，并 设置过期时间为2天。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#指定接收DHCP请求的网卡的子网地址，注意不是本机的IP地址。netmask为子网掩码</span></span><br><span class="line">subnet 192.168.2.0 netmask 255.255.255.0&#123;</span><br><span class="line"><span class="comment">#指定默认网关</span></span><br><span class="line">option routers 192.168.2.1;</span><br><span class="line"><span class="comment">#指定默认子网掩码</span></span><br><span class="line">option subnet-mask 255.255.255.0;</span><br><span class="line"><span class="comment">#指定最大租用周期</span></span><br><span class="line">max-lease-time 172800 ;</span><br><span class="line"><span class="comment">#此DHCP服务分配的IP地址范围</span></span><br><span class="line">range 192.168.2.2 192.168.2.240;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>subnet-mask 默认子网掩码和max-lease-time最大租用周期，单位是秒。需要特别说明的是，在本地须有一个网络接口的IP地址为192.168.2.0网络，DHCP服务才能启动。</p>
+<p>启动服务<code>systemctl start dhcpd.service</code></p>
+<p>如启动失败可以参考屏幕输出定位错误内容，或查看&#x2F;var&#x2F;log&#x2F;messages的内容</p>
+<h3 id="配置DHCP客户端"><a href="#配置DHCP客户端" class="headerlink" title="配置DHCP客户端"></a>配置DHCP客户端</h3><p>当服务端启动成功后，客户端需要与服务端网络联通，然后做以下配置以便自 动获取IP地址。客户端网卡配置如下。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /etc/sysconfig/network-scripts/ifcfg-ens33</span><br></pre></td></tr></table></figure>
+
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230707004746333.png" alt="image-20230707004746333" style="zoom:50%;">
+
+<p>如需使用DHCP服务， BOOTPROTO&#x3D;dhcp表示将当前主机的网络IP地址设置为自动获取方式。需要说明的是DHCP客户端无须使用CentOS 7，使用其他版本的Linux 或Windows操作系统均可。</p>
+<p>网络重启一下:<code>service network restart</code></p>
+<h1 id="域名服务DNS"><a href="#域名服务DNS" class="headerlink" title="域名服务DNS"></a>域名服务DNS</h1><p>在使用域名访问网络应用时，DNS负责将域名解析为IP地址。</p>
+<h2 id="DNS简介"><a href="#DNS简介" class="headerlink" title="DNS简介"></a>DNS简介</h2><p>DNS是一个<strong>分布式数据库系统</strong>，扩充性好，由于是分布式的存储，数据量的增长 并不会影响其性能。新加入的网络应用可以由DNS负责将新主机的信息传播到网络中 的其他部分。</p>
+<p>域名查询有两种常用的方式：<strong>递归查询</strong>和<strong>迭代查询</strong>。（这两个概念很重要）</p>
+<blockquote>
+<p>递归查询由最初的域名服务器代替客户端进行域名查询。如该域名服务器不能 直接回答，则会在域中的各分支的上下进行递归查询，最终将返回查询结果给客户 端，在域名服务器查询期间，客户端将完全处于等待状态。</p>
+<p>迭代查询则每次由客户端发起请求，如请求的域名服务器能提供需要查询的信 息则返回主机地址信息。如不能提供，则引导客户端到其他域名服务器查询。</p>
+<p>如果不理解请网上找其他资料。</p>
+</blockquote>
+<p>DNS域名服务器的分类有高速缓存服务器、主DNS服务器和辅助DNS服务器。高 速缓存服务器将每次域名查询的结果缓存到本机，主DNS服务器则提供特定域的权威 信息，是可信赖的，辅助DNS服务器信息则来源于主DNS服务器。</p>
+<h2 id="DNS规划"><a href="#DNS规划" class="headerlink" title="DNS规划"></a>DNS规划</h2><table>
+<thead>
+<tr>
+<th>test1.daokun.com</th>
+<th>192.168.2.100</th>
+<th>A</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>test2.daokun.com</td>
+<td>192.168.2.101</td>
+<td>A</td>
+</tr>
+<tr>
+<td>test3.daokun.com</td>
+<td>test2.daokun.com</td>
+<td>CNAME</td>
+</tr>
+</tbody></table>
+<h2 id="DNS配置"><a href="#DNS配置" class="headerlink" title="DNS配置"></a>DNS配置</h2><p>目前网络上的域名服务系统使用最多的为BIND（Berkeley Internet Name Domain）软件，该软件实现了DNS协议。</p>
+<p>centos7安装:<code>yum install -y bind bind-utils</code>或<code>yum install -y bind*</code></p>
+<blockquote>
+<h2 id="ubuntu20-0安装"><a href="#ubuntu20-0安装" class="headerlink" title="ubuntu20.0安装"></a>ubuntu20.0安装</h2><p>ubuntu配置更多内容:<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/bf3f7011b9fe">Ubuntu Server 安装配置 bind9 - 简书 (jianshu.com)</a>)</p>
+<p>在终端提示符下，输入以下命令安装 dns:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install bind9</span><br></pre></td></tr></table></figure>
+
+<p>dnsutils 软件包是测试和解决 DNS 问题非常有用的。 这些工具通常已经安装，但是要检查或安装 dnsutils，请输入以下内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install dnsutils</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><strong>&#x2F;etc&#x2F;named.conf</strong>为DNS主配置文件 <strong>&#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;named.service</strong>为DNS服务控制单元</p>
+<h3 id="服务器端"><a href="#服务器端" class="headerlink" title="服务器端"></a>服务器端</h3><h4 id="编辑-x2F-etc-x2F-named-conf"><a href="#编辑-x2F-etc-x2F-named-conf" class="headerlink" title="编辑&#x2F;etc&#x2F;named.conf"></a>编辑&#x2F;etc&#x2F;named.conf</h4><p>配置文件如下所示，如需添加注释，可以以“#”、“&#x2F;&#x2F;”</p>
+<p>了解一下name.conf:<code>cat /etc/named.conf</code></p>
+<p>内容如下:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">// 此配置文件删除了英文注释</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">options：是全局服务器的配置选项，即在options中指定的参数，对配置</span><br><span class="line">中的任何域都有效，如在服务器上要配置多个域如test1.com和test2.com，</span><br><span class="line">在option中指定的选项对这些域都生效。</span><br><span class="line">*/</span><br><span class="line">options &#123;</span><br><span class="line">		 <span class="comment"># 端口是53，127.0.0.1是监听本机IP，此处换成any是接收所有主机连接</span></span><br><span class="line">        listen-on port 53 &#123; any; &#125;;</span><br><span class="line">        listen-on-v6 port 53 &#123; ::1; &#125;;</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># directory:指定named从/var/named目录下读取DNS数据文件,可以自行创建，但是目录所属组必须是named,否则无法读取</span></span><br><span class="line">        directory       <span class="string">&quot;/var/named&quot;</span>; </span><br><span class="line">        </span><br><span class="line">        <span class="comment"># dump-file:当执行导出命令时将DNS服务器的缓存数据存储到指定的文件中。</span></span><br><span class="line">        dump-file       <span class="string">&quot;/var/named/data/cache_dump.db&quot;</span>; </span><br><span class="line">        </span><br><span class="line">        <span class="comment"># statistics-file：指定named服务的统计文件。当执行统计命令时，会将内存中的统计信息追加到该文件中。</span></span><br><span class="line">        statistics-file <span class="string">&quot;/var/named/data/named_stats.txt&quot;</span>;</span><br><span class="line">        memstatistics-file <span class="string">&quot;/var/named/data/named_mem_stats.txt&quot;</span>;</span><br><span class="line">        recursing-file  <span class="string">&quot;/var/named/data/named.recursing&quot;</span>;</span><br><span class="line">        secroots-file   <span class="string">&quot;/var/named/data/named.secroots&quot;</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># allow-query：允许那些客户端可以访问DNS服务，此处“any”表示任意主机。</span></span><br><span class="line">        allow-query     &#123; any; &#125;;</span><br><span class="line"></span><br><span class="line">     </span><br><span class="line">        recursion <span class="built_in">yes</span>;</span><br><span class="line"></span><br><span class="line">        dnssec-enable <span class="built_in">yes</span>;</span><br><span class="line">        dnssec-validation <span class="built_in">yes</span>;</span><br><span class="line"></span><br><span class="line">        /* Path to ISC DLV key */</span><br><span class="line">        bindkeys-file <span class="string">&quot;/etc/named.root.key&quot;</span>;</span><br><span class="line"></span><br><span class="line">        managed-keys-directory <span class="string">&quot;/var/named/dynamic&quot;</span>;</span><br><span class="line"></span><br><span class="line">        pid-file <span class="string">&quot;/run/named/named.pid&quot;</span>;</span><br><span class="line">        session-keyfile <span class="string">&quot;/run/named/session.key&quot;</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">logging &#123;</span><br><span class="line">        channel default_debug &#123;</span><br><span class="line">                file <span class="string">&quot;data/named.run&quot;</span>;</span><br><span class="line">                severity dynamic;</span><br><span class="line">        &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># zone：每一个zone就是定义一个域的相关信息及指定了named服务从哪些文件中获得DNS各个域名的数据文件。</span></span><br><span class="line"></span><br><span class="line">zone <span class="string">&quot;.&quot;</span> IN &#123;</span><br><span class="line">        <span class="built_in">type</span> hint;</span><br><span class="line">        file <span class="string">&quot;named.ca&quot;</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 此处是我们添加的内容,或者添加到 &quot;/etc/named.rfc1912.zones&quot;文件</span></span><br><span class="line"><span class="comment"># daokun.com正向解析成IP地址，文件是daokun.com.zone</span></span><br><span class="line">zone <span class="string">&quot;daokun.com&quot;</span> IN &#123;</span><br><span class="line">	<span class="built_in">type</span> master;</span><br><span class="line">	file <span class="string">&quot;daokun.com.zone&quot;</span>;</span><br><span class="line">	allow-update &#123; none;&#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">#反向解析                                                       </span></span><br><span class="line">zone <span class="string">&quot;2.168.192.in-addr.arpa&quot;</span> IN&#123;                              </span><br><span class="line">	<span class="built_in">type</span> master;                                              </span><br><span class="line">	file <span class="string">&quot;2.168.192.zone&quot;</span>;                                     </span><br><span class="line">&#125;; </span><br><span class="line"></span><br><span class="line"><span class="comment"># 这个是区域文件，上面的添加可以放到这里</span></span><br><span class="line">include <span class="string">&quot;/etc/named.rfc1912.zones&quot;</span>;</span><br><span class="line">include <span class="string">&quot;/etc/named.root.key&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>可以选择在”&#x2F;etc&#x2F;named.rfc1912.zones”配置</p>
+<p>抱歉，我这里有个错误，2.168.192.in-addr才是对的，需要有.</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230707165009577.png" alt="image-20230707165009577" style="zoom:50%;">
+</blockquote>
+<h4 id="配置解析文件-x2F-var-x2F-named-x2F-oa-com-zone"><a href="#配置解析文件-x2F-var-x2F-named-x2F-oa-com-zone" class="headerlink" title="配置解析文件&#x2F;var&#x2F;named&#x2F;oa.com.zone"></a>配置解析文件&#x2F;var&#x2F;named&#x2F;oa.com.zone</h4><ol>
+<li>复制文件</li>
+</ol>
+<p>为了省事，自己少些一些内容，我们复制文件：</p>
+<p>正向文件<code>cp  /var/named/named.localhost /var/named/daokun.com.zone</code> </p>
+<p>反向文件<code>cp  /var/named/named.localhost /var/named/2.168.192.zone</code></p>
+<blockquote>
+<p>daokun.com.zone是自定义的，和上文有关。</p>
+<p>在目录**&#x2F;var&#x2F;named**下有文件  <strong>named.localhost</strong></p>
+</blockquote>
+<ol start="2">
+<li>配置正向文件</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> <span class="variable">$TTL</span> 1D</span><br><span class="line"> <span class="comment"># 域名.　root.域名（注意空格）</span></span><br><span class="line"> <span class="comment">#　@       IN SOA  daokun.com.　root.也可以</span></span><br><span class="line">@       IN SOA  daokun.com.　root.daokun.com (</span><br><span class="line">                                        202307  ; serial</span><br><span class="line">                                        1D      ; refresh</span><br><span class="line">                                        1H      ; retry</span><br><span class="line">                                        1W      ; expire</span><br><span class="line">                                        3H )    ; minimum</span><br><span class="line">            NS    dns.daokun.com.</span><br><span class="line">dns   A     192.168.2.4 <span class="comment"># 本机ip</span></span><br><span class="line">test1 A     192.168.2.100</span><br><span class="line">test2 A     192.168.2.101</span><br><span class="line">test3 CNAME test2</span><br></pre></td></tr></table></figure>
+
+<p>TTL：表示域名缓存周期字段，指定该资源文件中的信息存放在DNS缓存服务器的时间,</p>
+<p>@：表示本域，SOA描述了一个授权区域</p>
+<p>serial：表示该区域文件的版本号。<br>refresh：指定了从域名服务器将要检查主域名服务器的SOA记录的时间间隔，单位为秒。<br>retry：指定了从域名服务器的一个请求或一个区域刷新失败后，从服务器重新与主服务器联系的时间间隔，单位是秒。<br>expire：指在指定的时间内，如果从服务器还不能联系到主服务器，从服务器将丢去所有的区域数据。<br>Minimum：如果没有明确指定TTL的值，则minimum表示域名默认的缓存周期。 </p>
+<p>A：表示主机记录，用于将一个主机名与一个或一组IP地址相对应。</p>
+<p> NS：一条NS记录指向一个给定区域的主域名服务器，以及包含该服务器主 机名的资源记录。</p>
+<p> CNAME：用来将一个域名和该域名的别名相关联，访问域名的别名和访问域 名的原始名字将解析到同样的主机地址。</p>
+<blockquote>
+<p>默认权限可能会阻止bind访问daokun.zone和2.168.192.zone文件，因由root用户使 用命令chgrp named daokun.com.zone修改文件所属的用户组。chgrp named 2.168.192.zone</p>
+</blockquote>
+<ol start="3">
+<li>配置反向文件</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$TTL</span> 1D</span><br><span class="line"><span class="comment"># daokun.com.后面需要空格，否则后续报错</span></span><br><span class="line">@       IN SOA  daokun.com. root.daokun.com. (</span><br><span class="line">                                        0       ; serial</span><br><span class="line">                                        1D      ; refresh</span><br><span class="line">                                        1H      ; retry</span><br><span class="line">                                        1W      ; expire</span><br><span class="line">                                        3H )    ; minimum</span><br><span class="line">          NS  dns.daokun.com.</span><br><span class="line">4   PTR dns.daokun.com.</span><br><span class="line">100 PTR test1.daokun.com.</span><br><span class="line">101 PTR test2.daokun.com.</span><br><span class="line">101 PTR test3.daokun.com.</span><br></pre></td></tr></table></figure>
+
+
+
+<p>检查文件有没有问题</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">named-checkconf -z /etc/named.conf</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>语法问题</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230707172554119.png" style="zoom:50%;">
+
+
+</blockquote>
+<h4 id="启动域名服务"><a href="#启动域名服务" class="headerlink" title="启动域名服务"></a>启动域名服务</h4><p>放行端口:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --permanent --add-port=53/tcp --zone=public</span><br><span class="line">firewall-cmd --permanent --add-port=53/udp --zone=public</span><br><span class="line">firewall-cmd --reload </span><br></pre></td></tr></table></figure>
+
+
+
+<p>使用BIND软件提供的**&#x2F;etc&#x2F;init.d&#x2F;named**脚本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start named.service</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如启动失败可以参考屏幕输出定位错误内容，或查看cat &#x2F;var&#x2F;log&#x2F;messages的内 容</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230707175048290.png" alt="image-20230707175048290" style="zoom:50%;">
+
+<p>我这个情况是daokun.com. 没有空格，导致数字无效</p>
+<p>daokun.com.  root.daokun.com或者@  root.daokun.com都可以</p>
+</blockquote>
+<h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3><h4 id="DNS服务测试"><a href="#DNS服务测试" class="headerlink" title="DNS服务测试"></a>DNS服务测试</h4><p>DNS服务端已经部署完毕，客户端还需设置一些东西。</p>
+<ol>
+<li>配置&#x2F;etc&#x2F;resolv.conf</li>
+</ol>
+<p>客户端需要设置DNS服务器地址。</p>
+<p>namesever 地址看自己情况</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230707172157770.png" alt="image-20230707172157770" style="zoom:50%;">
+
+<p>重启一下:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart named</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<ol start="2">
+<li>域名测试</li>
+</ol>
+<p>域名测试可以使用ping、nslookup或dig命令。</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230707180033039.png" alt="image-20230707180033039" style="zoom:50%;">
+
+<p>可以看到正向解析有问题，反向解析是好的。大概率是区域配置库文件(也就是正、反向解析文件)的属主和属组的问题。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /var/named</span><br><span class="line">ll</span><br></pre></td></tr></table></figure>
+
+
+
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230707180447774.png" alt="image-20230707180447774" style="zoom:50%;">
+
+<p>果然是这个问题。我们自己定义的正向解析文件和反向解析文件的属组为 root 而DNS原配置文件的属组为 named 所以我们就要修改 正向、反向解析文件的属组，执行命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chgrp</span> named 2.168.192.zone</span><br><span class="line"><span class="built_in">chgrp</span> named daokun.com.zone</span><br></pre></td></tr></table></figure>
+
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230707180715282.png" alt="image-20230707180715282" style="zoom:50%;">
+
+
+
+<p>重启<code>systemctl restart named</code></p>
+<p>这下应该没有问题了吧</p>
+<p>果然</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230707180916600.png" alt="image-20230707180916600" style="zoom: 50%;">
+
+
+
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230707181507216.png" alt="image-20230707181507216" style="zoom:50%;">
+
+<blockquote>
+<p>192.168.1.101(我手误)会报错是因为我们没配置，我们都是配置的192.168.2.xx。</p>
+<p>192.168.2.4是我的dns服务器IP地址</p>
+</blockquote>
+<p>推荐一本更多更全的书籍(非广告)</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20230707204611218.png" alt="image-20230707204611218" style="zoom: 33%;">
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://daokun.eu.org">阿福</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://daokun.eu.org/2023/07/06/%E5%9F%BA%E4%BA%8ECentos7-9%E7%9A%84%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86%E6%8A%80%E8%83%BD/">https://daokun.eu.org/2023/07/06/基于Centos7-9的网络管理技能/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://daokun.eu.org" target="_blank">道坤</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Linux/">Linux</a></div><div class="post_share"><div class="social-share" data-image="/img/centos.jpg" data-sites="wechat,weibo,qq,facebook,twitter"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/loading.gif" data-original="/img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/loading.gif" data-original="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/07/08/MySQL8%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E5%92%8C%E6%97%A5%E5%B8%B8%E8%BF%90%E7%BB%B4/"><img class="prev-cover" src="/img/loading.gif" data-original="/img/mysql.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">MySQL8安装配置和日常运维</div></div></a></div><div class="next-post pull-right"><a href="/2023/07/05/kvm%E7%9A%84%E5%AE%89%E8%A3%85/"><img class="next-cover" src="/img/loading.gif" data-original="/img/kvm.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">kvm的安装</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/05/16/Centos7-9%E8%AE%BE%E7%BD%AE%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC-%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E8%84%9A%E6%9C%AC/" title="Centos7.9设置定时执行脚本+开机自启脚本"><img class="cover" src="/img/loading.gif" data-original="/img/linux.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-16</div><div class="title">Centos7.9设置定时执行脚本+开机自启脚本</div></div></a></div><div><a href="/2022/11/28/Centos7%E4%B8%8B%E5%AE%89%E8%A3%85Python3/" title="Centos7下安装Python3"><img class="cover" src="/img/loading.gif" data-original="/img/default_top_img.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-28</div><div class="title">Centos7下安装Python3</div></div></a></div><div><a href="/2022/11/28/Centos7%E7%B3%BB%E7%BB%9F%E7%9A%84yum%E6%BA%90%E6%9B%B4%E6%8D%A2/" title="Centos7系统的yum源更换"><img class="cover" src="/img/loading.gif" data-original="/img/python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-28</div><div class="title">Centos7系统的yum源更换</div></div></a></div><div><a href="/2022/07/10/GCC-GDB-makefile%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/" title="GCC+GDB+makefile工具的使用"><img class="cover" src="/img/loading.gif" data-original="/img/linux_vim.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-10</div><div class="title">GCC+GDB+makefile工具的使用</div></div></a></div><div><a href="/2023/06/17/Linux%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C-%E7%A3%81%E7%9B%98%E6%93%8D%E4%BD%9C/" title="Linux基本操作:磁盘操作"><img class="cover" src="/img/loading.gif" data-original="/img/linux.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-17</div><div class="title">Linux基本操作:磁盘操作</div></div></a></div><div><a href="/2022/12/22/Linux%E7%94%A8%E6%88%B7%E5%92%8C%E7%BB%84%E7%AE%A1%E7%90%86/" title="Linux用户和组管理"><img class="cover" src="/img/loading.gif" data-original="/img/default_top_img.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-22</div><div class="title">Linux用户和组管理</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/loading.gif" data-original="/img/avatar.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">阿福</div><div class="author-info__description">遇见就是缘分</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">85</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">28</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/daokunn/daokunn.github.io"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">小心肝啊！别熬夜了！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.</span> <span class="toc-text">网络管理协议</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP-x2F-IP%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.1.</span> <span class="toc-text">TCP&#x2F;IP协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%AD%97%E8%8A%82%E5%BA%8F"><span class="toc-number">1.2.</span> <span class="toc-text">网络字节序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UDP%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.3.</span> <span class="toc-text">UDP协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ICMP%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.4.</span> <span class="toc-text">ICMP协议</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4"><span class="toc-number">2.</span> <span class="toc-text">网络管理命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5%E7%BD%91%E7%BB%9C%E9%80%9A%E5%B8%B8%E6%88%96%E9%80%9F%E5%BA%A6ping"><span class="toc-number">2.1.</span> <span class="toc-text">检查网络通常或速度ping</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E7%BD%91%E7%BB%9C%E6%88%96%E6%98%BE%E7%A4%BA%E5%BD%93%E5%89%8D%E7%BD%91%E7%BB%9C%E6%8E%A5%E5%8F%A3%E7%8A%B6%E6%80%81ifconfig"><span class="toc-number">2.2.</span> <span class="toc-text">配置网络或显示当前网络接口状态ifconfig</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%98%BE%E7%A4%BA%E6%B7%BB%E5%8A%A0%E6%88%96%E4%BF%AE%E6%94%B9%E8%B7%AF%E7%94%B1%E8%A1%A8route"><span class="toc-number">2.3.</span> <span class="toc-text">显示添加或修改路由表route</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E5%88%B6%E6%96%87%E4%BB%B6%E8%87%B3%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9Fscp"><span class="toc-number">2.4.</span> <span class="toc-text">复制文件至其他系统scp</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E6%9C%AC%E5%9C%B0%E5%A4%8D%E5%88%B6%E5%88%B0%E8%BF%9C%E7%A8%8B"><span class="toc-number">2.4.1.</span> <span class="toc-text">从本地复制到远程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Centos7-9%E5%88%B0ubuntu20-0%EF%BC%88%E4%BB%A5add-sh%E4%B8%BA%E4%BE%8B%E5%AD%90%EF%BC%89"><span class="toc-number">2.4.1.1.</span> <span class="toc-text">Centos7.9到ubuntu20.0（以add.sh为例子）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#win10%E5%88%B0ubuntu"><span class="toc-number">2.4.1.2.</span> <span class="toc-text">win10到ubuntu</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E8%BF%9C%E7%A8%8B%E5%88%B0%E6%9C%AC%E5%9C%B0"><span class="toc-number">2.4.2.</span> <span class="toc-text">从远程到本地</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Centos7-9%E5%88%B0ubuntu20-0-%E5%9C%A8ubuntu%E6%93%8D%E4%BD%9C"><span class="toc-number">2.4.2.1.</span> <span class="toc-text">Centos7.9到ubuntu20.0(在ubuntu操作)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E5%88%B6%E6%96%87%E4%BB%B6%E8%87%B3%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9Frsync"><span class="toc-number">2.5.</span> <span class="toc-text">复制文件至其他系统rsync</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E4%BC%A0%E9%80%81%E5%88%B0%E8%BF%9C%E7%A8%8B%E4%B8%BB%E6%9C%BA-%E9%BB%98%E8%AE%A4%E5%9C%A8%E5%AE%B6%E7%9B%AE%E5%BD%95%EF%BC%8C%E5%91%BD%E5%90%8D%E4%B8%BAdaokun1-txt"><span class="toc-number">2.5.1.</span> <span class="toc-text">本地文件传送到远程主机(默认在家目录，命名为daokun1.txt)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E7%9B%AE%E5%BD%95%E4%BC%A0%E9%80%81%E5%88%B0%E8%BF%9C%E7%A8%8B%E4%B8%BB%E6%9C%BA%EF%BC%88%E5%91%BD%E5%90%8D%E4%B8%BAdao%EF%BC%89"><span class="toc-number">2.5.2.</span> <span class="toc-text">本地目录传送到远程主机（命名为dao）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E5%A4%8D%E5%88%B6%E5%88%B0%E6%9C%AC%E6%9C%BA"><span class="toc-number">2.5.3.</span> <span class="toc-text">远程复制到本机</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%98%BE%E7%A4%BA%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5%E3%80%81%E8%B7%AF%E7%94%B1%E8%A1%A8%E6%88%96%E6%8E%A5%E5%8F%A3%E7%8A%B6%E6%80%81netstat"><span class="toc-number">2.6.</span> <span class="toc-text">显示网络连接、路由表或接口状态netstat</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E5%B7%A5%E5%85%B7wget"><span class="toc-number">2.7.</span> <span class="toc-text">下载工具wget</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">Linux网络配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AELinux%E7%B3%BB%E7%BB%9F%E7%9A%84IP%E5%9C%B0%E5%9D%80"><span class="toc-number">3.1.</span> <span class="toc-text">配置Linux系统的IP地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E4%B8%BB%E6%9C%BA%E5%90%8D"><span class="toc-number">3.2.</span> <span class="toc-text">设置主机名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E9%BB%98%E8%AE%A4%E7%BD%91%E5%85%B3"><span class="toc-number">3.3.</span> <span class="toc-text">设置默认网关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AEDNS%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">3.4.</span> <span class="toc-text">设置DNS服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux%E9%98%B2%E7%81%AB%E5%A2%99"><span class="toc-number">3.5.</span> <span class="toc-text">Linux防火墙</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%88%E7%AB%AF%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7"><span class="toc-number">3.5.0.1.</span> <span class="toc-text">终端管理工具</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BE%E5%BD%A2%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7"><span class="toc-number">3.5.0.2.</span> <span class="toc-text">图形管理工具</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux%E9%AB%98%E7%BA%A7%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE%E5%B7%A5%E5%85%B7"><span class="toc-number">4.</span> <span class="toc-text">Linux高级网络配置工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E7%BA%A7%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7iproute2"><span class="toc-number">4.0.1.</span> <span class="toc-text">高级网络管理工具iproute2</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ip%E6%9F%A5%E7%9C%8B%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE"><span class="toc-number">4.0.1.1.</span> <span class="toc-text">ip查看网络配置</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86%E4%B8%8E%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7tcpdump"><span class="toc-number">4.0.2.</span> <span class="toc-text">网络数据采集与分析工具tcpdump</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E4%B8%BB%E6%9C%BA%E9%85%8D%E7%BD%AE%E5%8D%8F%E8%AE%AE%EF%BC%88DHCP%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">动态主机配置协议（DHCP）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#DHCP%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">5.1.</span> <span class="toc-text">DHCP工作原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEDHCP%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">5.2.</span> <span class="toc-text">配置DHCP服务器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DHCP%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="toc-number">5.2.1.</span> <span class="toc-text">DHCP服务端配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEDHCP%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">5.2.2.</span> <span class="toc-text">配置DHCP客户端</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%9F%E5%90%8D%E6%9C%8D%E5%8A%A1DNS"><span class="toc-number">6.</span> <span class="toc-text">域名服务DNS</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#DNS%E7%AE%80%E4%BB%8B"><span class="toc-number">6.1.</span> <span class="toc-text">DNS简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DNS%E8%A7%84%E5%88%92"><span class="toc-number">6.2.</span> <span class="toc-text">DNS规划</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DNS%E9%85%8D%E7%BD%AE"><span class="toc-number">6.3.</span> <span class="toc-text">DNS配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ubuntu20-0%E5%AE%89%E8%A3%85"><span class="toc-number">6.4.</span> <span class="toc-text">ubuntu20.0安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF"><span class="toc-number">6.4.1.</span> <span class="toc-text">服务器端</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%96%E8%BE%91-x2F-etc-x2F-named-conf"><span class="toc-number">6.4.1.1.</span> <span class="toc-text">编辑&#x2F;etc&#x2F;named.conf</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E8%A7%A3%E6%9E%90%E6%96%87%E4%BB%B6-x2F-var-x2F-named-x2F-oa-com-zone"><span class="toc-number">6.4.1.2.</span> <span class="toc-text">配置解析文件&#x2F;var&#x2F;named&#x2F;oa.com.zone</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E5%9F%9F%E5%90%8D%E6%9C%8D%E5%8A%A1"><span class="toc-number">6.4.1.3.</span> <span class="toc-text">启动域名服务</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">6.4.2.</span> <span class="toc-text">客户端</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#DNS%E6%9C%8D%E5%8A%A1%E6%B5%8B%E8%AF%95"><span class="toc-number">6.4.2.1.</span> <span class="toc-text">DNS服务测试</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/06/12/Linux%E5%AE%89%E5%85%A8%EF%BC%9ASSH%E5%8E%9F%E7%90%86/" title="Linux安全：SSH原理"><img src="/img/loading.gif" data-original="/img/default_top_img.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux安全：SSH原理"/></a><div class="content"><a class="title" href="/2024/06/12/Linux%E5%AE%89%E5%85%A8%EF%BC%9ASSH%E5%8E%9F%E7%90%86/" title="Linux安全：SSH原理">Linux安全：SSH原理</a><time datetime="2024-06-12T02:33:00.000Z" title="发表于 2024-06-12 10:33:00">2024-06-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/12/Linux%E9%85%8D%E7%BD%AEgithub%E5%8A%A0%E9%80%9F/" title="Linux配置github加速"><img src="/img/loading.gif" data-original="/img/default_top_img.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux配置github加速"/></a><div class="content"><a class="title" href="/2024/06/12/Linux%E9%85%8D%E7%BD%AEgithub%E5%8A%A0%E9%80%9F/" title="Linux配置github加速">Linux配置github加速</a><time datetime="2024-06-12T02:28:04.000Z" title="发表于 2024-06-12 10:28:04">2024-06-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/20/Python%E4%BD%BF%E7%94%A8paramiko%E5%AE%9E%E7%8E%B0ssh%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95/" title="Python使用paramiko实现ssh远程登录"><img src="/img/loading.gif" data-original="/img/default_top_img.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python使用paramiko实现ssh远程登录"/></a><div class="content"><a class="title" href="/2024/05/20/Python%E4%BD%BF%E7%94%A8paramiko%E5%AE%9E%E7%8E%B0ssh%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95/" title="Python使用paramiko实现ssh远程登录">Python使用paramiko实现ssh远程登录</a><time datetime="2024-05-20T07:12:19.000Z" title="发表于 2024-05-20 15:12:19">2024-05-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/20/Shell%E5%AE%9E%E7%8E%B0%E6%8C%87%E5%AE%9A%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%9A%84%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E6%B8%85%E7%A9%BA/" title="Shell实现指定目录下的指定文件清空"><img src="/img/loading.gif" data-original="/img/default_top_img.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Shell实现指定目录下的指定文件清空"/></a><div class="content"><a class="title" href="/2024/05/20/Shell%E5%AE%9E%E7%8E%B0%E6%8C%87%E5%AE%9A%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%9A%84%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E6%B8%85%E7%A9%BA/" title="Shell实现指定目录下的指定文件清空">Shell实现指定目录下的指定文件清空</a><time datetime="2024-05-20T06:38:22.000Z" title="发表于 2024-05-20 14:38:22">2024-05-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/16/Centos7-9%E8%AE%BE%E7%BD%AE%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC-%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E8%84%9A%E6%9C%AC/" title="Centos7.9设置定时执行脚本+开机自启脚本"><img src="/img/loading.gif" data-original="/img/linux.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Centos7.9设置定时执行脚本+开机自启脚本"/></a><div class="content"><a class="title" href="/2024/05/16/Centos7-9%E8%AE%BE%E7%BD%AE%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC-%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E8%84%9A%E6%9C%AC/" title="Centos7.9设置定时执行脚本+开机自启脚本">Centos7.9设置定时执行脚本+开机自启脚本</a><time datetime="2024-05-16T02:38:48.000Z" title="发表于 2024-05-16 10:38:48">2024-05-16</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/centos.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2024 By 阿福</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a><br>
+<imgsrc="/img/loading.gif" data-original="https://haiyong.site/img/icp.png">
+<a href="https://beian.miit.gov.cn/#/Integrated/index"  style="color:white" target="_blank">赣ICP备2023004169号-1</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'TC3zGNHX95voCrjm3zIGGDtM-gzGzoHsz',
+      appKey: 'KLVEwzS0mvYkxYOwbpUJjG5k',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><canvas class="fireworks" mobile="true"></canvas><script src="/%5Bobject%20Object%5D"></script><script defer="defer" id="ribbon" src="/%5Bobject%20Object%5D" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="/%5Bobject%20Object%5D"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script>(function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/5b735920.js","daovoice")
+</script><script>var isChatBtn = true
+daovoice('init', {
+  app_id: '5b735920',},{
+  launcher: { 
+     disableLauncherIcon: isChatBtn // 悬浮 ICON 是否显示
+  },
+});
+daovoice('update');
+
+if (isChatBtn) {
+  var chatBtnFn = () => {
+    var chatBtn = document.getElementById("chat_btn")
+    chatBtn.addEventListener("click", function(){
+      daovoice('show')
+    });
+  }
+  chatBtnFn()
+} else {
+  if (true) {
+    function chatBtnHide () {
+      daovoice('update', {},{
+        launcher: { 
+        disableLauncherIcon: true // 悬浮 ICON 是否显示
+        },
+      });
+    }
+    function chatBtnShow () {
+      daovoice('update', {},{
+        launcher: { 
+        disableLauncherIcon: false // 悬浮 ICON 是否显示
+        },
+      });
+    }
+  }
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/meting@1.2/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div>
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"left","width":200,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>
