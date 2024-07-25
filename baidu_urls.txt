@@ -1,3 +1,4 @@
+https://daokun.eu.org/2024/06/12/Linux%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4-ansible/
 https://daokun.eu.org/2024/06/12/Linux%E5%AE%89%E5%85%A8%EF%BC%9ASSH%E5%8E%9F%E7%90%86/
 https://daokun.eu.org/2024/06/12/Linux%E9%85%8D%E7%BD%AEgithub%E5%8A%A0%E9%80%9F/
 https://daokun.eu.org/2024/05/20/Python%E4%BD%BF%E7%94%A8paramiko%E5%AE%9E%E7%8E%B0ssh%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95/

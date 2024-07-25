@@ -1,0 +1,523 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Linux自动化运维:ansible | 道坤</title><meta name="author" content="阿福"><meta name="copyright" content="阿福"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="是 中文社区：国内最专业的Ansible中文官方学习手册 ansible安装在线安装12yum -y install epel-releaseyum install ansible -y    离线安装现在有网的centos服务器下载，然后打包，A是有网的，B的无网络的。 以下操作是A服务器 12yum -y install epel-release  # 下载epel仓库yum install">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux自动化运维:ansible">
+<meta property="og:url" content="https://daokun.eu.org/2024/06/12/Linux%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4-ansible/index.html">
+<meta property="og:site_name" content="道坤">
+<meta property="og:description" content="是 中文社区：国内最专业的Ansible中文官方学习手册 ansible安装在线安装12yum -y install epel-releaseyum install ansible -y    离线安装现在有网的centos服务器下载，然后打包，A是有网的，B的无网络的。 以下操作是A服务器 12yum -y install epel-release  # 下载epel仓库yum install">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://daokun.eu.org/img/default_top_img.jpg">
+<meta property="article:published_time" content="2024-06-12T07:42:03.000Z">
+<meta property="article:modified_time" content="2024-06-26T00:48:27.827Z">
+<meta property="article:author" content="阿福">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://daokun.eu.org/img/default_top_img.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://daokun.eu.org/2024/06/12/Linux%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4-ansible/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="baidu-site-verification" content="code-mCgJ2GybwQ"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bfd0e8d34358f7b5477c5fccfd340d45";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Linux自动化运维:ansible',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-06-26 08:48:27'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/loading.gif" data-original="/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">87</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">28</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E5%88%86%E7%B1%BB/"><i class="fa-fw fa fa-archive"></i><span> 工具教程</span></a></li><li><a class="site-page child" href="/%E6%A0%87%E7%AD%BE/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E7%9B%B8%E5%86%8C/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/%E9%9F%B3%E4%B9%90/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/%E5%BD%B1%E8%A7%86/"><i class="fa-fw fas fa-video"></i><span> 影视</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/%E7%95%99%E8%A8%80%E6%9D%BF/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link"><i class="fa-fw fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/%E5%85%B3%E4%BA%8E%E7%AC%94%E8%80%85/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/default_top_img.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">道坤</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E5%88%86%E7%B1%BB/"><i class="fa-fw fa fa-archive"></i><span> 工具教程</span></a></li><li><a class="site-page child" href="/%E6%A0%87%E7%AD%BE/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E7%9B%B8%E5%86%8C/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/%E9%9F%B3%E4%B9%90/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/%E5%BD%B1%E8%A7%86/"><i class="fa-fw fas fa-video"></i><span> 影视</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/%E7%95%99%E8%A8%80%E6%9D%BF/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link"><i class="fa-fw fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/%E5%85%B3%E4%BA%8E%E7%AC%94%E8%80%85/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Linux自动化运维:ansible</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-06-12T07:42:03.000Z" title="发表于 2024-06-12 15:42:03">2024-06-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-06-26T00:48:27.827Z" title="更新于 2024-06-26 08:48:27">2024-06-26</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>11分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Linux自动化运维:ansible"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>是</p>
+<p>中文社区：<a target="_blank" rel="noopener" href="http://ansible.com.cn/docs/intro.html">国内最专业的Ansible中文官方学习手册</a></p>
+<h1 id="ansible安装"><a href="#ansible安装" class="headerlink" title="ansible安装"></a>ansible安装</h1><h2 id="在线安装"><a href="#在线安装" class="headerlink" title="在线安装"></a>在线安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum -y install epel-release</span><br><span class="line">yum install ansible -y</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="离线安装"><a href="#离线安装" class="headerlink" title="离线安装"></a>离线安装</h2><p>现在有网的centos服务器下载，然后打包，A是有网的，B的无网络的。</p>
+<p>以下操作是A服务器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum -y install epel-release  <span class="comment"># 下载epel仓库</span></span><br><span class="line">yum install -y  ansible  --downloadonly --downloaddir=~/ansible  <span class="comment"># 仅下载，并下载到~/ansible</span></span><br></pre></td></tr></table></figure>
+
+<p>打包</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar zcvf ansible.tar.gz ~/ansible</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240612161049955.png" alt="image-20240612161049955"></p>
+<p>上传到服务器B，以下是B的操作</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar zxvf ansible.tar.gz &amp;&amp; <span class="built_in">cd</span> ansible</span><br><span class="line">yum localinstall *.rpm -y  --nogpgcheck</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>验证安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible --version</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240612161059776.png" alt="image-20240612161059776"></p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240606224709751.png" alt="image-20240606224709751"></p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240606224709751.png"></p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240606225133739.png" alt="image-20240606225133739" style="zoom:50%;">
+
+<h1 id="主机清单配置"><a href="#主机清单配置" class="headerlink" title="主机清单配置"></a>主机清单配置</h1><h2 id="查看已配置的分组"><a href="#查看已配置的分组" class="headerlink" title="查看已配置的分组"></a>查看已配置的分组</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -vE <span class="string">&#x27;^#|^$&#x27;</span> /etc/ansible/hosts </span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="主机分组"><a href="#主机分组" class="headerlink" title="主机分组"></a>主机分组</h2><p>在&#x2F;etc&#x2F;ansible&#x2F;hosts 文件中配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[web]</span><br><span class="line">192.168.0.100</span><br><span class="line">192.168.0.101</span><br><span class="line"></span><br><span class="line">[mysql]</span><br><span class="line">192.168.0.102</span><br><span class="line"></span><br><span class="line">[backup]</span><br><span class="line">192.168.0.103</span><br></pre></td></tr></table></figure>
+
+<p>更多请查看官网：<a target="_blank" rel="noopener" href="https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html#inventory-basics-formats-hosts-and-groups">How to build your inventory — Ansible Community Documentation</a></p>
+<h2 id="连接参数配置"><a href="#连接参数配置" class="headerlink" title="连接参数配置"></a>连接参数配置</h2><p>这部分内容很重要，详细可以查看<a target="_blank" rel="noopener" href="https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html#connecting-to-hosts-behavioral-inventory-parameters">Connecting to hosts: behavioral inventory parameters</a>，使用密码登录，当然可以使用免密登录，详细可以查看之前的博客配置ssh免密<a href="https://daokun.eu.org/2024/06/12/Linux%E5%AE%89%E5%85%A8%EF%BC%9ASSH%E5%8E%9F%E7%90%86/">Linux安全：SSH原理 | 道坤 (daokun.eu.org)</a></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>参数类型</th>
+<th>参数说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ansible_host</td>
+<td>主机地址</td>
+<td>远程主机ip</td>
+</tr>
+<tr>
+<td>ansible_port</td>
+<td>主机端口</td>
+<td>设置SSH连接端口，默认22</td>
+</tr>
+<tr>
+<td>ansible_user</td>
+<td>主机用户</td>
+<td>默认SSH远程连接的用户身份</td>
+</tr>
+<tr>
+<td>ansible_password</td>
+<td>用户密码</td>
+<td>指定SSH远程主机密码</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[web]</span><br><span class="line">192.168.0.100 ansible_port=22 ansible_user=root ansible_password=<span class="string">&#x27;daokun&#x27;</span></span><br><span class="line">192.168.0.101 ansible_port=4422 ansible_user=root ansible_password=<span class="string">&#x27;daokun&#x27;</span></span><br><span class="line"></span><br><span class="line">[mysql]</span><br><span class="line">192.168.0.102 ansible_port=22 ansible_user=root ansible_password=<span class="string">&#x27;daokun&#x27;</span></span><br><span class="line"></span><br><span class="line">[backup]</span><br><span class="line">192.168.0.103 ansible_port=22 ansible_user=root ansible_password=<span class="string">&#x27;daokun&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240625100010043.png" alt="image-20240625100010043"></p>
+<h2 id="故障解决"><a href="#故障解决" class="headerlink" title="故障解决"></a>故障解决</h2><h3 id="连接故障"><a href="#连接故障" class="headerlink" title="连接故障"></a>连接故障</h3><p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240625100238063.png" alt="image-20240625100238063"></p>
+<p>如果你是第一次连接远程主机，会出现如上报错，这是新机器的指纹确认问题。具体原因在我之前的博客SSH原理。解决办法有两个：</p>
+<ol>
+<li><p>手动ssh连接远程主机，进行指纹确认即可</p>
+</li>
+<li><p>ansible配置文件中忽略指纹确认</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">grep <span class="string">&#x27;host_key_checking&#x27;</span> /etc/ansible/ansible.cfg </span><br><span class="line">host_key_checking = False</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>当我手动添加之后，可以看到kown_hosts文件含有192.168.0.101信息，这时候，使用ansible就正常了。<br><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240625110213547.png" alt="image-20240625110213547"></p>
+<h3 id="ansible缓存问题"><a href="#ansible缓存问题" class="headerlink" title="ansible缓存问题"></a>ansible缓存问题</h3><p>ansible在对远程主机操作之前，默认会先通过setup模块获取机器的facts（静态属性），并且会生成缓存，便于加速远程主机的操作；但缓存也会导致一些奇怪的现象，比如客户端的机器信息更新了，服务端依旧使用的是旧数据，那就不准确了，因此可以删除缓存。详细可见<a target="_blank" rel="noopener" href="https://serverfault.com/questions/630253/ansible-stuck-on-gathering-facts">缓存问题</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#清理ansible的缓存目录即可</span></span><br><span class="line"><span class="built_in">rm</span> -rf ~/.ansible/cp/*</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="连续的主机名"><a href="#连续的主机名" class="headerlink" title="连续的主机名"></a>连续的主机名</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[web]</span><br><span class="line">192.168.0.[100:110]</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="公共变量"><a href="#公共变量" class="headerlink" title="公共变量"></a>公共变量</h2><h3 id="局部变量"><a href="#局部变量" class="headerlink" title="局部变量"></a>局部变量</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[web:vars]</span><br><span class="line">ansible_ssh_port=22</span><br><span class="line">ansible_ssh_user=root</span><br><span class="line">ansible_ssh_pass=<span class="string">&#x27;daokun&#x27;</span></span><br><span class="line">[web]</span><br><span class="line">192.168.0.[100:110]</span><br></pre></td></tr></table></figure>
+
+<h3 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[all:vars]</span><br><span class="line">ansible_port=7722</span><br><span class="line">ansible_user=root</span><br><span class="line">ansible_password=<span class="string">&#x27;123123&#x27;</span></span><br><span class="line"></span><br><span class="line">[web]</span><br><span class="line">192.168.0.100 ansible_port=22 ansible_user=root ansible_password=<span class="string">&#x27;daokun&#x27;</span></span><br><span class="line">192.168.0.101 ansible_port=4422 ansible_user=root ansible_password=<span class="string">&#x27;daokun&#x27;</span></span><br><span class="line"></span><br><span class="line">[mysql]</span><br><span class="line">192.168.0.102 ansible_port=22 ansible_user=root ansible_password=<span class="string">&#x27;daokun&#x27;</span></span><br><span class="line"></span><br><span class="line">[backup]</span><br><span class="line">192.168.0.103 ansible_port=22 ansible_user=root ansible_password=<span class="string">&#x27;daokun&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>局部变量的优先大于全局</p>
+<h1 id="ansible的执行模式"><a href="#ansible的执行模式" class="headerlink" title="ansible的执行模式"></a>ansible的执行模式</h1><p>Ansible实现批量管理主机的模式主要有俩：</p>
+<ul>
+<li>利用ansible命令实现批量管理（ad-hoc）模式</li>
+<li>利用ansible剧本实现批量管理（playbook）模式</li>
+</ul>
+<p>Ad-hoc和playbook的关系就好比shell命令与shell scripts的关系</p>
+<p>Ansible的ad-hoc模式也就是ansible的命令行模式，该模式通常用来临时处理一些任务。例如</p>
+<ul>
+<li>临时批量查看所有被管控机器的内存、负载、磁盘</li>
+<li>临时批量分发某个特定文件</li>
+</ul>
+<p>Ansible的playbook模式就是针对特定的具体较大的任务，事先写好执行剧本，然后在其他机器上批量执行相同的任务，属于定制化的批量执行任务，例如</p>
+<ul>
+<li>一键安装Rsync</li>
+<li>一键搭建LNMP集群等</li>
+</ul>
+<h2 id="ad-hoc模式"><a href="#ad-hoc模式" class="headerlink" title="ad-hoc模式"></a>ad-hoc模式</h2><h3 id="ansible-ad-hoc命令用法"><a href="#ansible-ad-hoc命令用法" class="headerlink" title="ansible ad-hoc命令用法"></a>ansible ad-hoc命令用法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ansible 主机（主机组） -m module(模块名)  -a <span class="string">&quot;action(执行的动作)&quot;</span></span><br><span class="line"><span class="comment"># 如下</span></span><br><span class="line">ansible 192.168.0.100 -m <span class="built_in">command</span> -a <span class="string">&quot;hostname&quot;</span> <span class="comment"># 在192.168.0.100主机上使用command模块执行hostname命令</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="ad-hoc帮助用法"><a href="#ad-hoc帮助用法" class="headerlink" title="ad-hoc帮助用法"></a>ad-hoc帮助用法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ansible-doc -l |grep ^ping  <span class="comment"># 列出ping开头的模块</span></span><br><span class="line">ansible-doc -l |grep ^shell  <span class="comment"># 列出shell开头的模块</span></span><br><span class="line">ansible-doc -l |<span class="built_in">wc</span> -l        <span class="comment"># 列出ansible所支持的模块</span></span><br><span class="line">ansible-doc -s shell         <span class="comment"># 查看shell的参数</span></span><br><span class="line">ansible-doc -l        <span class="comment">#列出所有的模块列表</span></span><br><span class="line">ansible-doc -s 模块名  <span class="comment">#查看指定模块的参数</span></span><br><span class="line">ansible-doc 模块名     <span class="comment">#查看指定模块的详细参数</span></span><br><span class="line">ansible-doc copy <span class="comment">#查看copy模块的帮助</span></span><br><span class="line">ansible-doc yum  <span class="comment">#查看yum模块的帮助</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240625112113145.png" alt="image-20240625112113145"></p>
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240625112138568.png" alt="image-20240625112138568"></p>
+<h3 id="ansible核心内容（模块）"><a href="#ansible核心内容（模块）" class="headerlink" title="ansible核心内容（模块）"></a>ansible核心内容（模块）</h3><p>ansible正确玩法：<a target="_blank" rel="noopener" href="https://docs.ansible.com/ansible/latest/collections/ansible/builtin/index.html#plugins-in-ansible-builtin">ansible社区</a></p>
+<h4 id="各个颜色意义"><a href="#各个颜色意义" class="headerlink" title="各个颜色意义"></a>各个颜色意义</h4><table>
+<thead>
+<tr>
+<th>绿色</th>
+<th>黄色</th>
+<th>紫色</th>
+<th>红色</th>
+<th>蓝色</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>命令以用户期望的执行了，但是状态没有发生改变。</td>
+<td>命令以用户期望的执行了，并且状态发生了改变。</td>
+<td>警告信息，说明ansible提示你有更合适的用法。</td>
+<td>命令错误，执行失败。</td>
+<td>详细的执行过程。</td>
+</tr>
+</tbody></table>
+<p>以下模块默认使主机组web</p>
+<h4 id="ping测试连通性"><a href="#ping测试连通性" class="headerlink" title="ping测试连通性"></a>ping测试连通性</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ansible web -m ping</span><br><span class="line">ansible-doc -s ping  <span class="comment"># 查看模块用法</span></span><br></pre></td></tr></table></figure>
+
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240625113225432.png" alt="image-20240625113225432" style="zoom:67%;">
+
+<p>​           </p>
+<h4 id="command-简单命令"><a href="#command-简单命令" class="headerlink" title="command 简单命令"></a>command 简单命令</h4><p>command模块是ansible命令基本模块</p>
+<ul>
+<li><p>使用command模块执行远程命令，命令不得用变量（$HOME）</p>
+</li>
+<li><p>不得出现特殊符号</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt; 、&gt;、|、；、&amp; ,</span><br></pre></td></tr></table></figure>
+
+<p>否则无法识别，需要则使用shell模块实现。也就是无法使用复杂的linux命令</p>
+<table>
+<thead>
+<tr>
+<th align="left">选项参数</th>
+<th align="left">选项说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">chdir</td>
+<td align="left">在执行命令前进入到指定目录</td>
+</tr>
+<tr>
+<td align="left">creates</td>
+<td align="left">定义一个文件是否存在，如果不存在则运行相应命令，存在则跳过执行</td>
+</tr>
+<tr>
+<td align="left">removes</td>
+<td align="left">定义一个文件是否存在，如果存在则运行相应命令，如果不存在则跳过执行</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">ansible web -m <span class="built_in">command</span> -a <span class="string">&quot;free -m&quot;</span>   <span class="comment"># 远程查看主机内存</span></span><br><span class="line">ansible web -m <span class="built_in">command</span> -a <span class="string">&quot;uptime&quot;</span>    <span class="comment"># 远程查看负载</span></span><br><span class="line">ansible all -m <span class="built_in">command</span> -a <span class="string">&quot;df -h&quot;</span>     <span class="comment"># 查看磁盘使用情况</span></span><br><span class="line">ansible all -m <span class="built_in">command</span> -a <span class="string">&quot;service httpd restart&quot;</span> <span class="comment"># http重启</span></span><br><span class="line">ansible all -m <span class="built_in">command</span> -a <span class="string">&quot;mkdir /path/to/new/directory&quot;</span> <span class="comment"># 创建目录</span></span><br><span class="line">ansible all -m <span class="built_in">command</span> -a <span class="string">&quot;rm /path/to/file&quot;</span>  <span class="comment"># 删除文件</span></span><br><span class="line">ansible all -m <span class="built_in">command</span> -a <span class="string">&quot;rm /path/to/file&quot;</span>  <span class="comment"># 执行脚本文件</span></span><br><span class="line"></span><br><span class="line">ansible web -m <span class="built_in">command</span> -a <span class="string">&#x27;mkdir /opt creates=/opt&#x27;</span> <span class="comment"># 目标目录已经存在了，就别创建该目录了</span></span><br><span class="line"></span><br><span class="line">ansible web -m <span class="built_in">command</span> -a <span class="string">&#x27;tar -zcf /backup_config/etc.tgz removes=/backup_config&#x27;</span>  <span class="comment">#  判断如果该文件夹不存在，则不执行备份</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ansible web -m <span class="built_in">command</span> -a <span class="string">&#x27;touch /home/daokun ansible.log warn=False&#x27;</span>    <span class="comment"># 创建文件且忽略警告</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240625113527078.png" alt="image-20240625113527078" style="zoom:50%;">
+
+
+
+<p>​                              <img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240625113613185.png" alt="image-20240625113613185" style="zoom:50%;"></p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240625144605767.png" alt="image-20240625144605767" style="zoom:50%;">
+
+<blockquote>
+<p>这个command模块不支持复杂的命令</p>
+</blockquote>
+<h4 id="shell模块（万能模块）"><a href="#shell模块（万能模块）" class="headerlink" title="shell模块（万能模块）"></a>shell模块（万能模块）</h4><p>shell模块功能：在远程节点上执行命令（复杂的命令）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">ansible web -m shell -a <span class="string">&#x27;ps -ef|grep ssh&#x27;</span> </span><br><span class="line"></span><br><span class="line">ansible web -m shell -a <span class="string">&quot;mkdir -p /server/scripts/;echo &#x27;hostname&#x27; &gt; /server/scripts/hostname.sh;chmod +x /server/scripts/hostname.sh;/usr/bin/bash /server/scripts/hostname.sh&quot;</span>  </span><br><span class="line"><span class="comment">#创建文件夹</span></span><br><span class="line"><span class="comment">#生成sh脚本文件</span></span><br><span class="line"><span class="comment">#赋予脚本可执行权限</span></span><br><span class="line"><span class="comment">#执行脚本</span></span><br></pre></td></tr></table></figure>
+
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240625150032402.png" alt="image-20240625150032402" style="zoom:67%;">
+
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240625153809170.png" alt="image-20240625153809170"></p>
+<h4 id="copy拷贝文件"><a href="#copy拷贝文件" class="headerlink" title="copy拷贝文件"></a>copy拷贝文件</h4><p>copy模块是远程推送数据模块，只能把数据推送给远程主机节点，无法拉取数据到本地。</p>
+<img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20200317155559101.png" alt="image-20200317155559101" style="zoom: 67%;">
+
+
+
+<h5 id="简单发送文件"><a href="#简单发送文件" class="headerlink" title="简单发送文件"></a>简单发送文件</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible web -m copy -a <span class="string">&#x27;src=~/fast_github.sh dest=/opt/&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]<span class="comment"># ls</span></span><br><span class="line">anaconda-ks.cfg  a.sh  cali.tar.gz   cri-dockerd-0.3.8-3.el7.x86_64.rpm  fast_github.sh  k8s-1-29-5.tar.gz  log.tar       Python-3.7.5.tar</span><br><span class="line">ana.py           cali  clean_pos.py  fast_github2.sh                     ins_k8s.sh      logs               Python-3.7.5  <span class="built_in">test</span></span><br><span class="line">[root@master ~]<span class="comment"># ansible web -m copy -a &#x27;src=~/fast_github.sh dest=/opt/&#x27;</span></span><br><span class="line">192.168.0.102 | CHANGED =&gt; &#123;</span><br><span class="line">    <span class="string">&quot;ansible_facts&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;discovered_interpreter_python&quot;</span>: <span class="string">&quot;/usr/bin/python&quot;</span></span><br><span class="line">    &#125;, </span><br><span class="line">    <span class="string">&quot;changed&quot;</span>: <span class="literal">true</span>, </span><br><span class="line">    <span class="string">&quot;checksum&quot;</span>: <span class="string">&quot;98db8b930a8e627297adebfd5360e14da21c4765&quot;</span>, </span><br><span class="line">    <span class="string">&quot;dest&quot;</span>: <span class="string">&quot;/opt/fast_github.sh&quot;</span>, </span><br><span class="line">    <span class="string">&quot;gid&quot;</span>: 0, </span><br><span class="line">    <span class="string">&quot;group&quot;</span>: <span class="string">&quot;root&quot;</span>, </span><br><span class="line">    <span class="string">&quot;md5sum&quot;</span>: <span class="string">&quot;4217dd1158b3ba69a57183c2e216f515&quot;</span>, </span><br><span class="line">    <span class="string">&quot;mode&quot;</span>: <span class="string">&quot;0644&quot;</span>, </span><br><span class="line">    <span class="string">&quot;owner&quot;</span>: <span class="string">&quot;root&quot;</span>, </span><br><span class="line">    <span class="string">&quot;size&quot;</span>: 1704, </span><br><span class="line">    <span class="string">&quot;src&quot;</span>: <span class="string">&quot;/root/.ansible/tmp/ansible-tmp-1719302376.08-106171-121380087039244/source&quot;</span>, </span><br><span class="line">    <span class="string">&quot;state&quot;</span>: <span class="string">&quot;file&quot;</span>, </span><br><span class="line">    <span class="string">&quot;uid&quot;</span>: 0</span><br><span class="line">&#125;</span><br><span class="line">192.168.0.101 | CHANGED =&gt; &#123;</span><br><span class="line">    <span class="string">&quot;ansible_facts&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;discovered_interpreter_python&quot;</span>: <span class="string">&quot;/usr/bin/python&quot;</span></span><br><span class="line">    &#125;, </span><br><span class="line">    <span class="string">&quot;changed&quot;</span>: <span class="literal">true</span>, </span><br><span class="line">    <span class="string">&quot;checksum&quot;</span>: <span class="string">&quot;98db8b930a8e627297adebfd5360e14da21c4765&quot;</span>, </span><br><span class="line">    <span class="string">&quot;dest&quot;</span>: <span class="string">&quot;/opt/fast_github.sh&quot;</span>, </span><br><span class="line">    <span class="string">&quot;gid&quot;</span>: 0, </span><br><span class="line">    <span class="string">&quot;group&quot;</span>: <span class="string">&quot;root&quot;</span>, </span><br><span class="line">    <span class="string">&quot;md5sum&quot;</span>: <span class="string">&quot;4217dd1158b3ba69a57183c2e216f515&quot;</span>, </span><br><span class="line">    <span class="string">&quot;mode&quot;</span>: <span class="string">&quot;0644&quot;</span>, </span><br><span class="line">    <span class="string">&quot;owner&quot;</span>: <span class="string">&quot;root&quot;</span>, </span><br><span class="line">    <span class="string">&quot;size&quot;</span>: 1704, </span><br><span class="line">    <span class="string">&quot;src&quot;</span>: <span class="string">&quot;/root/.ansible/tmp/ansible-tmp-1719302376.06-106169-80912088180686/source&quot;</span>, </span><br><span class="line">    <span class="string">&quot;state&quot;</span>: <span class="string">&quot;file&quot;</span>, </span><br><span class="line">    <span class="string">&quot;uid&quot;</span>: 0</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="发送文件且指定文件属性"><a href="#发送文件且指定文件属性" class="headerlink" title="发送文件且指定文件属性"></a>发送文件且指定文件属性</h5><p>权限改为600、修改为www用户（要求目标机器存在该用户）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建www用户</span></span><br><span class="line">[root@master ~]<span class="comment">#ansible web -m shell -a &quot;useradd www&quot;</span></span><br><span class="line"><span class="comment"># 远程拷贝文件，修改权限</span></span><br><span class="line">[root@master ~]<span class="comment">#ansible web -m copy -a &quot;src=~/fast_github.sh  dest=/tmp/ owner=www group=www mode=600&quot;</span></span><br><span class="line"><span class="comment"># 远程检查文件信息</span></span><br><span class="line">[root@master ~]<span class="comment">#ansible web -m shell -a &quot;ls -l /tmp/fast_github.sh&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/loading.gif" data-original="https://daokun-hexo.oss-cn-hangzhou.aliyuncs.com/img_for_hexo/image-20240625160833843.png" alt="image-20240625160833843"></p>
+<h5 id="发送文件且先做好备份"><a href="#发送文件且先做好备份" class="headerlink" title="发送文件且先做好备份"></a>发送文件且先做好备份</h5><p>使用backup参数，防止覆盖远程文件，丢失备份，提前备份该目标机器的数据</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ansible web -m copy -a <span class="string">&quot;src=/opt/fast_github.sh  dest=/tmp/ owner=www group=www mode=600  backup=yes&quot;</span></span><br><span class="line">ansible web -m shell -a <span class="string">&quot;ls /tmp -l&quot;</span> <span class="comment"># 查看</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="指定数据写入到远程文件中"><a href="#指定数据写入到远程文件中" class="headerlink" title="指定数据写入到远程文件中"></a>指定数据写入到远程文件中</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible web -m copy -a <span class="string">&quot;content=&#x27;hello world&#x27; dest=/tmp/test.txt mode=600&quot;</span> </span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>像这样的覆盖操作，还是添加备份参数更合适</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible web -m copy -a <span class="string">&quot;content=&#x27;hello world&#x27; dest=/tmp/test.txt mode=600 backup=yes&quot;</span> </span><br></pre></td></tr></table></figure>
+
+
+</blockquote>
+<h5 id="复制文件夹，注意结尾斜杠"><a href="#复制文件夹，注意结尾斜杠" class="headerlink" title="复制文件夹，注意结尾斜杠"></a>复制文件夹，注意结尾斜杠</h5><p>远程拷贝~&#x2F;Python-3.7.5&#x2F;下的所有内容</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#远程拷贝~/Python-3.7.5/下的所有内容</span></span><br><span class="line">ansible backup -m copy -a  <span class="string">&quot;src=~/Python-3.7.5/ dest=/opt/&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 远程拷贝/opt/yuchao整个目录到目标机器</span></span><br><span class="line">ansible backup -m copy -a  <span class="string">&quot;src=~/Python-3.7.5 dest=/opt/&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="file文件操作模块"><a href="#file文件操作模块" class="headerlink" title="file文件操作模块"></a>file文件操作模块</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>path</td>
+<td>必须指定操作的文件或目录。在之前版本中使用dest或name也可。</td>
+</tr>
+<tr>
+<td>state</td>
+<td>根据操作需求设置，例如directory、touch、link、hard、absent。<br>假设，我想要在远程主机上创建&#x2F;testdir&#x2F;a&#x2F;b目录，那么我则需要设置path&#x3D;&#x2F;testdir&#x2F;a&#x2F;b，但是，我们和ansible无法从一个字符串就知道你要创建文件还是目录，所以，我们需要通过state参数进行说明，当我们想要创建的&#x2F;testdir&#x2F;a&#x2F;b是一个目录时，需要将state的值设置为directory<br>当我们想要删除一个文件时（删除时不用区分目标是文件、目录、还是链接），则需要将state的值设置为absent</td>
+</tr>
+<tr>
+<td>src</td>
+<td>当state为link或hard时指定软硬链接的源文件。</td>
+</tr>
+<tr>
+<td>force</td>
+<td>当state为link时，可以强制创建链接，即使源文件不存在或同名文件已存在。</td>
+</tr>
+<tr>
+<td>owner</td>
+<td>设置被操作文件的属主用户。属主用户必须在远程主机中存在。</td>
+</tr>
+<tr>
+<td>group</td>
+<td>设置被操作文件的属组。属组必须在远程主机中存在。</td>
+</tr>
+<tr>
+<td>mode</td>
+<td>设置被操作文件的权限，如rw-r-x–，使用mode&#x3D;650进行设置或特殊权限如suid（4700）。</td>
+</tr>
+<tr>
+<td>recurse</td>
+<td>当操作目标为目录时设置为yes，递归修改目录中文件属性。</td>
+</tr>
+</tbody></table>
+<p>​              </p>
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><h2 id="复制文件"><a href="#复制文件" class="headerlink" title="复制文件"></a>复制文件</h2><p>将家目录下的1.txt和2.txt复制到远程主机的家目录下</p>
+<p>playbook</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">- name: Copy files to remote hosts</span><br><span class="line">  hosts: all</span><br><span class="line">  tasks:</span><br><span class="line">    - name: Copy 1.txt to remote hosts</span><br><span class="line">      copy:</span><br><span class="line">        src: ~/1.txt</span><br><span class="line">        dest: ~/1.txt</span><br><span class="line">        owner: <span class="string">&quot;&#123;&#123; ansible_user_id &#125;&#125;&quot;</span></span><br><span class="line">        group: <span class="string">&quot;&#123;&#123; ansible_user_id &#125;&#125;&quot;</span></span><br><span class="line">        mode: <span class="string">&#x27;0644&#x27;</span></span><br><span class="line"></span><br><span class="line">    - name: Copy 2.txt to remote hosts</span><br><span class="line">      copy:</span><br><span class="line">        src: ~/2.txt</span><br><span class="line">        dest: ~/2.txt</span><br><span class="line">        owner: <span class="string">&quot;&#123;&#123; ansible_user_id &#125;&#125;&quot;</span></span><br><span class="line">        group: <span class="string">&quot;&#123;&#123; ansible_user_id &#125;&#125;&quot;</span></span><br><span class="line">        mode: <span class="string">&#x27;0644&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>运行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible-playbook copy_files.yml</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+<p>参考资料：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36893457/article/details/104416776">傻瓜式Ansible离线安装，适合任何系统_一键离线安装ansible的shell脚本-CSDN博客</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.apecome.com/courses/2x1x1x2x6xall?uname=5e102ce91a1525783c29dd95b06150ae">Linux云计算自学-猿来教育官方网站 (apecome.com)</a></li>
+<li><a target="_blank" rel="noopener" href="https://curder.github.io/ansible-study/module/command.html">Ansible 学习 (curder.github.io)</a></li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://daokun.eu.org">阿福</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://daokun.eu.org/2024/06/12/Linux%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4-ansible/">https://daokun.eu.org/2024/06/12/Linux自动化运维-ansible/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://daokun.eu.org" target="_blank">道坤</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/default_top_img.jpg" data-sites="wechat,weibo,qq,facebook,twitter"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/loading.gif" data-original="/img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/loading.gif" data-original="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/06/12/Linux%E5%AE%89%E5%85%A8%EF%BC%9ASSH%E5%8E%9F%E7%90%86/"><img class="next-cover" src="/img/loading.gif" data-original="/img/ssh.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Linux安全：SSH原理</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/loading.gif" data-original="/img/avatar.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">阿福</div><div class="author-info__description">遇见就是缘分</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">87</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">28</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/daokunn/daokunn.github.io"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">小心肝啊！别熬夜了！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ansible%E5%AE%89%E8%A3%85"><span class="toc-number">1.</span> <span class="toc-text">ansible安装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E7%BA%BF%E5%AE%89%E8%A3%85"><span class="toc-number">1.1.</span> <span class="toc-text">在线安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85"><span class="toc-number">1.2.</span> <span class="toc-text">离线安装</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BB%E6%9C%BA%E6%B8%85%E5%8D%95%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">主机清单配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%B7%B2%E9%85%8D%E7%BD%AE%E7%9A%84%E5%88%86%E7%BB%84"><span class="toc-number">2.1.</span> <span class="toc-text">查看已配置的分组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E6%9C%BA%E5%88%86%E7%BB%84"><span class="toc-number">2.2.</span> <span class="toc-text">主机分组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE"><span class="toc-number">2.3.</span> <span class="toc-text">连接参数配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%85%E9%9A%9C%E8%A7%A3%E5%86%B3"><span class="toc-number">2.4.</span> <span class="toc-text">故障解决</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E6%95%85%E9%9A%9C"><span class="toc-number">2.4.1.</span> <span class="toc-text">连接故障</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ansible%E7%BC%93%E5%AD%98%E9%97%AE%E9%A2%98"><span class="toc-number">2.4.2.</span> <span class="toc-text">ansible缓存问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9E%E7%BB%AD%E7%9A%84%E4%B8%BB%E6%9C%BA%E5%90%8D"><span class="toc-number">2.5.</span> <span class="toc-text">连续的主机名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AC%E5%85%B1%E5%8F%98%E9%87%8F"><span class="toc-number">2.6.</span> <span class="toc-text">公共变量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F"><span class="toc-number">2.6.1.</span> <span class="toc-text">局部变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="toc-number">2.6.2.</span> <span class="toc-text">全局变量</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ansible%E7%9A%84%E6%89%A7%E8%A1%8C%E6%A8%A1%E5%BC%8F"><span class="toc-number">3.</span> <span class="toc-text">ansible的执行模式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ad-hoc%E6%A8%A1%E5%BC%8F"><span class="toc-number">3.1.</span> <span class="toc-text">ad-hoc模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ansible-ad-hoc%E5%91%BD%E4%BB%A4%E7%94%A8%E6%B3%95"><span class="toc-number">3.1.1.</span> <span class="toc-text">ansible ad-hoc命令用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ad-hoc%E5%B8%AE%E5%8A%A9%E7%94%A8%E6%B3%95"><span class="toc-number">3.1.2.</span> <span class="toc-text">ad-hoc帮助用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ansible%E6%A0%B8%E5%BF%83%E5%86%85%E5%AE%B9%EF%BC%88%E6%A8%A1%E5%9D%97%EF%BC%89"><span class="toc-number">3.1.3.</span> <span class="toc-text">ansible核心内容（模块）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%84%E4%B8%AA%E9%A2%9C%E8%89%B2%E6%84%8F%E4%B9%89"><span class="toc-number">3.1.3.1.</span> <span class="toc-text">各个颜色意义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ping%E6%B5%8B%E8%AF%95%E8%BF%9E%E9%80%9A%E6%80%A7"><span class="toc-number">3.1.3.2.</span> <span class="toc-text">ping测试连通性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#command-%E7%AE%80%E5%8D%95%E5%91%BD%E4%BB%A4"><span class="toc-number">3.1.3.3.</span> <span class="toc-text">command 简单命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#shell%E6%A8%A1%E5%9D%97%EF%BC%88%E4%B8%87%E8%83%BD%E6%A8%A1%E5%9D%97%EF%BC%89"><span class="toc-number">3.1.3.4.</span> <span class="toc-text">shell模块（万能模块）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#copy%E6%8B%B7%E8%B4%9D%E6%96%87%E4%BB%B6"><span class="toc-number">3.1.3.5.</span> <span class="toc-text">copy拷贝文件</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E5%8F%91%E9%80%81%E6%96%87%E4%BB%B6"><span class="toc-number">3.1.3.5.1.</span> <span class="toc-text">简单发送文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%91%E9%80%81%E6%96%87%E4%BB%B6%E4%B8%94%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E5%B1%9E%E6%80%A7"><span class="toc-number">3.1.3.5.2.</span> <span class="toc-text">发送文件且指定文件属性</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%91%E9%80%81%E6%96%87%E4%BB%B6%E4%B8%94%E5%85%88%E5%81%9A%E5%A5%BD%E5%A4%87%E4%BB%BD"><span class="toc-number">3.1.3.5.3.</span> <span class="toc-text">发送文件且先做好备份</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8C%87%E5%AE%9A%E6%95%B0%E6%8D%AE%E5%86%99%E5%85%A5%E5%88%B0%E8%BF%9C%E7%A8%8B%E6%96%87%E4%BB%B6%E4%B8%AD"><span class="toc-number">3.1.3.5.4.</span> <span class="toc-text">指定数据写入到远程文件中</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%8D%E5%88%B6%E6%96%87%E4%BB%B6%E5%A4%B9%EF%BC%8C%E6%B3%A8%E6%84%8F%E7%BB%93%E5%B0%BE%E6%96%9C%E6%9D%A0"><span class="toc-number">3.1.3.5.5.</span> <span class="toc-text">复制文件夹，注意结尾斜杠</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#file%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E6%A8%A1%E5%9D%97"><span class="toc-number">3.1.3.6.</span> <span class="toc-text">file文件操作模块</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">4.</span> <span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E5%88%B6%E6%96%87%E4%BB%B6"><span class="toc-number">4.1.</span> <span class="toc-text">复制文件</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/06/12/Linux%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4-ansible/" title="Linux自动化运维:ansible"><img src="/img/loading.gif" data-original="/img/default_top_img.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux自动化运维:ansible"/></a><div class="content"><a class="title" href="/2024/06/12/Linux%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4-ansible/" title="Linux自动化运维:ansible">Linux自动化运维:ansible</a><time datetime="2024-06-12T07:42:03.000Z" title="发表于 2024-06-12 15:42:03">2024-06-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/12/Linux%E5%AE%89%E5%85%A8%EF%BC%9ASSH%E5%8E%9F%E7%90%86/" title="Linux安全：SSH原理"><img src="/img/loading.gif" data-original="/img/ssh.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux安全：SSH原理"/></a><div class="content"><a class="title" href="/2024/06/12/Linux%E5%AE%89%E5%85%A8%EF%BC%9ASSH%E5%8E%9F%E7%90%86/" title="Linux安全：SSH原理">Linux安全：SSH原理</a><time datetime="2024-06-12T02:33:00.000Z" title="发表于 2024-06-12 10:33:00">2024-06-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/12/Linux%E9%85%8D%E7%BD%AEgithub%E5%8A%A0%E9%80%9F/" title="Linux配置github加速"><img src="/img/loading.gif" data-original="/img/default_top_img.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux配置github加速"/></a><div class="content"><a class="title" href="/2024/06/12/Linux%E9%85%8D%E7%BD%AEgithub%E5%8A%A0%E9%80%9F/" title="Linux配置github加速">Linux配置github加速</a><time datetime="2024-06-12T02:28:04.000Z" title="发表于 2024-06-12 10:28:04">2024-06-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/20/Python%E4%BD%BF%E7%94%A8paramiko%E5%AE%9E%E7%8E%B0ssh%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95/" title="Python使用paramiko实现ssh远程登录"><img src="/img/loading.gif" data-original="/img/default_top_img.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python使用paramiko实现ssh远程登录"/></a><div class="content"><a class="title" href="/2024/05/20/Python%E4%BD%BF%E7%94%A8paramiko%E5%AE%9E%E7%8E%B0ssh%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95/" title="Python使用paramiko实现ssh远程登录">Python使用paramiko实现ssh远程登录</a><time datetime="2024-05-20T07:12:19.000Z" title="发表于 2024-05-20 15:12:19">2024-05-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/20/Shell%E5%AE%9E%E7%8E%B0%E6%8C%87%E5%AE%9A%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%9A%84%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E6%B8%85%E7%A9%BA/" title="Shell实现指定目录下的指定文件清空"><img src="/img/loading.gif" data-original="/img/default_top_img.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Shell实现指定目录下的指定文件清空"/></a><div class="content"><a class="title" href="/2024/05/20/Shell%E5%AE%9E%E7%8E%B0%E6%8C%87%E5%AE%9A%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%9A%84%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E6%B8%85%E7%A9%BA/" title="Shell实现指定目录下的指定文件清空">Shell实现指定目录下的指定文件清空</a><time datetime="2024-05-20T06:38:22.000Z" title="发表于 2024-05-20 14:38:22">2024-05-20</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/default_top_img.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2024 By 阿福</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a><br>
+<imgsrc="/img/loading.gif" data-original="https://haiyong.site/img/icp.png">
+<a href="https://beian.miit.gov.cn/#/Integrated/index"  style="color:white" target="_blank">赣ICP备2023004169号-1</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'TC3zGNHX95voCrjm3zIGGDtM-gzGzoHsz',
+      appKey: 'KLVEwzS0mvYkxYOwbpUJjG5k',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><canvas class="fireworks" mobile="true"></canvas><script src="/%5Bobject%20Object%5D"></script><script defer="defer" id="ribbon" src="/%5Bobject%20Object%5D" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="/%5Bobject%20Object%5D"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script>(function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/5b735920.js","daovoice")
+</script><script>var isChatBtn = true
+daovoice('init', {
+  app_id: '5b735920',},{
+  launcher: { 
+     disableLauncherIcon: isChatBtn // 悬浮 ICON 是否显示
+  },
+});
+daovoice('update');
+
+if (isChatBtn) {
+  var chatBtnFn = () => {
+    var chatBtn = document.getElementById("chat_btn")
+    chatBtn.addEventListener("click", function(){
+      daovoice('show')
+    });
+  }
+  chatBtnFn()
+} else {
+  if (true) {
+    function chatBtnHide () {
+      daovoice('update', {},{
+        launcher: { 
+        disableLauncherIcon: true // 悬浮 ICON 是否显示
+        },
+      });
+    }
+    function chatBtnShow () {
+      daovoice('update', {},{
+        launcher: { 
+        disableLauncherIcon: false // 悬浮 ICON 是否显示
+        },
+      });
+    }
+  }
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/meting@1.2/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"left","width":200,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script>
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script></body></html>

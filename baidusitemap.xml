@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://daokun.eu.org/2024/06/12/Linux%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4-ansible/</loc>
+    <lastmod>2024-06-26</lastmod>
+  </url>
+  <url>
+    <loc>https://daokun.eu.org/2022/11/28/Centos7%E7%B3%BB%E7%BB%9F%E7%9A%84yum%E6%BA%90%E6%9B%B4%E6%8D%A2/</loc>
+    <lastmod>2024-06-17</lastmod>
+  </url>
+  <url>
     <loc>https://daokun.eu.org/2024/06/12/Linux%E5%AE%89%E5%85%A8%EF%BC%9ASSH%E5%8E%9F%E7%90%86/</loc>
     <lastmod>2024-06-12</lastmod>
   </url>
@@ -14,10 +22,6 @@
   </url>
   <url>
     <loc>https://daokun.eu.org/2022/11/28/Centos7%E4%B8%8B%E5%AE%89%E8%A3%85Python3/</loc>
-    <lastmod>2024-06-12</lastmod>
-  </url>
-  <url>
-    <loc>https://daokun.eu.org/2022/11/28/Centos7%E7%B3%BB%E7%BB%9F%E7%9A%84yum%E6%BA%90%E6%9B%B4%E6%8D%A2/</loc>
     <lastmod>2024-06-12</lastmod>
   </url>
   <url>
